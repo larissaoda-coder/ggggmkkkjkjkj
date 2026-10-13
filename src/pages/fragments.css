@@ -184,3 +184,12 @@
     font-size: 0.875rem;
   }
 }
+@media (max-width: 640px) {
+  .fragment-card {
+    min-height: 0;
+    gap: 0.9rem;
+  }
+  .fragment-card__num {
+    font-size: 2rem;
+  }
+}

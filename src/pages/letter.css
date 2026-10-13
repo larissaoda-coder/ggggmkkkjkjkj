@@ -11,10 +11,6 @@
   padding: 3rem var(--gutter);
   text-align: center;
 }
-.app[data-nav='lateral'] .letter-closed,
-.app[data-nav='superior'] .letter-closed {
-  min-height: 88dvh;
-}
 .letter-closed__stage {
   display: flex;
   flex-direction: column;
@@ -185,12 +181,6 @@
   height: 2px;
   pointer-events: none;
 }
-.app[data-nav='lateral'] .letter-progress {
-  left: var(--nav-side-w);
-}
-.app[data-nav='lateral'][data-compact='true'] .letter-progress {
-  left: var(--nav-side-w-compact);
-}
 .letter-progress span {
   display: block;
   height: 100%;
@@ -213,8 +203,13 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-.app[data-nav='superior'] .letter-toolbar {
-  top: 3.55rem;
+@media (min-width: 760px) {
+  .letter-toolbar {
+    top: var(--header-h);
+  }
+  .letter-closed {
+    min-height: calc(100dvh - var(--header-h) - 2rem);
+  }
 }
 .letter-toolbar__status {
   font-size: 0.75rem;

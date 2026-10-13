@@ -22,19 +22,13 @@ export class ErrorBoundary extends Component<{ children: ReactNode }, State> {
     const chunk = /dynamically imported module|Loading chunk|Failed to fetch/i.test(this.state.error.message);
     return (
       <div className="page page--narrow empty-state" role="alert">
-        <p className="eyebrow">Algo não saiu como esperado</p>
-        <h1 className="title">{chunk ? 'Esta seção não carregou.' : 'Esta seção encontrou um problema.'}</h1>
-        <p className="lede">
-          {chunk
-            ? 'Talvez a conexão tenha oscilado. Tente recarregar a página.'
-            : 'O restante do espaço continua disponível. Você pode tentar novamente ou seguir por outro caminho.'}
-        </p>
+        <h1 className="title">{chunk ? 'A página não carregou.' : 'A página apresentou um erro.'}</h1>
         <div className="row-actions">
           <button type="button" className="btn btn--solid" onClick={() => window.location.reload()}>
             Recarregar
           </button>
-          <Link to="/sumario" className="btn">
-            Ir ao sumário
+          <Link to="/carta" className="btn">
+            Ir para a carta
           </Link>
         </div>
       </div>

@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { letterParagraphs, letterWordCount } from '../data/letter';
 import { useMotion, useSettings } from '../context/SettingsContext';
 import { usePersistentState } from '../lib/usePersistentState';
-import { sfx } from '../lib/sound';
 import { Icon } from '../components/Icon';
 import './letter.css';
 
@@ -51,7 +50,6 @@ export default function LetterPage() {
       reveal(null);
       return;
     }
-    sfx.paper();
     setPhase('opening');
     openTimer.current = window.setTimeout(() => reveal(null), 1900 * m.factor);
   };

@@ -20,13 +20,7 @@ export default function FragmentsPage() {
 
   return (
     <div className="page fragments">
-      <PageHeader
-        eyebrow="Dez fragmentos"
-        title="Sobre aquilo que é seu."
-        description={`Dez textos breves. Abra-os na ordem que preferir. ${
-          state.read.length ? `${state.read.length} de 10 já abertos.` : ''
-        }`}
-      />
+      <PageHeader title="Dez fragmentos" />
 
       <ol className="fragment-grid">
         {fragments.map((f, i) => {

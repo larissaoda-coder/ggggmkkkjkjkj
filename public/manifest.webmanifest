@@ -1,7 +1,7 @@
 {
   "name": "Annelise",
   "short_name": "Annelise",
-  "description": "Um espaço pessoal, feito para Annelise.",
+  "description": "Uma carta para Annelise.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

@@ -4,103 +4,33 @@
   display: grid;
   place-items: center;
   padding: 2rem var(--gutter);
-  overflow: hidden;
-}
-.home::before {
-  /* Um círculo fino, quase imperceptível, que gira muito devagar. */
-  content: '';
-  position: absolute;
-  width: min(120vw, 64rem);
-  aspect-ratio: 1;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.home::after {
-  content: '';
-  position: absolute;
-  width: min(80vw, 40rem);
-  aspect-ratio: 1;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.6;
-  pointer-events: none;
-  animation: home-breathe 9s var(--ease) infinite alternate;
-}
-@keyframes home-breathe {
-  to {
-    transform: translate(-50%, -50%) scale(1.06);
-    opacity: 0.25;
-  }
 }
 .home__theme {
   position: absolute;
   top: max(1rem, env(safe-area-inset-top));
   right: 1rem;
   color: var(--muted);
-  z-index: 2;
 }
 .home__inner {
-  position: relative;
-  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 1.6rem;
+  gap: 1.5rem;
 }
 .home__name {
   font-family: var(--serif);
   font-weight: 300;
   font-style: italic;
-  font-size: clamp(3.4rem, 15vw, 8.5rem);
+  font-size: clamp(3.2rem, 14vw, 7.5rem);
   line-height: 1;
   letter-spacing: -0.02em;
-  display: flex;
-}
-.home__name span {
-  display: inline-block;
-}
-.home__rule {
-  display: block;
-  width: 4rem;
-  height: 1px;
-  background: var(--ink);
-  transform-origin: center;
 }
 .home__intro {
   font-family: var(--serif);
-  font-size: clamp(1rem, 2.6vw, 1.2rem);
+  font-size: clamp(1.05rem, 2.6vw, 1.25rem);
   color: var(--ink-2);
-  max-width: 22rem;
-  line-height: 1.5;
 }
 .home__enter {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.9rem;
-  min-height: 2.75rem;
-  padding: 0 0.25rem;
-  font-size: 0.75rem;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: var(--ink);
-}
-.home__enter-line {
-  display: block;
-  width: 2rem;
-  height: 1px;
-  background: currentColor;
-  transition: width var(--d-med) var(--ease-out);
-}
-.home__enter:hover .home__enter-line,
-.home__enter:focus-visible .home__enter-line {
-  width: 3.5rem;
+  margin-top: 0.5rem;
 }

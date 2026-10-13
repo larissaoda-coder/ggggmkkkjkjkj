@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { fragments } from '../data/fragments';
 import { useMotion } from '../context/SettingsContext';
 import { usePersistentState } from '../lib/usePersistentState';
-import { sfx } from '../lib/sound';
 import { FragmentMark } from '../components/FragmentMark';
 import { Icon } from '../components/Icon';
 import { initialFragmentsRead, type FragmentsRead } from './FragmentsPage';
@@ -53,7 +52,6 @@ export default function FragmentDetailPage() {
   });
 
   const go = (num: number) => {
-    sfx.tick();
     navigate(`/fragmentos/${num}`);
   };
 
@@ -90,7 +88,7 @@ export default function FragmentDetailPage() {
     >
       <div className="fragment-detail__bar">
         <Link to="/fragmentos" className="link-btn">
-          <Icon name="arrow-left" size={16} /> Galeria
+          <Icon name="arrow-left" size={16} /> Fragmentos
         </Link>
         <span className="meta num" aria-label={`Fragmento ${fragment.number} de 10`}>
           {String(fragment.number).padStart(2, '0')} / 10
@@ -120,11 +118,7 @@ export default function FragmentDetailPage() {
 
       <nav className="fragment-detail__nav" aria-label="Entre fragmentos">
         {prev ? (
-          <Link
-            to={`/fragmentos/${prev.number}`}
-            className="fragment-nav fragment-nav--prev"
-            onClick={() => sfx.tick()}
-          >
+          <Link to={`/fragmentos/${prev.number}`} className="fragment-nav fragment-nav--prev">
             <span className="meta">
               <Icon name="arrow-left" size={14} /> Anterior · {String(prev.number).padStart(2, '0')}
             </span>
@@ -134,11 +128,7 @@ export default function FragmentDetailPage() {
           <span />
         )}
         {next ? (
-          <Link
-            to={`/fragmentos/${next.number}`}
-            className="fragment-nav fragment-nav--next"
-            onClick={() => sfx.tick()}
-          >
+          <Link to={`/fragmentos/${next.number}`} className="fragment-nav fragment-nav--next">
             <span className="meta">
               Seguinte · {String(next.number).padStart(2, '0')} <Icon name="arrow-right" size={14} />
             </span>

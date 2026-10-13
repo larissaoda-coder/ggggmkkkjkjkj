@@ -28,7 +28,7 @@ export default function MusicPage() {
 
   return (
     <div className="page page--narrow music">
-      <PageHeader eyebrow="Músicas" title="Para ouvir enquanto percorre." />
+      <PageHeader title="Músicas" />
 
       {embed ? (
         <>

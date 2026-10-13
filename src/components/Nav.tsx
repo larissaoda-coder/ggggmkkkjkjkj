@@ -1,4 +1,4 @@
-import { Link, NavLink } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { sections } from '../app/sections';
 import { useSettings } from '../context/SettingsContext';
 import { Icon } from './Icon';
@@ -8,9 +8,6 @@ export function Nav() {
   const { resolvedTheme, toggleTheme } = useSettings();
   return (
     <nav className="nav" aria-label="Navegação">
-      <Link to="/" className="nav__brand">
-        Annelise
-      </Link>
       <div className="nav__links">
         {sections.map((s) => (
           <NavLink key={s.id} to={s.path} className="nav__item">

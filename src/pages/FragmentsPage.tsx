@@ -4,7 +4,6 @@ import { fragments } from '../data/fragments';
 import { useMotion } from '../context/SettingsContext';
 import { usePersistentState } from '../lib/usePersistentState';
 import { PageHeader } from '../components/PageHeader';
-import { FragmentMark } from '../components/FragmentMark';
 import { Icon } from '../components/Icon';
 import './fragments.css';
 
@@ -38,13 +37,9 @@ export default function FragmentsPage() {
                 className="fragment-card"
                 data-read={read}
                 data-last={last}
-                aria-label={`Fragmento ${f.number}: ${f.title}${read ? ' (já aberto)' : ''}`}
+                aria-label={`Fragmento ${f.number}${read ? ' (já aberto)' : ''}`}
               >
-                <span className="fragment-card__top">
-                  <span className="fragment-card__num num">{String(f.number).padStart(2, '0')}</span>
-                  <FragmentMark n={f.number} />
-                </span>
-                <span className="fragment-card__title">{f.title}</span>
+                <span className="fragment-card__num num">{f.number}</span>
                 <span className="fragment-card__foot">
                   <span>{last ? 'Aberto por último' : read ? 'Lido' : 'Abrir'}</span>
                   <Icon name="arrow-right" size={16} />

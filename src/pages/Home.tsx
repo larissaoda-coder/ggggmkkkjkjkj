@@ -25,8 +25,7 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={m.t(1.2, { delay: 0.2 * m.factor })}
       >
-        <h1 className="home__name">Annelise</h1>
-        <p className="home__intro">Escrevi uma carta para você.</p>
+        <h1 className="home__title">Escrevi uma carta para você.</h1>
         <Link to="/carta" className="btn btn--solid home__enter">
           Ler a carta
         </Link>

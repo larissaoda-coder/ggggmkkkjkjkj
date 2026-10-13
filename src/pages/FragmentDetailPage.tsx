@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { fragments } from '../data/fragments';
 import { useMotion } from '../context/SettingsContext';
 import { usePersistentState } from '../lib/usePersistentState';
-import { FragmentMark } from '../components/FragmentMark';
 import { Icon } from '../components/Icon';
 import { initialFragmentsRead, type FragmentsRead } from './FragmentsPage';
 import './fragments.css';
@@ -91,7 +90,7 @@ export default function FragmentDetailPage() {
           <Icon name="arrow-left" size={16} /> Fragmentos
         </Link>
         <span className="meta num" aria-label={`Fragmento ${fragment.number} de 10`}>
-          {String(fragment.number).padStart(2, '0')} / 10
+          {fragment.number} / 10
         </span>
       </div>
 
@@ -105,12 +104,8 @@ export default function FragmentDetailPage() {
           exit={{ opacity: 0, x: m.reduced ? 0 : direction * -36 }}
           transition={m.t(0.4)}
         >
-          <div className="fragment-detail__mark">
-            <FragmentMark n={fragment.number} size={64} active />
-          </div>
-          <p className="fragment-detail__num num">{String(fragment.number).padStart(2, '0')}</p>
-          <h1 className="fragment-detail__title" ref={headingRef} tabIndex={-1}>
-            {fragment.title}
+          <h1 className="fragment-detail__title num" ref={headingRef} tabIndex={-1}>
+            {fragment.number}
           </h1>
           <p className="fragment-detail__text">{fragment.text}</p>
         </motion.article>
@@ -120,9 +115,9 @@ export default function FragmentDetailPage() {
         {prev ? (
           <Link to={`/fragmentos/${prev.number}`} className="fragment-nav fragment-nav--prev">
             <span className="meta">
-              <Icon name="arrow-left" size={14} /> Anterior · {String(prev.number).padStart(2, '0')}
+              <Icon name="arrow-left" size={14} /> Anterior
             </span>
-            <span className="fragment-nav__title">{prev.title}</span>
+            <span className="fragment-nav__title">{prev.number}</span>
           </Link>
         ) : (
           <span />
@@ -130,16 +125,16 @@ export default function FragmentDetailPage() {
         {next ? (
           <Link to={`/fragmentos/${next.number}`} className="fragment-nav fragment-nav--next">
             <span className="meta">
-              Seguinte · {String(next.number).padStart(2, '0')} <Icon name="arrow-right" size={14} />
+              Seguinte <Icon name="arrow-right" size={14} />
             </span>
-            <span className="fragment-nav__title">{next.title}</span>
+            <span className="fragment-nav__title">{next.number}</span>
           </Link>
         ) : (
           <Link to="/fragmentos" className="fragment-nav fragment-nav--next">
             <span className="meta">
-              Fim dos fragmentos <Icon name="arrow-right" size={14} />
+              Fim <Icon name="arrow-right" size={14} />
             </span>
-            <span className="fragment-nav__title">Voltar à galeria</span>
+            <span className="fragment-nav__title">Voltar aos fragmentos</span>
           </Link>
         )}
       </nav>

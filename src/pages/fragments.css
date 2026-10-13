@@ -193,3 +193,22 @@
     font-size: 2rem;
   }
 }
+
+/* Cartões só com o número */
+.fragment-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 9rem), 1fr));
+}
+.fragment-card {
+  min-height: 9rem;
+  justify-content: space-between;
+}
+.fragment-card__num {
+  font-size: 3rem;
+}
+.fragment-detail__title {
+  font-size: clamp(2.5rem, 8vw, 3.5rem);
+  margin-bottom: 1.5rem;
+}
+.fragment-nav__title {
+  font-size: 1.4rem;
+}

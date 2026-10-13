@@ -18,18 +18,15 @@
   text-align: center;
   gap: 1.5rem;
 }
-.home__name {
+.home__title {
   font-family: var(--serif);
   font-weight: 300;
   font-style: italic;
-  font-size: clamp(3.2rem, 14vw, 7.5rem);
-  line-height: 1;
-  letter-spacing: -0.02em;
-}
-.home__intro {
-  font-family: var(--serif);
-  font-size: clamp(1.05rem, 2.6vw, 1.25rem);
-  color: var(--ink-2);
+  font-size: clamp(2rem, 7vw, 3.6rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  text-wrap: balance;
+  max-width: 14em;
 }
 .home__enter {
   margin-top: 0.5rem;

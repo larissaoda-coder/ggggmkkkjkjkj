@@ -70,7 +70,7 @@
     padding-bottom: 0;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: center;
     height: var(--header-h);
     padding-inline: var(--gutter);
     border-top: 0;

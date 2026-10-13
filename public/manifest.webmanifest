@@ -1,7 +1,7 @@
 {
-  "name": "Annelise",
-  "short_name": "Annelise",
-  "description": "Uma carta para Annelise.",
+  "name": "Uma carta",
+  "short_name": "Carta",
+  "description": "Uma carta.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

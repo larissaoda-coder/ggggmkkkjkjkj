@@ -161,7 +161,7 @@ export default function LetterPage() {
     const opening = phase === 'opening';
     return (
       <div className="letter-closed">
-        <h1 className="visually-hidden">Texto — uma carta para Annelise</h1>
+        <h1 className="visually-hidden">Carta</h1>
         <div className="letter-closed__stage">
           <div className={`envelope${opening ? ' envelope--opening' : ''}`} aria-hidden="true">
             <div className="envelope__paper">
@@ -176,14 +176,8 @@ export default function LetterPage() {
               </svg>
             </div>
             <div className="envelope__flap" />
-            <div className="envelope__seal">
-              <span>A</span>
-            </div>
+            <div className="envelope__seal" />
           </div>
-          <p className="letter-closed__to">
-            <span className="eyebrow">Para</span>
-            <span className="letter-closed__name">Annelise</span>
-          </p>
         </div>
 
         <div className="letter-closed__actions">
@@ -223,7 +217,7 @@ export default function LetterPage() {
   /* ---------- carta aberta ---------- */
   return (
     <div className="letter-open">
-      <h1 className="visually-hidden">Texto — uma carta para Annelise</h1>
+      <h1 className="visually-hidden">Carta</h1>
       <div className="letter-progress" aria-hidden="true">
         <span style={{ transform: `scaleX(${progress})` }} />
       </div>
@@ -281,9 +275,8 @@ export default function LetterPage() {
         initial={{ opacity: 0, y: m.reduced ? 0 : 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={m.t(0.8)}
-        aria-label="Carta para Annelise"
+        aria-label="Carta"
       >
-        <p className="letter-paper__to eyebrow">Para Annelise</p>
         <div className="letter-paper__body">
           {letterParagraphs.map((p, i) => (
             <p key={i}>{p}</p>

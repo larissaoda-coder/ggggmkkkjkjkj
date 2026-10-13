@@ -4,12 +4,10 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { sectionForPath } from './sections';
 import { useSettings, useMotion } from '../context/SettingsContext';
 import { useProgress } from '../context/ProgressContext';
-import { usePlayer } from '../context/PlayerContext';
 import { useMediaQuery } from '../lib/useMediaQuery';
 import { SideNav } from '../components/nav/SideNav';
 import { TopNav } from '../components/nav/TopNav';
 import { BottomNav } from '../components/nav/BottomNav';
-import { MiniPlayer } from '../components/MiniPlayer';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 
 function transitionKey(pathname: string) {
@@ -23,7 +21,6 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
   const { settings } = useSettings();
   const m = useMotion();
   const { markVisited } = useProgress();
-  const player = usePlayer();
   const desktop = useMediaQuery('(min-width: 900px)');
 
   const section = sectionForPath(location.pathname);
@@ -41,16 +38,8 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
     document.title = name ? `${name} — Annelise` : 'Annelise';
   }, [section, location.pathname]);
 
-  const showMini = player.active && !location.pathname.startsWith('/musicas') && chrome;
-
   return (
-    <div
-      className="app"
-      data-nav={navMode}
-      data-compact={!settings.navLabels}
-      data-mini={showMini}
-      data-chrome={chrome}
-    >
+    <div className="app" data-nav={navMode} data-compact={!settings.navLabels} data-chrome={chrome}>
       <a className="skip-link" href="#conteudo">
         Ir para o conteúdo
       </a>
@@ -74,7 +63,6 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
         </AnimatePresence>
       </main>
 
-      {chrome && <MiniPlayer />}
       {navMode === 'bottom' && <BottomNav />}
     </div>
   );

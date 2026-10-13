@@ -55,7 +55,7 @@ export const sections: Section[] = [
     path: '/musicas',
     label: 'Músicas',
     title: 'Músicas',
-    description: 'Um pequeno reprodutor que acompanha a navegação.',
+    description: 'Uma playlist do Spotify para ouvir aqui mesmo.',
     icon: 'music',
     group: 'experiencias',
     primary: true,

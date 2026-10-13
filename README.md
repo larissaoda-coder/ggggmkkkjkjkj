@@ -43,43 +43,23 @@ Os dois arquivos contêm os textos originais, sem edição. Os testes
 (`src/data/content.test.ts`) verificam início, fim, número de parágrafos e a
 correspondência título/texto dos fragmentos.
 
-## Músicas: como configurar
+## Músicas (Spotify)
 
-Edite `src/data/tracks.ts`. Há três tipos de fonte, todos reais:
+A aba **Músicas** toca uma playlist do Spotify dentro do próprio site, pelo
+player oficial incorporado do Spotify.
+
+Para definir a playlist, cole o link em `src/data/spotify.ts`:
 
 ```ts
-// 1. Arquivo de áudio — coloque o arquivo em public/audio/
-{ id: 'a', title: '…', artist: '…', category: 'Para a noite',
-  source: { kind: 'audio', src: 'audio/minha-musica.mp3' } }
-
-// 2. YouTube — toca dentro do app pela API oficial de iframe
-{ id: 'b', title: '…', artist: '…', category: 'Para dividir',
-  source: { kind: 'youtube', videoId: 'ID_DO_VIDEO' },
-  links: [{ label: 'Spotify', url: 'https://open.spotify.com/track/…' }] }
-
-// 3. Link externo — a interface deixa claro que a faixa abre fora do app
-{ id: 'c', title: '…', artist: '…', category: 'Para ouvir devagar',
-  source: { kind: 'external', url: 'https://open.spotify.com/track/…' } }
+export const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/…';
 ```
 
-As categorias exibidas como filtros ficam em `categories`, no mesmo arquivo.
-Também é possível adicionar faixas pela própria página (“Adicionar uma
-faixa”); essas ficam salvas só no navegador em que foram adicionadas.
+Enquanto esse valor estiver vazio, a aba mostra um campo para colar o link
+(salvo só no navegador em que foi colado).
 
-> **Demonstração.** As duas faixas incluídas (`public/audio/demo-*.mp3`) são
-> peças curtas geradas por `scripts/generate-demo-audio.py` apenas para que o
-> reprodutor possa ser testado. Elas aparecem com a etiqueta “demonstração”.
-> Remova-as de `tracks.ts` (e os arquivos de `public/audio/`) ao incluir as
-> músicas de vocês.
-
-Observações honestas sobre limites:
-
-- Vídeos do YouTube cujo autor bloqueia a reprodução incorporada mostram uma
-  mensagem e o link para abrir no YouTube.
-- O vídeo do YouTube aparece num pequeno quadro no canto (pode ser recolhido sem
-  parar a música), como exigem os termos do YouTube.
-- No iPhone/iPad, o volume de arquivos de áudio só pode ser controlado pelos
-  botões do aparelho; o app indica isso no lugar do controle deslizante.
+Sem estar conectada ao Spotify no navegador, a pessoa ouve prévias de 30
+segundos; com a conta conectada, as músicas tocam inteiras. A música para ao
+sair da aba Músicas.
 
 ## Desenvolvimento
 
@@ -102,7 +82,7 @@ src/
   context/      preferências, progresso e reprodutor (estado global)
   data/         textos originais e catálogo de músicas
   features/     cada experiência: dados/lógica (.ts) + interface (.tsx) + estilo (.css)
-  lib/          persistência local, sons sintetizados, YouTube, utilidades
+  lib/          persistência local, sons sintetizados, utilidades
   pages/        início, sumário, carta, fragmentos, ajustes
   styles/       tokens de cor e tipografia, base e layout
 ```
@@ -117,7 +97,7 @@ do simulador é alcançável e todos os 7 desfechos podem ser atingidos).
 - **Roteamento por hash** (`/#/carta`): funciona em qualquer hospedagem
   estática sem configuração de servidor.
 - **Fontes locais** (`@fontsource`): nada é carregado de serviços de terceiros
-  até que se toque uma faixa do YouTube.
+  fora da aba Músicas (Spotify).
 - **Sons sintetizados** com a Web Audio API: desativados por padrão; nenhum
   arquivo de efeito sonoro.
 - **Movimento**: respeita `prefers-reduced-motion` (modo “Automática”) e pode

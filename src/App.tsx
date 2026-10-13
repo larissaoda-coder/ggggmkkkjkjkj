@@ -2,7 +2,6 @@ import { lazy } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { SettingsProvider } from './context/SettingsContext';
 import { ProgressProvider } from './context/ProgressContext';
-import { PlayerProvider } from './context/PlayerContext';
 import { Layout } from './app/Layout';
 import Home from './pages/Home';
 import IndexPage from './pages/IndexPage';
@@ -26,29 +25,27 @@ export default function App() {
     <SettingsProvider>
       <ProgressProvider>
         <HashRouter>
-          <PlayerProvider>
-            <Layout>
-              {(location) => (
-                <Routes location={location}>
-                  <Route path="/" element={<Home />} />
-                  <Route path="/sumario" element={<IndexPage />} />
-                  <Route path="/carta" element={<LetterPage />} />
-                  <Route path="/fragmentos" element={<FragmentsPage />} />
-                  <Route path="/fragmentos/:n" element={<FragmentDetailPage />} />
-                  <Route path="/escolhas" element={<SimulatorPage />} />
-                  <Route path="/musicas" element={<MusicPage />} />
-                  <Route path="/labirinto" element={<LabyrinthPage />} />
-                  <Route path="/mesa" element={<TablePage />} />
-                  <Route path="/noite" element={<NightPage />} />
-                  <Route path="/caminho" element={<PathsPage />} />
-                  <Route path="/intervalo" element={<IntervalPage />} />
-                  <Route path="/ajustes" element={<SettingsPage />} />
-                  <Route path="/observatorio" element={<ObservatoryPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Routes>
-              )}
-            </Layout>
-          </PlayerProvider>
+          <Layout>
+            {(location) => (
+              <Routes location={location}>
+                <Route path="/" element={<Home />} />
+                <Route path="/sumario" element={<IndexPage />} />
+                <Route path="/carta" element={<LetterPage />} />
+                <Route path="/fragmentos" element={<FragmentsPage />} />
+                <Route path="/fragmentos/:n" element={<FragmentDetailPage />} />
+                <Route path="/escolhas" element={<SimulatorPage />} />
+                <Route path="/musicas" element={<MusicPage />} />
+                <Route path="/labirinto" element={<LabyrinthPage />} />
+                <Route path="/mesa" element={<TablePage />} />
+                <Route path="/noite" element={<NightPage />} />
+                <Route path="/caminho" element={<PathsPage />} />
+                <Route path="/intervalo" element={<IntervalPage />} />
+                <Route path="/ajustes" element={<SettingsPage />} />
+                <Route path="/observatorio" element={<ObservatoryPage />} />
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            )}
+          </Layout>
         </HashRouter>
       </ProgressProvider>
     </SettingsProvider>

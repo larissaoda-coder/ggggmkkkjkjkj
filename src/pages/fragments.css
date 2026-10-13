@@ -1,0 +1,186 @@
+.fragment-grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+.fragment-grid > li {
+  display: flex;
+}
+.fragment-card {
+  position: relative;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+  min-height: 15rem;
+  padding: 1.4rem 1.4rem 1.2rem;
+  background: var(--bg);
+  text-decoration: none;
+  transition: background-color var(--d-med) var(--ease);
+}
+.fragment-card::after {
+  content: '';
+  position: absolute;
+  left: 1.4rem;
+  right: 1.4rem;
+  bottom: 0;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--d-slow) var(--ease-out);
+}
+.fragment-card:hover,
+.fragment-card:focus-visible {
+  background: var(--bg-elev);
+}
+.fragment-card:hover::after,
+.fragment-card:focus-visible::after {
+  transform: scaleX(1);
+}
+.fragment-card:focus-visible {
+  outline-offset: -4px;
+}
+.fragment-card__top {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: var(--muted);
+  transition: color var(--d-med) var(--ease);
+}
+.fragment-card:hover .fragment-card__top {
+  color: var(--ink);
+}
+.fragment-card__num {
+  font-family: var(--serif);
+  font-size: 2.6rem;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--ink);
+}
+.fragment-card__title {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.3;
+  flex: 1;
+}
+.fragment-card__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.6875rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.fragment-card__foot svg {
+  transition: transform var(--d-med) var(--ease-out);
+}
+.fragment-card:hover .fragment-card__foot svg {
+  transform: translateX(4px);
+}
+.fragment-card[data-read='true'] .fragment-card__num {
+  color: var(--muted);
+}
+.fragment-card[data-last='true']::before {
+  content: '';
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  transform: translate(0.6rem, -0.6rem);
+}
+
+/* Fragmento aberto */
+.fragment-detail {
+  overflow-x: clip;
+}
+.fragment-detail__bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: clamp(2rem, 6vw, 4rem);
+}
+.fragment-detail__article {
+  min-height: 40vh;
+}
+.fragment-detail__mark {
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+}
+.fragment-detail__num {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+}
+.fragment-detail__title {
+  font-family: var(--serif);
+  font-weight: 350;
+  font-size: clamp(1.75rem, 5vw, 2.6rem);
+  line-height: 1.12;
+  letter-spacing: -0.01em;
+  margin-bottom: 2rem;
+  outline: none;
+}
+.fragment-detail__text {
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  line-height: 1.78;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  text-wrap: pretty;
+}
+.fragment-detail__nav {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1px;
+  margin-top: 3.5rem;
+  border-top: 1px solid var(--line);
+}
+.fragment-nav {
+  display: grid;
+  gap: 0.35rem;
+  padding: 1.25rem 0;
+  text-decoration: none;
+  align-content: start;
+}
+.fragment-nav .meta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.fragment-nav--next {
+  text-align: right;
+  justify-items: end;
+}
+.fragment-nav__title {
+  font-family: var(--serif);
+  font-size: 0.98rem;
+  line-height: 1.35;
+  color: var(--ink-2);
+  transition: color var(--d-fast) var(--ease);
+}
+.fragment-nav:hover .fragment-nav__title {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.25em;
+}
+.fragment-detail__hint {
+  text-align: center;
+  margin-top: 1rem;
+}
+@media (max-width: 520px) {
+  .fragment-nav__title {
+    font-size: 0.875rem;
+  }
+}

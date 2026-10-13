@@ -1,0 +1,310 @@
+/* ------------------------------------------------------------------
+   Carta fechada
+------------------------------------------------------------------- */
+.letter-closed {
+  min-height: calc(100dvh - var(--bottom-nav-h) - 2rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.25rem;
+  padding: 3rem var(--gutter);
+  text-align: center;
+}
+.app[data-nav='lateral'] .letter-closed,
+.app[data-nav='superior'] .letter-closed {
+  min-height: 88dvh;
+}
+.letter-closed__stage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.75rem;
+}
+.letter-closed__to {
+  display: grid;
+  gap: 0.2rem;
+}
+.letter-closed__name {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.6rem;
+}
+.letter-closed__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  min-height: 7rem;
+}
+.letter-closed__meta {
+  margin-top: -0.5rem;
+}
+
+/* Envelope desenhado só com bordas finas */
+.envelope {
+  --w: min(19rem, 72vw);
+  --h: calc(var(--w) * 0.62);
+  --dur: calc(1s * var(--motion-scale));
+  position: relative;
+  width: var(--w);
+  height: var(--h);
+  perspective: 900px;
+  transition:
+    transform calc(var(--dur) * 0.6) var(--ease) calc(var(--dur) * 1.25),
+    opacity calc(var(--dur) * 0.6) var(--ease) calc(var(--dur) * 1.25);
+}
+.envelope__back,
+.envelope__front {
+  position: absolute;
+  inset: 0;
+  border: 1px solid var(--ink);
+  background: var(--paper);
+}
+.envelope__back {
+  z-index: 0;
+}
+.envelope__front {
+  z-index: 2;
+  clip-path: polygon(0 0, 50% 52%, 100% 0, 100% 100%, 0 100%);
+}
+.envelope__front svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  fill: none;
+  stroke: var(--line-strong);
+  stroke-width: 1;
+}
+.envelope__flap {
+  position: absolute;
+  z-index: 3;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 62%;
+  transform-origin: top center;
+  transition: transform calc(var(--dur) * 0.6) var(--ease);
+}
+.envelope__flap::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--paper);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+.envelope__flap::after {
+  /* As duas linhas da aba */
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(to bottom left, transparent calc(50% - 0.6px), var(--ink) 50%, transparent calc(50% + 0.6px)) left
+      top / 50% 100% no-repeat,
+    linear-gradient(to bottom right, transparent calc(50% - 0.6px), var(--ink) 50%, transparent calc(50% + 0.6px)) right
+      top / 50% 100% no-repeat;
+}
+.envelope__seal {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 62%;
+  width: 2.4rem;
+  height: 2.4rem;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1px solid var(--ink);
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.1rem;
+  transition:
+    opacity calc(var(--dur) * 0.25) var(--ease),
+    transform calc(var(--dur) * 0.3) var(--ease);
+}
+.envelope__paper {
+  position: absolute;
+  z-index: 1;
+  left: 6%;
+  right: 6%;
+  top: 6%;
+  height: 88%;
+  background: var(--paper);
+  border: 1px solid var(--line-strong);
+  padding: 14% 10%;
+  display: flex;
+  flex-direction: column;
+  gap: 9%;
+  transition: transform calc(var(--dur) * 0.7) var(--ease-out) calc(var(--dur) * 0.55);
+}
+.envelope__paper-line {
+  display: block;
+  height: 1px;
+  background: var(--line-strong);
+}
+.envelope__paper-line--short {
+  width: 60%;
+}
+
+.envelope--opening .envelope__seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0.8);
+}
+.envelope--opening .envelope__flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+  transition:
+    transform calc(var(--dur) * 0.6) var(--ease),
+    z-index 0s linear calc(var(--dur) * 0.3);
+}
+.envelope--opening .envelope__paper {
+  transform: translateY(-62%);
+}
+.envelope--opening {
+  transform: translateY(-1rem) scale(1.04);
+  opacity: 0;
+}
+
+/* ------------------------------------------------------------------
+   Carta aberta
+------------------------------------------------------------------- */
+.letter-open {
+  position: relative;
+  padding-bottom: 4rem;
+}
+
+.letter-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  height: 2px;
+  pointer-events: none;
+}
+.app[data-nav='lateral'] .letter-progress {
+  left: var(--nav-side-w);
+}
+.app[data-nav='lateral'][data-compact='true'] .letter-progress {
+  left: var(--nav-side-w-compact);
+}
+.letter-progress span {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: left;
+  transition: transform 0.15s linear;
+}
+
+.letter-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  align-items: center;
+  gap: 0.15rem;
+  max-width: calc(var(--measure) + 6rem);
+  margin: 0 auto;
+  padding: 0.5rem var(--gutter);
+  background: color-mix(in srgb, var(--bg) 90%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.app[data-nav='superior'] .letter-toolbar {
+  top: 3.55rem;
+}
+.letter-toolbar__status {
+  font-size: 0.75rem;
+  color: var(--ink);
+  padding-left: 0.35rem;
+}
+.letter-toolbar__remaining {
+  color: var(--muted);
+}
+.letter-toolbar__spacer {
+  flex: 1;
+}
+.letter-toolbar__a {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1;
+}
+.letter-toolbar__a--small {
+  font-size: 0.8rem;
+}
+
+.letter-paper {
+  --letter-scale: 1;
+  max-width: calc(var(--measure) * min(1.15, var(--letter-scale)));
+  margin: clamp(1.5rem, 5vw, 3.5rem) auto 0;
+  padding: 0 var(--gutter);
+}
+.letter-paper__to {
+  margin-bottom: 2.5rem;
+}
+.letter-paper__body {
+  font-family: var(--serif);
+  font-size: calc(1.12rem * var(--letter-scale));
+  line-height: 1.78;
+  color: var(--ink);
+  font-optical-sizing: auto;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+  text-wrap: pretty;
+}
+.letter-paper__body p + p {
+  margin-top: 1.35em;
+}
+.letter-paper__body p:first-child::first-letter {
+  float: left;
+  font-size: 3.6em;
+  line-height: 0.82;
+  padding: 0.08em 0.1em 0 0;
+  font-weight: 300;
+}
+.letter-paper__body p:last-child {
+  font-style: italic;
+}
+
+.letter-end {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.1rem;
+  padding: 4rem 0 2rem;
+}
+.letter-end__rule {
+  display: block;
+  width: 5rem;
+  height: 1px;
+  background: var(--ink);
+  transform: scaleX(0);
+  transition: transform calc(1.4s * var(--motion-scale)) var(--ease-out);
+}
+.letter-end__dot {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--ink);
+  opacity: 0;
+  transition: opacity calc(1s * var(--motion-scale)) var(--ease) calc(0.9s * var(--motion-scale));
+}
+.letter-end--visible .letter-end__rule {
+  transform: scaleX(1);
+}
+.letter-end--visible .letter-end__dot {
+  opacity: 1;
+}
+
+.letter-after {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 1.75rem;
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: 0 var(--gutter) 2rem;
+}

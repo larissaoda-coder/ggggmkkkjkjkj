@@ -1,0 +1,213 @@
+/* O observatório é sempre noturno, independentemente do tema escolhido. */
+.observatory {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--black);
+  color: var(--ivory);
+  overflow: hidden;
+  display: grid;
+}
+.observatory__sky {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.observatory__rotate {
+  animation: obs-rotate 240s linear infinite;
+}
+.obs-dust {
+  fill: var(--ivory);
+  opacity: 0.35;
+  animation: obs-twinkle 5s ease-in-out infinite alternate;
+}
+.obs-shooting {
+  stroke: var(--ivory);
+  stroke-width: 1;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+  stroke-dasharray: 60 600;
+  stroke-dashoffset: 660;
+  opacity: 0.8;
+  animation: obs-shoot 11s ease-in 3s infinite;
+}
+.obs-line {
+  stroke: var(--ivory);
+  stroke-width: 1;
+  opacity: 0.7;
+  vector-effect: non-scaling-stroke;
+}
+.obs-star {
+  cursor: pointer;
+  outline: none;
+}
+.obs-hit {
+  fill: transparent;
+}
+.obs-dot {
+  fill: var(--ivory);
+  transition: r var(--d-med) var(--ease);
+}
+.obs-star[data-named='false'] .obs-dot {
+  opacity: 0.75;
+}
+.obs-star:hover .obs-dot,
+.obs-star:focus-visible .obs-dot {
+  r: 4.5;
+}
+.obs-star[data-pending='true'] .obs-dot {
+  r: 5;
+}
+.obs-star[data-pending='true'] .obs-hit {
+  stroke: var(--ivory);
+  stroke-width: 0.8;
+  stroke-dasharray: 2 3;
+  vector-effect: non-scaling-stroke;
+}
+.obs-star:focus-visible .obs-hit {
+  stroke: var(--ivory);
+  stroke-width: 0.8;
+  vector-effect: non-scaling-stroke;
+}
+.obs-label {
+  font-family: var(--sans);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  fill: var(--ivory);
+  opacity: 0.75;
+  pointer-events: none;
+}
+
+.observatory__panel {
+  position: relative;
+  z-index: 2;
+  align-self: end;
+  display: grid;
+  gap: 0.9rem;
+  padding: 1.5rem var(--gutter) calc(1.5rem + var(--safe-bottom));
+  background: linear-gradient(to top, rgba(17, 17, 17, 0.92) 55%, rgba(17, 17, 17, 0));
+  pointer-events: none;
+}
+.observatory__panel > * {
+  pointer-events: auto;
+}
+.observatory__back {
+  position: fixed;
+  top: max(1rem, env(safe-area-inset-top));
+  left: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 1px solid rgba(245, 243, 238, 0.25);
+  border-radius: 999px;
+  color: var(--ivory);
+  text-decoration: none;
+  font-size: 0.8125rem;
+  background: rgba(17, 17, 17, 0.6);
+}
+.app[data-nav='lateral'] .observatory__back {
+  left: calc(var(--nav-side-w) + 1rem);
+}
+.app[data-nav='lateral'][data-compact='true'] .observatory__back {
+  left: calc(var(--nav-side-w-compact) + 1rem);
+}
+.observatory__back:focus-visible,
+.observatory__btn:focus-visible,
+.observatory__input:focus-visible {
+  outline-color: var(--ivory);
+}
+.obs-eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gray);
+}
+.observatory__title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+}
+.observatory__lede {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--light);
+  max-width: 32rem;
+}
+.observatory__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.observatory__input {
+  min-height: 2.5rem;
+  min-width: min(18rem, 100%);
+  padding: 0 0.8rem;
+  border: 1px solid rgba(245, 243, 238, 0.25);
+  border-radius: var(--radius);
+  background: rgba(245, 243, 238, 0.05);
+  color: var(--ivory);
+}
+.observatory__input::placeholder {
+  color: var(--gray);
+}
+.observatory__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0 0.9rem;
+  border: 1px solid rgba(245, 243, 238, 0.25);
+  border-radius: var(--radius);
+  color: var(--ivory);
+  font-size: 0.8125rem;
+}
+.observatory__btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.observatory__btn:not(:disabled):hover {
+  border-color: var(--ivory);
+}
+.observatory__meta {
+  font-size: 0.75rem;
+  color: var(--gray);
+}
+.observatory ::selection {
+  background: var(--ivory);
+  color: var(--black);
+}
+
+@keyframes obs-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes obs-twinkle {
+  from {
+    opacity: 0.12;
+  }
+  to {
+    opacity: 0.6;
+  }
+}
+@keyframes obs-shoot {
+  0% {
+    stroke-dashoffset: 660;
+    opacity: 0;
+  }
+  3% {
+    opacity: 0.9;
+  }
+  12% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}

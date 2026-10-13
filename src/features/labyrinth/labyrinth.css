@@ -1,0 +1,307 @@
+.lab {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+  gap: clamp(1rem, 3vw, 2.5rem);
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .lab {
+    grid-template-columns: 1fr;
+  }
+}
+.lab-confirm {
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
+  max-width: 30rem;
+}
+.lab-confirm .row-actions {
+  margin-top: 0.75rem;
+}
+.lab__map {
+  position: relative;
+  padding: 0.5rem;
+  background: var(--bg-elev);
+  overflow: hidden;
+}
+.lab__svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1;
+  touch-action: manipulation;
+}
+.lab__dust circle {
+  fill: var(--ink);
+  opacity: 0.12;
+}
+.labyrinth[data-lit='true'] .lab__dust circle {
+  opacity: 0.32;
+  transition: opacity 2s var(--ease);
+}
+
+.lab__edge {
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  fill: none;
+}
+.lab__edge--walked {
+  stroke-width: 1.6;
+}
+.lab__edge--open {
+  stroke-dasharray: 5 7;
+  opacity: 0.55;
+  animation:
+    lab-dash 2.4s linear infinite,
+    lab-fade var(--d-slow) var(--ease);
+}
+@keyframes lab-fade {
+  from {
+    opacity: 0;
+  }
+}
+.lab__edge--closed {
+  stroke-dasharray: 1.5 6;
+  stroke-linecap: round;
+  stroke-width: 1.8;
+  opacity: 0.45;
+  animation: lab-fade var(--d-slow) var(--ease);
+}
+@keyframes lab-dash {
+  to {
+    stroke-dashoffset: -24;
+  }
+}
+.lab__trail {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 6;
+  opacity: 0.06;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.labyrinth[data-lit='true'] .lab__edge--walked {
+  filter: drop-shadow(0 0 3px var(--glow));
+}
+
+.lab__node {
+  cursor: default;
+  outline: none;
+}
+.lab__node[data-reachable='true'],
+.lab__node[data-visited='true']:not([data-current='true']) {
+  cursor: pointer;
+}
+.lab__hit {
+  fill: transparent;
+}
+.lab__dot {
+  fill: var(--bg-elev);
+  stroke: var(--ink);
+  stroke-width: 1.4;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill var(--d-med) var(--ease),
+    r var(--d-med) var(--ease);
+}
+.lab__node[data-visited='true'] .lab__dot {
+  fill: var(--ink);
+}
+.lab__node[data-closed='true'] .lab__dot {
+  stroke-dasharray: 2 3;
+  opacity: 0.5;
+}
+.lab__x {
+  stroke: var(--ink);
+  stroke-width: 1.2;
+  opacity: 0.6;
+  vector-effect: non-scaling-stroke;
+}
+.lab__halo {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  opacity: 0.35;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lab-halo 2.6s var(--ease) infinite;
+}
+@keyframes lab-halo {
+  0% {
+    transform: scale(0.7);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1.6);
+    opacity: 0;
+  }
+}
+.lab__ripple {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: lab-ripple 1.6s var(--ease-out) 2 forwards;
+}
+@keyframes lab-ripple {
+  from {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  to {
+    transform: scale(5);
+    opacity: 0;
+  }
+}
+.lab__label {
+  font-family: var(--sans);
+  font-size: 26px;
+  fill: var(--muted);
+  pointer-events: none;
+  transition: fill var(--d-med) var(--ease);
+}
+.lab__node[data-visited='true'] .lab__label,
+.lab__node[data-reachable='true'] .lab__label {
+  fill: var(--ink);
+}
+.lab__node[data-current='true'] .lab__label {
+  font-weight: 600;
+}
+.lab__node:focus-visible .lab__dot {
+  stroke-width: 3;
+}
+.lab__node:focus-visible .lab__hit {
+  stroke: var(--ink);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.lab__node:hover .lab__label {
+  fill: var(--ink);
+}
+.lab__me {
+  fill: none;
+  stroke: var(--ink);
+  stroke-width: 1.2;
+  vector-effect: non-scaling-stroke;
+  pointer-events: none;
+}
+
+.lab__legend {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.25rem 0.5rem 0.5rem;
+}
+.lab__legend span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.lg {
+  display: inline-block;
+  width: 1.4rem;
+  height: 0;
+  border-top: 1.5px solid var(--ink);
+}
+.lg--open {
+  border-top-style: dashed;
+  opacity: 0.6;
+}
+.lg--closed {
+  border-top-style: dotted;
+  opacity: 0.5;
+}
+
+.lab__panel {
+  position: sticky;
+  top: 1.5rem;
+  display: grid;
+  gap: 1.25rem;
+}
+.app[data-nav='superior'] .lab__panel {
+  top: 5rem;
+}
+.lab__place {
+  font-family: var(--serif);
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  margin: 0.25rem 0 0.75rem;
+}
+.lab__text {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+.lab__options {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.lab__option {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.2rem 0.75rem;
+  align-items: center;
+  text-align: left;
+  padding: 0.85rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--d-fast) var(--ease),
+    background-color var(--d-fast) var(--ease),
+    transform var(--d-med) var(--ease-out);
+}
+.lab__option:not(:disabled):hover {
+  border-color: var(--ink);
+  background: var(--hover);
+  transform: translateX(3px);
+}
+.lab__option:disabled {
+  cursor: not-allowed;
+  border-style: dashed;
+  color: var(--muted);
+}
+.lab__locked {
+  grid-column: 1 / -1;
+  font-size: 0.75rem;
+  font-style: italic;
+}
+.lab__result {
+  margin-top: 1.25rem;
+  padding-left: 1rem;
+  border-left: 1px solid var(--ink);
+  display: grid;
+  gap: 0.4rem;
+}
+.lab__result-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+.lab__result-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.lab__untaken {
+  font-style: italic;
+}
+.lab__next {
+  display: grid;
+  gap: 0.5rem;
+  margin-top: 1.25rem;
+}
+.lab__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.chip--quiet {
+  border-color: var(--line);
+}
+.lab__stats {
+  padding-top: 1rem;
+  border-top: 1px solid var(--line);
+}

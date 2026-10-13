@@ -24,8 +24,8 @@
   --light: #eaeaea;
   --ivory: #f5f3ee;
 
-  --serif: 'Newsreader Variable', 'Iowan Old Style', Georgia, serif;
-  --sans: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Newsreader Variable', 'Newsreader', 'Iowan Old Style', Georgia, serif;
+  --sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   --motion-scale: 1;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -88,12 +88,12 @@
 }
 
 :root[data-fonts='classica'] {
-  --serif: 'EB Garamond Variable', Garamond, Georgia, serif;
-  --sans: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'EB Garamond Variable', 'EB Garamond', Garamond, Georgia, serif;
+  --sans: 'Manrope Variable', 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 :root[data-fonts='moderna'] {
-  --serif: 'Literata Variable', Georgia, serif;
-  --sans: 'IBM Plex Sans Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --serif: 'Literata Variable', 'Literata', Georgia, serif;
+  --sans: 'IBM Plex Sans Variable', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 /* ------------------------------------------------------------------

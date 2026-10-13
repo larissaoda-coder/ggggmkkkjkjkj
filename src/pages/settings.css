@@ -72,23 +72,23 @@
 .font-option__sample {
   font-size: 2.1rem;
   line-height: 1.1;
-  font-family: 'Newsreader Variable', serif;
+  font-family: 'Newsreader Variable', 'Newsreader', serif;
 }
 .font-option[data-fonts-preview='classica'] .font-option__sample {
-  font-family: 'EB Garamond Variable', serif;
+  font-family: 'EB Garamond Variable', 'EB Garamond', serif;
 }
 .font-option[data-fonts-preview='moderna'] .font-option__sample {
-  font-family: 'Literata Variable', serif;
+  font-family: 'Literata Variable', 'Literata', serif;
 }
 .font-option__name {
   font-size: 0.85rem;
-  font-family: 'Inter Variable', sans-serif;
+  font-family: 'Inter Variable', 'Inter', sans-serif;
 }
 .font-option[data-fonts-preview='classica'] .font-option__name {
-  font-family: 'Manrope Variable', sans-serif;
+  font-family: 'Manrope Variable', 'Manrope', sans-serif;
 }
 .font-option[data-fonts-preview='moderna'] .font-option__name {
-  font-family: 'IBM Plex Sans Variable', sans-serif;
+  font-family: 'IBM Plex Sans Variable', 'IBM Plex Sans', sans-serif;
 }
 .font-option__desc {
   font-size: 0.7rem;

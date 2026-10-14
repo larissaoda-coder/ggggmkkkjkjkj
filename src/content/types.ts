@@ -108,6 +108,4 @@ export interface Content {
   puzzle: { photoId: string; size: 3 | 4; message: string };
   garden: { messages: string[] };
   secret: { requires: string[] };
-  /** Ajustes de texto do simulador: falas e escolhas, por cena. */
-  story: { lines: Record<string, string[]>; choices: Record<string, string[]> };
 }

@@ -18,7 +18,6 @@ const AtlasPage = lazy(() => import('./features/atlas/AtlasPage'));
 const RadioPage = lazy(() => import('./features/radio/RadioPage'));
 const OraclePage = lazy(() => import('./features/oracle/OraclePage'));
 const EnvelopesPage = lazy(() => import('./features/envelopes/EnvelopesPage'));
-const SimulatorPage = lazy(() => import('./features/simulator/SimulatorPage'));
 const PuzzlePage = lazy(() => import('./features/puzzle/PuzzlePage'));
 const MuseumPage = lazy(() => import('./features/museum/MuseumPage'));
 const DictionaryPage = lazy(() => import('./features/dictionary/DictionaryPage'));
@@ -50,7 +49,6 @@ export default function App() {
                       <Route path="/radio" element={<RadioPage />} />
                       <Route path="/oraculo" element={<OraclePage />} />
                       <Route path="/cartas" element={<EnvelopesPage />} />
-                      <Route path="/historia" element={<SimulatorPage />} />
                       <Route path="/quebra-cabeca" element={<PuzzlePage />} />
                       <Route path="/museu" element={<MuseumPage />} />
                       <Route path="/dicionario" element={<DictionaryPage />} />

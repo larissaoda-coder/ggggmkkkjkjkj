@@ -98,14 +98,6 @@ export const sections: Section[] = [
     milestoneLabel: 'Revelar a leitura',
   },
   {
-    id: 'historia',
-    path: '/historia',
-    title: 'Uma história em aberto',
-    description: 'Imagine algumas situações e escolha como gostaria de continuar.',
-    group: 'explorar',
-    milestoneLabel: 'Chegar a um final da história',
-  },
-  {
     id: 'futuro',
     path: '/futuro',
     title: 'Em outra fase da vida',

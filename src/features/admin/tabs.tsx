@@ -8,7 +8,6 @@ import { MediaImg } from '../../components/MediaImg';
 import { fragments } from '../../data/fragments';
 import { spotifyEmbedUrl } from '../../data/spotify';
 import { sections } from '../../app/sections';
-import { scenes as storyScenes, chapters, speakerNames } from '../simulator/story';
 import { Check, Choice, Items, PhotoPicker, RemoveButton, Section, Text, uid } from './fields';
 
 export interface TabProps {
@@ -749,81 +748,6 @@ export function FutureTab({ draft, patch }: TabProps) {
           </>
         )}
       />
-    </Section>
-  );
-}
-
-/* ---------------- História (simulador) ---------------- */
-export function StoryTab({ draft, patch }: TabProps) {
-  const ids = useMemo(() => Object.keys(storyScenes), []);
-  const [sceneId, setSceneId] = useState(ids[0]);
-  const scene = storyScenes[sceneId];
-  const lines = draft.story.lines[sceneId] ?? [];
-  const choices = draft.story.choices[sceneId] ?? [];
-  const setLine = (i: number, v: string) =>
-    patch((d) => {
-      const arr = [...(d.story.lines[sceneId] ?? [])];
-      arr[i] = v;
-      return { ...d, story: { ...d.story, lines: { ...d.story.lines, [sceneId]: arr } } };
-    });
-  const setChoice = (i: number, v: string) =>
-    patch((d) => {
-      const arr = [...(d.story.choices[sceneId] ?? [])];
-      arr[i] = v;
-      return { ...d, story: { ...d.story, choices: { ...d.story.choices, [sceneId]: arr } } };
-    });
-  const edited = Object.keys(draft.story.lines).length + Object.keys(draft.story.choices).length;
-
-  return (
-    <Section
-      title="Uma história em aberto"
-      note="Escolha uma cena e reescreva as falas ou as opções. Campo vazio mantém o texto original, que aparece em cinza. As ligações entre cenas não mudam."
-    >
-      <Choice
-        label="Cena"
-        value={sceneId}
-        options={ids.map((id) => ({
-          value: id,
-          label: `${chapters[storyScenes[id].chapter - 1] ?? ''} · ${id}${draft.story.lines[id]?.some(Boolean) || draft.story.choices[id]?.some(Boolean) ? ' (editada)' : ''}`,
-        }))}
-        onChange={setSceneId}
-      />
-      <ol className="a-lines">
-        {scene.lines.map((l, i) => (
-          <li key={i}>
-            <Text
-              label={speakerNames[l.who] ?? l.who}
-              value={lines[i] ?? ''}
-              placeholder={l.text}
-              onChange={(v) => setLine(i, v)}
-              rows={2}
-            />
-          </li>
-        ))}
-      </ol>
-      {(scene.choices ?? []).length > 0 && (
-        <>
-          <h3 className="as__sub">Opções</h3>
-          <ol className="a-lines">
-            {(scene.choices ?? []).map((c, i) => (
-              <li key={c.id}>
-                <Text
-                  label={`Opção ${i + 1}`}
-                  value={choices[i] ?? ''}
-                  placeholder={c.label}
-                  onChange={(v) => setChoice(i, v)}
-                />
-              </li>
-            ))}
-          </ol>
-        </>
-      )}
-      {edited > 0 && (
-        <RemoveButton
-          label="Desfazer todas as edições da história"
-          onConfirm={() => patch((d) => ({ ...d, story: { lines: {}, choices: {} } }))}
-        />
-      )}
     </Section>
   );
 }

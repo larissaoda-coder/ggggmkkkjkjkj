@@ -432,6 +432,4 @@ export const defaultContent: Content = {
   },
 
   secret: { requires: ['livro', 'atlas', 'oraculo', 'cartas'] },
-
-  story: { lines: {}, choices: {} },
 };

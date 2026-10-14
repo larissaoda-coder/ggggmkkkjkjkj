@@ -27,7 +27,6 @@ edição; um teste confere isso.
 | `/radio`         | Faixas selecionadas         | Player de áudio real, fila, Spotify, links e o modo rádio "Frequência Annelise".                |
 | `/mapa`          | Pontos de referência        | Pontos que abrem fotografia, fragmento, música, pergunta, carta curta e um segredo.             |
 | `/oraculo`       | Uma leitura simbólica       | Baralho próprio, embaralhamento real, três cartas escolhidas, leitura e carta escondida.        |
-| `/historia`      | Uma história em aberto      | Narrativa de escolhas com consequências e vários desfechos.                                     |
 | `/futuro`        | Em outra fase da vida       | Sete cenas imaginadas em formato de conversa.                                                   |
 | `/intervalo`     | Um intervalo                | Lago interativo com ondulações, pétalas e detalhes para perceber; som e movimento controláveis. |
 | `/antes-de-sair` | Antes de sair               | Página final, liberada depois de algumas áreas vistas.                                          |
@@ -75,7 +74,7 @@ Limites conhecidos:
 ```bash
 npm install
 npm run dev     # servidor local
-npm test        # textos originais, paginação do livro, história e conteúdo padrão
+npm test        # textos originais, paginação do livro e conteúdo padrão
 npm run build   # gera dist/
 ```
 

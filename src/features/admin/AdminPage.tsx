@@ -18,7 +18,6 @@ import {
   PhotosTab,
   PuzzleTab,
   SecretTab,
-  StoryTab,
   type TabProps,
 } from './tabs';
 import './admin.css';
@@ -33,7 +32,6 @@ const tabs: { id: string; label: string; Comp: ComponentType<TabProps> }[] = [
   { id: 'dicionario', label: 'Dicionário', Comp: DictionaryTab },
   { id: 'museu', label: 'Museu', Comp: MuseumTab },
   { id: 'futuro', label: 'Outra fase', Comp: FutureTab },
-  { id: 'historia', label: 'História', Comp: StoryTab },
   { id: 'quebra-cabeca', label: 'Quebra-cabeça', Comp: PuzzleTab },
   { id: 'jardim', label: 'Intervalo', Comp: GardenTab },
   { id: 'final', label: 'Página final', Comp: SecretTab },

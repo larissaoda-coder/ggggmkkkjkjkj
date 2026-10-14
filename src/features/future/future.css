@@ -1,0 +1,213 @@
+/* Em outra fase da vida: uma conversa entre o agora e uma fase imaginada. */
+.future__head {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 36rem;
+  margin-bottom: clamp(1.75rem, 5vw, 3rem);
+}
+.future__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+}
+.future__desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.future__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 15rem) minmax(0, 1fr);
+  gap: clamp(1.25rem, 4vw, 3rem);
+  align-items: start;
+}
+.future__scenes ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  border-top: 1px solid var(--line);
+}
+.future__scenes button {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.9rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--muted);
+  transition: color var(--d-fast) var(--ease);
+}
+.future__scenes button:hover {
+  color: var(--ink);
+}
+.future__scenes button .num {
+  font-family: var(--sans);
+  font-size: 0.6875rem;
+  color: var(--faint);
+}
+.future__scenes button[aria-current='true'] {
+  color: var(--ink);
+  font-style: italic;
+}
+.future__scenes button[aria-current='true'] .num {
+  color: var(--gold-ink);
+}
+
+.chat {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: min(34rem, 70dvh);
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+.chat__head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1.1rem;
+  border-bottom: 1px solid var(--line);
+}
+.chat__dot {
+  width: 2.1rem;
+  height: 2.1rem;
+  border-radius: 50%;
+  border: 1px solid var(--line-strong);
+  background: radial-gradient(circle at 50% 50%, var(--gold) 0 2px, transparent 3px), var(--bg-sunk);
+  flex-shrink: 0;
+}
+.chat__title {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+}
+.chat__sub {
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  color: var(--faint);
+}
+.chat__log {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 1.25rem clamp(0.9rem, 3vw, 1.5rem);
+  overflow-y: auto;
+  max-height: 60dvh;
+}
+.msg {
+  display: grid;
+  gap: 0.25rem;
+  max-width: min(82%, 30rem);
+}
+.msg[data-who='hoje'] {
+  align-self: flex-end;
+  justify-items: end;
+}
+.msg[data-who='adiante'] {
+  align-self: flex-start;
+}
+.msg__who {
+  margin-top: 0.75rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.msg__bubble {
+  padding: 0.6rem 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  border-radius: 14px;
+}
+.msg[data-who='hoje'] .msg__bubble {
+  background: var(--accent);
+  color: var(--on-accent);
+  border-bottom-right-radius: 4px;
+}
+.msg[data-who='adiante'] .msg__bubble {
+  background: var(--bg-sunk);
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-bottom-left-radius: 4px;
+  font-family: var(--serif);
+  font-size: 1.02rem;
+}
+.msg--typing .msg__bubble {
+  display: inline-flex;
+  gap: 4px;
+  padding: 0.85rem 0.9rem;
+}
+.msg--typing span {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--faint);
+  animation: typing 1.2s ease-in-out infinite;
+}
+.msg--typing span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.msg--typing span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-2px);
+  }
+}
+.chat__foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-top: 1px solid var(--line);
+  min-height: 3.75rem;
+}
+.future__note {
+  margin-top: clamp(1.5rem, 4vw, 2.5rem);
+  max-width: 34rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .future__layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .future__scenes ol {
+    display: flex;
+    gap: 0.4rem;
+    overflow-x: auto;
+    border-top: 0;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+  }
+  .future__scenes li {
+    flex-shrink: 0;
+  }
+  .future__scenes button {
+    min-height: 2.4rem;
+    padding: 0 0.85rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+  .future__scenes button[aria-current='true'] {
+    border-color: var(--ink);
+  }
+}

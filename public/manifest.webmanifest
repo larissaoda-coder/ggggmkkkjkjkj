@@ -1,7 +1,7 @@
 {
-  "name": "Uma carta",
-  "short_name": "Carta",
-  "description": "Uma carta.",
+  "name": "Para Annelise",
+  "short_name": "Annelise",
+  "description": "Algumas coisas merecem ser lidas com calma.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

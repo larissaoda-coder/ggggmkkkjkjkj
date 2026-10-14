@@ -1,35 +1,66 @@
-# Annelise
+# Para Annelise
 
-Um site simples com uma carta para Annelise, dez fragmentos e uma playlist do Spotify.
+Um site pessoal, em português, com uma carta, dez fragmentos e várias áreas para ler, ver, ouvir e explorar com
+calma. Visual monocromático (preto, branco, marfim e grafite, com detalhes em dourado envelhecido), tipografia
+serifada com uma sans-serif de apoio, sem dependências além de React, React Router e Framer Motion.
 
-## Páginas
+Os textos originais da carta e dos fragmentos estão em `src/data/letter.ts` e `src/data/fragments.ts`, sem
+edição; um teste confere isso.
 
-| Endereço      | Conteúdo                                                                                |
-| ------------- | --------------------------------------------------------------------------------------- |
-| `/`           | Abertura com o nome e o botão para ler a carta.                                         |
-| `/carta`      | A carta inteira, com progresso de leitura, tamanho da letra e posição de leitura salva. |
-| `/fragmentos` | Os dez fragmentos; cada um abre em página própria, com anterior e seguinte.             |
-| `/musicas`    | A playlist do Spotify, tocando dentro do site.                                          |
+## Áreas
 
-Os textos originais estão em `src/data/letter.ts` e `src/data/fragments.ts`, sem edição.
+| Endereço         | Área                        | O que faz                                                                                       |
+| ---------------- | --------------------------- | ----------------------------------------------------------------------------------------------- |
+| `/`              | Abertura                    | Título, subtítulo e o botão Entrar.                                                             |
+| `/indice`        | Índice                      | Todas as áreas por grupo; marca o que já foi visto.                                             |
+| `/carta`         | A carta                     | A carta inteira, com progresso e tamanho de letra.                                              |
+| `/livro`         | Algumas coisas sobre você   | Livro com capa, dedicatória, carta, dez fragmentos e fotografias; páginas viram em 3D.          |
+| `/cartas`        | Cartas guardadas            | Cinco envelopes "Abra quando…", cada um com sua animação; a mensagem pode ser guardada.         |
+| `/dicionario`    | Termos particulares         | Verbetes com busca e navegação por letra.                                                       |
+| `/arquivo`       | Arquivo pessoal             | Fotografias em mosaico, coleções, polaroides e tela cheia com legenda e dedicatória.            |
+| `/museu`         | Coisas que merecem registro | Peças com fotografia ou objeto, etiqueta de museu, frase e texto.                               |
+| `/quebra-cabeca` | Uma imagem por partes       | Quebra-cabeça de uma fotografia: arrastar, trocar, girar peças, progresso e mensagem final.     |
+| `/radio`         | Faixas selecionadas         | Player de áudio real, fila, Spotify, links e o modo rádio "Frequência Annelise".                |
+| `/mapa`          | Pontos de referência        | Pontos que abrem fotografia, fragmento, música, pergunta, carta curta e um segredo.             |
+| `/oraculo`       | Uma leitura simbólica       | Baralho próprio, embaralhamento real, três cartas escolhidas, leitura e carta escondida.        |
+| `/historia`      | Uma história em aberto      | Narrativa de escolhas com consequências e vários desfechos.                                     |
+| `/futuro`        | Em outra fase da vida       | Sete cenas imaginadas em formato de conversa.                                                   |
+| `/intervalo`     | Um intervalo                | Lago interativo com ondulações, pétalas e detalhes para perceber; som e movimento controláveis. |
+| `/antes-de-sair` | Antes de sair               | Página final, liberada depois de algumas áreas vistas.                                          |
+| `/admin`         | Administração               | Edição de fotos, textos, músicas, mapa, cartas, dicionário, museu, cenas e da página final.     |
 
-## Playlist do Spotify
+O menu também guarda as preferências: tema (sistema, claro, escuro), reduzir movimento, sons do jardim e texto
+maior.
 
-Cole o link da playlist em `src/data/spotify.ts`:
+## Onde o conteúdo fica salvo
 
-```ts
-export const SPOTIFY_PLAYLIST_URL = 'https://open.spotify.com/playlist/…';
-```
+O conteúdo editável (tudo, menos a carta e os fragmentos) vem de três camadas, nesta ordem:
 
-Quem não estiver conectado ao Spotify no navegador ouve prévias de 30 segundos; com a conta conectada, as
-músicas tocam inteiras.
+1. **Padrão** em `src/content/defaults.ts`. Não há fotografias nem faixas inventadas: essas áreas começam
+   vazias.
+2. **`public/content.json`** (opcional): o conteúdo publicado junto com o site. Pode ser gerado em
+   _Administração → Exportar e importar_.
+3. **O que foi salvo pela administração**, que depende de onde o site está:
+
+| Onde o site roda                              | Salvar e enviar fotos                                                                                                         | Quem vê as alterações                                                                   |
+| --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Publicado como artifact no claude.ai          | Banco de dados e armazenamento de arquivos do próprio artifact. Só contas com permissão de edição salvam (regra no servidor). | Quem abre conectado ao claude.ai. Visitantes sem login veem o `content.json` publicado. |
+| Qualquer outra hospedagem (GitHub Pages etc.) | Apenas no navegador de quem administra (localStorage e IndexedDB). Não há login: a área não é protegida.                      | Ninguém além desse navegador, até o conteúdo ser exportado para `public/content.json`.  |
+
+Limites conhecidos:
+
+- No claude.ai não é possível enviar arquivos de áudio nem incorporar o player do Spotify; a rádio usa endereços
+  de arquivos `.mp3` e mostra um link para abrir no Spotify.
+- Fotografias e áudios guardados no navegador (endereços `idb:`) não vão junto ao exportar. Para publicar, coloque
+  os arquivos em `public/` e use o endereço deles (por exemplo `fotos/praia.jpg`).
+- O progresso de quem visita (áreas vistas, envelopes abertos, página final) fica no aparelho dessa pessoa.
 
 ## Rodar e publicar
 
 ```bash
 npm install
 npm run dev     # servidor local
-npm test        # confere a integridade dos textos
+npm test        # textos originais, paginação do livro, história e conteúdo padrão
 npm run build   # gera dist/
 ```
 

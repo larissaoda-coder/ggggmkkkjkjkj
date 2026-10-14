@@ -6,18 +6,19 @@
     <meta name="color-scheme" content="light dark" />
     <meta name="theme-color" content="#F5F3EE" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#111111" media="(prefers-color-scheme: dark)" />
-    <meta name="description" content="Uma carta." />
+    <meta name="description" content="Algumas coisas merecem ser lidas com calma." />
     <meta name="robots" content="noindex, nofollow" />
     <link rel="icon" type="image/svg+xml" href="./icon.svg" />
     <link rel="apple-touch-icon" href="./icon-180.png" />
     <link rel="manifest" href="./manifest.webmanifest" />
-    <title>Uma carta</title>
+    <title>Para Annelise</title>
     <script>
       // Aplica o tema antes da primeira pintura, evitando o "piscar" de tema.
       (function () {
         try {
-          var raw = localStorage.getItem('annelise:v1:theme');
-          var theme = raw ? JSON.parse(raw) : 'sistema';
+          var raw = localStorage.getItem('annelise:v1:preferencias');
+          var prefs = raw ? JSON.parse(raw) : null;
+          var theme = (prefs && prefs.theme) || 'sistema';
           if (theme === 'sistema') theme = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
           else theme = theme === 'escuro' ? 'dark' : 'light';
           document.documentElement.dataset.theme = theme;

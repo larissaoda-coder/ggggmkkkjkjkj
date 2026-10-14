@@ -1,35 +1,55 @@
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { useMotion, useSettings } from '../context/SettingsContext';
-import { Icon } from '../components/Icon';
+import { useMotion } from '../context/SettingsContext';
+import { useContent } from '../content/ContentContext';
 import './home.css';
 
 export default function Home() {
   const m = useMotion();
-  const { resolvedTheme, toggleTheme } = useSettings();
+  const { content } = useContent();
+  const { title, subtitle, footer } = content.home;
 
   return (
     <div className="home">
-      <button
-        type="button"
-        className="icon-btn home__theme"
-        onClick={toggleTheme}
-        aria-label={resolvedTheme === 'dark' ? 'Usar tema claro' : 'Usar tema escuro'}
-      >
-        <Icon name={resolvedTheme === 'dark' ? 'sun' : 'moon'} size={18} />
-      </button>
-
-      <motion.div
-        className="home__inner"
+      <div className="home__frame" aria-hidden="true" />
+      <div className="home__inner">
+        <motion.h1
+          className="home__title"
+          initial={{ opacity: 0, y: m.reduced ? 0 : 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={m.t(1.4, { delay: 0.2 * m.factor })}
+        >
+          {title}
+        </motion.h1>
+        <motion.span
+          className="home__rule"
+          aria-hidden="true"
+          initial={{ scaleX: 0 }}
+          animate={{ scaleX: 1 }}
+          transition={m.t(1.2, { delay: 0.9 * m.factor })}
+        />
+        <motion.p
+          className="home__subtitle"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={m.t(1.2, { delay: 1.2 * m.factor })}
+        >
+          {subtitle}
+        </motion.p>
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={m.t(1, { delay: 1.7 * m.factor })}>
+          <Link to="/indice" className="home__enter">
+            Entrar
+          </Link>
+        </motion.div>
+      </div>
+      <motion.p
+        className="home__footer"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={m.t(1.2, { delay: 0.2 * m.factor })}
+        transition={m.t(1.2, { delay: 2.1 * m.factor })}
       >
-        <h1 className="home__title">Escrevi uma carta para você.</h1>
-        <Link to="/carta" className="btn btn--solid home__enter">
-          Ler a carta
-        </Link>
-      </motion.div>
+        {footer}
+      </motion.p>
     </div>
   );
 }

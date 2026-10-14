@@ -1,0 +1,156 @@
+/* Dicionário: página de obra de referência — duas colunas, letras capitulares, verbetes compactos. */
+.dictionary__head {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 36rem;
+  margin-bottom: clamp(1.5rem, 5vw, 2.5rem);
+}
+.dictionary__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+}
+.dictionary__desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.dictionary__tools {
+  position: sticky;
+  top: var(--header-h);
+  z-index: 5;
+  display: grid;
+  gap: 0.6rem;
+  padding: 0.75rem 0 0.9rem;
+  background: var(--bg);
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.dictionary__search input {
+  width: 100%;
+  max-width: 24rem;
+  min-height: 2.75rem;
+  padding: 0 0.1rem;
+  border: 0;
+  border-bottom: 1px solid var(--line-strong);
+  background: transparent;
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+.dictionary__search input:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.dictionary__letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem;
+}
+.dictionary__letters a,
+.dictionary__letters span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.75rem;
+  min-height: 2rem;
+  font-family: var(--serif);
+  font-size: 0.95rem;
+}
+.dictionary__letters a {
+  color: var(--ink);
+  text-decoration: none;
+}
+.dictionary__letters a:hover {
+  color: var(--gold-ink);
+}
+.dictionary__letters span {
+  color: var(--faint);
+  opacity: 0.45;
+}
+.dictionary__hint {
+  font-size: 0.75rem;
+  color: var(--faint);
+}
+.dictionary__none {
+  font-family: var(--serif);
+  font-style: italic;
+  color: var(--muted);
+  padding: 2rem 0;
+}
+.dictionary__body {
+  columns: 2 22rem;
+  column-gap: clamp(2rem, 5vw, 4rem);
+  column-rule: 1px solid var(--line);
+}
+.dictionary__group {
+  break-inside: avoid-column;
+  scroll-margin-top: calc(var(--header-h) + 11rem);
+  margin-bottom: 1.75rem;
+}
+.dictionary__letter {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: 2.6rem;
+  line-height: 1;
+  color: var(--gold-ink);
+  margin-bottom: 0.6rem;
+}
+.dictionary__list {
+  margin: 0;
+  display: grid;
+  gap: 0.25rem;
+}
+.entry {
+  break-inside: avoid;
+  padding: 0.6rem 0.5rem 0.75rem;
+  margin: 0 -0.5rem;
+  border-left: 1px solid transparent;
+  cursor: pointer;
+  transition:
+    background-color var(--d-fast) var(--ease),
+    border-color var(--d-fast) var(--ease);
+}
+.entry:hover {
+  background: var(--hover);
+}
+.entry:focus-visible {
+  outline: 1px solid var(--ink);
+  outline-offset: 0;
+}
+.entry[data-marked='true'] {
+  border-left-color: var(--gold);
+}
+.entry dt {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.entry__word {
+  font-family: var(--serif);
+  font-weight: 600;
+  font-size: 1.2rem;
+}
+.entry__grammar {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+.entry dd {
+  margin: 0.2rem 0 0;
+}
+.entry__def {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.55;
+}
+.entry__example {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}

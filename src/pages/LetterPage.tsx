@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { letterParagraphs, letterWordCount } from '../data/letter';
 import { useMotion, useSettings } from '../context/SettingsContext';
+import { useProgress } from '../context/ProgressContext';
 import { usePersistentState } from '../lib/usePersistentState';
 import { Icon } from '../components/Icon';
 import './letter.css';
@@ -23,6 +24,7 @@ const WPM = 190;
 export default function LetterPage() {
   const m = useMotion();
   const { resolvedTheme, toggleTheme } = useSettings();
+  const { mark } = useProgress();
   const [saved, setSaved] = usePersistentState<LetterState>('letter', initialLetter);
   const [phase, setPhase] = useState<Phase>('closed');
   const [progress, setProgress] = useState(0);
@@ -123,6 +125,7 @@ export default function LetterPage() {
       ([entry]) => {
         if (entry.isIntersecting) {
           setAtEnd(true);
+          mark('carta');
           setSaved((s) => (s.finished ? s : { ...s, finished: true }));
         }
       },
@@ -130,7 +133,7 @@ export default function LetterPage() {
     );
     io.observe(endRef.current);
     return () => io.disconnect();
-  }, [phase, setSaved]);
+  }, [phase, setSaved, mark]);
 
   /* ---------- tamanho do texto (mantém a posição de leitura) ---------- */
   const changeScale = (dir: 1 | -1) => {
@@ -304,8 +307,8 @@ export default function LetterPage() {
             <button type="button" className="link-btn" onClick={closeLetter}>
               <Icon name="letter" size={16} /> Fechar a carta
             </button>
-            <Link to="/fragmentos" className="link-btn">
-              Dez fragmentos <Icon name="arrow-right" size={16} />
+            <Link to="/livro" className="link-btn">
+              Abrir o livro <Icon name="arrow-right" size={16} />
             </Link>
           </motion.nav>
         )}

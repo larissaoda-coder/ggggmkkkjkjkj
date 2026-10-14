@@ -1,0 +1,147 @@
+/* Museu: paredes claras, muito espaço, etiquetas pequenas como as de uma exposição. */
+.museum__head {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 36rem;
+  margin-bottom: clamp(2.5rem, 8vw, 5rem);
+}
+.museum__eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--gold-ink);
+}
+.museum__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.museum__desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.museum__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: clamp(4rem, 12vw, 8rem);
+}
+.exhibit {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+.exhibit[data-side='direita'] .exhibit__piece {
+  order: 2;
+}
+.exhibit__frame {
+  display: block;
+  width: 100%;
+  padding: clamp(0.9rem, 3vw, 1.75rem);
+  background: var(--paper);
+  border: 1px solid var(--line);
+  box-shadow: 0 30px 50px -40px rgba(0, 0, 0, 0.5);
+  cursor: zoom-in;
+}
+.exhibit__frame > span {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  background: var(--bg-sunk);
+}
+.exhibit__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.exhibit__plinth {
+  display: grid;
+  justify-items: center;
+  gap: 0;
+  padding-top: 3rem;
+}
+.exhibit__object {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 300;
+  font-size: clamp(1.6rem, 5vw, 2.6rem);
+  text-align: center;
+  line-height: 1.15;
+  padding: 2.5rem 1.5rem;
+  max-width: 22rem;
+  text-wrap: balance;
+}
+.exhibit__base {
+  width: min(16rem, 80%);
+  height: 4.5rem;
+  background: linear-gradient(180deg, var(--bg-elev), var(--bg-sunk));
+  border: 1px solid var(--line);
+  border-top-color: var(--line-strong);
+}
+.exhibit__info {
+  display: grid;
+  gap: 1.25rem;
+  align-content: end;
+  max-width: 26rem;
+}
+.exhibit__label {
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.9rem 1rem 1rem;
+  background: var(--bg-elev);
+  border: 1px solid var(--line);
+  max-width: 19rem;
+}
+.exhibit__inv {
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.exhibit__title {
+  font-family: var(--sans);
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+.exhibit__label dl {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.15rem 0.75rem;
+  margin: 0.2rem 0 0;
+  font-size: 0.75rem;
+}
+.exhibit__label dt {
+  color: var(--faint);
+}
+.exhibit__label dd {
+  margin: 0;
+  color: var(--ink-2);
+}
+.exhibit__phrase {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1.2rem, 3vw, 1.45rem);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+.exhibit__text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--ink-2);
+  white-space: pre-line;
+}
+@media (max-width: 720px) {
+  .exhibit {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .exhibit[data-side='direita'] .exhibit__piece {
+    order: 0;
+  }
+}

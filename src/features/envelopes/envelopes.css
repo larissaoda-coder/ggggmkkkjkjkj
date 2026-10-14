@@ -1,0 +1,441 @@
+/* Cartas guardadas: envelopes de papel, lacre dourado, leitura em folha clara. */
+.envelopes {
+  --env: #e8e2d4;
+  --env-flap: #dfd7c6;
+  --env-line: rgba(17, 17, 17, 0.16);
+  --env-sheet: #fbfaf6;
+  --env-sheet-ink: #1d1b18;
+  --env-seal: #9a7c49;
+  --env-seal-hi: #b8995f;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) .envelopes {
+    --env: #2a2824;
+    --env-flap: #33302b;
+    --env-line: rgba(245, 243, 238, 0.14);
+    --env-sheet: #f1ece0;
+  }
+}
+:root[data-theme='dark'] .envelopes {
+  --env: #2a2824;
+  --env-flap: #33302b;
+  --env-line: rgba(245, 243, 238, 0.14);
+  --env-sheet: #f1ece0;
+}
+
+.envelopes__head {
+  display: grid;
+  gap: 0.6rem;
+  margin-bottom: clamp(2rem, 6vw, 3.5rem);
+}
+.envelopes__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.2rem);
+  line-height: 1.05;
+}
+.envelopes__desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+.envelopes__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15.5rem), 1fr));
+  gap: clamp(2rem, 5vw, 3rem) clamp(1.25rem, 4vw, 2.5rem);
+}
+.envelopes__item {
+  display: grid;
+  justify-items: start;
+  align-content: start;
+  gap: 0.8rem;
+}
+.envelopes__label {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.35;
+  min-height: 2.7em;
+  text-wrap: balance;
+}
+.envelopes__meta {
+  display: flex;
+  gap: 0.75rem;
+  min-height: 1rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+.envelopes__saved {
+  color: var(--gold-ink);
+}
+
+/* ---------- envelope ---------- */
+.env {
+  position: relative;
+  width: 100%;
+  max-width: 17rem;
+  aspect-ratio: 16 / 10;
+  perspective: 900px;
+  margin-top: 3.75rem; /* espaço para a aba aberta e o papel */
+}
+.env__back {
+  position: absolute;
+  inset: 0;
+  background: var(--env);
+  border: 1px solid var(--env-line);
+  border-radius: 2px;
+}
+.env__paper {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  top: 6%;
+  height: 84%;
+  z-index: 1;
+  background: var(--env-sheet);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  display: grid;
+  align-content: start;
+  gap: 9%;
+  padding: 10% 12%;
+  transition: transform calc(800ms * var(--motion-scale)) var(--ease-out);
+}
+.env__paper span {
+  display: block;
+  height: 1px;
+  background: rgba(29, 27, 24, 0.18);
+}
+.env__paper span:nth-child(2) {
+  width: 80%;
+}
+.env__paper span:nth-child(3) {
+  width: 55%;
+}
+.env__pocket {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+}
+.env__pocket-fill {
+  fill: var(--env);
+  stroke: var(--env-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.env__fold {
+  fill: none;
+  stroke: var(--env-line);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.env__flap {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 54%;
+  z-index: 3;
+  background: var(--env-flap);
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top center;
+  transition:
+    transform calc(650ms * var(--motion-scale)) var(--ease),
+    z-index 0s linear calc(300ms * var(--motion-scale));
+}
+.env__flap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 60%);
+}
+.env__seal {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 54%;
+  width: 2.1rem;
+  height: 2.1rem;
+  margin: -1.05rem 0 0 -1.05rem;
+  transition: opacity calc(300ms * var(--motion-scale)) var(--ease);
+}
+.env__seal i {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, var(--env-seal-hi), var(--env-seal) 60%);
+  box-shadow:
+    inset 0 0 0 3px rgba(0, 0, 0, 0.08),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.14),
+    0 1px 2px rgba(0, 0, 0, 0.25);
+  transition:
+    transform calc(600ms * var(--motion-scale)) var(--ease-out),
+    opacity calc(600ms * var(--motion-scale)) var(--ease);
+}
+.env__seal i:first-child {
+  clip-path: polygon(0 0, 55% 0, 45% 100%, 0 100%);
+}
+.env__seal i:last-child {
+  clip-path: polygon(55% 0, 100% 0, 100% 100%, 45% 100%);
+}
+
+/* lido: aba aberta, papel à mostra, sem lacre */
+.env[data-stage='lido'] .env__flap {
+  transform: rotateX(180deg);
+  z-index: 0;
+  transition: none;
+}
+.env[data-stage='lido'] .env__seal {
+  opacity: 0;
+}
+.env[data-stage='lido'] .env__paper {
+  transform: translateY(-12%);
+}
+
+/* ---------- abrindo ---------- */
+.env[data-stage='abrindo'] .env__flap {
+  animation: env-flap calc(650ms * var(--motion-scale)) var(--ease) forwards;
+}
+.env[data-stage='abrindo'] .env__seal {
+  opacity: 0;
+}
+.env[data-stage='abrindo'] .env__paper {
+  animation: env-rise calc(800ms * var(--motion-scale)) var(--ease-out) calc(450ms * var(--motion-scale)) forwards;
+}
+
+/* salto: tremor, aba rápida, papel salta */
+.env[data-variant='salto'][data-stage='abrindo'] {
+  animation: env-shake calc(420ms * var(--motion-scale)) ease-in-out;
+}
+.env[data-variant='salto'][data-stage='abrindo'] .env__flap {
+  animation-duration: calc(320ms * var(--motion-scale));
+  animation-delay: calc(380ms * var(--motion-scale));
+}
+.env[data-variant='salto'][data-stage='abrindo'] .env__paper {
+  animation: env-jump calc(700ms * var(--motion-scale)) cubic-bezier(0.34, 1.56, 0.64, 1)
+    calc(560ms * var(--motion-scale)) forwards;
+}
+
+/* selo: o lacre se parte, depois a aba abre */
+.env[data-variant='selo'][data-stage='abrindo'] .env__seal {
+  opacity: 1;
+}
+.env[data-variant='selo'][data-stage='abrindo'] .env__seal i:first-child {
+  animation: env-seal-left calc(700ms * var(--motion-scale)) var(--ease-out) forwards;
+}
+.env[data-variant='selo'][data-stage='abrindo'] .env__seal i:last-child {
+  animation: env-seal-right calc(700ms * var(--motion-scale)) var(--ease-out) forwards;
+}
+.env[data-variant='selo'][data-stage='abrindo'] .env__flap {
+  animation-delay: calc(600ms * var(--motion-scale));
+}
+.env[data-variant='selo'][data-stage='abrindo'] .env__paper {
+  animation-delay: calc(1050ms * var(--motion-scale));
+}
+
+/* névoa: o envelope inteiro se dissolve */
+.env[data-variant='nevoa'][data-stage='abrindo'] {
+  animation: env-mist calc(1600ms * var(--motion-scale)) ease-in forwards;
+}
+.env[data-variant='nevoa'][data-stage='abrindo'] .env__flap,
+.env[data-variant='nevoa'][data-stage='abrindo'] .env__paper {
+  animation: none;
+}
+
+@keyframes env-flap {
+  0% {
+    transform: rotateX(0deg);
+    z-index: 3;
+  }
+  49% {
+    z-index: 3;
+  }
+  50% {
+    z-index: 0;
+  }
+  100% {
+    transform: rotateX(180deg);
+    z-index: 0;
+  }
+}
+@keyframes env-rise {
+  to {
+    transform: translateY(-62%);
+  }
+}
+@keyframes env-jump {
+  to {
+    transform: translateY(-95%) rotate(-2deg);
+  }
+}
+@keyframes env-shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+  25% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2deg);
+  }
+  75% {
+    transform: rotate(-1deg);
+  }
+}
+@keyframes env-seal-left {
+  to {
+    transform: translate(-60%, 40%) rotate(-25deg);
+    opacity: 0;
+  }
+}
+@keyframes env-seal-right {
+  to {
+    transform: translate(60%, 40%) rotate(25deg);
+    opacity: 0;
+  }
+}
+@keyframes env-mist {
+  to {
+    opacity: 0;
+    filter: blur(10px);
+    transform: scale(1.04);
+  }
+}
+
+/* ---------- leitura ---------- */
+.env-reader {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: grid;
+  grid-template-rows: auto 1fr;
+  grid-template-columns: minmax(0, 1fr);
+  background: var(--bg);
+  overflow-y: auto;
+  padding: env(safe-area-inset-top, 0px) 0 var(--safe-bottom);
+}
+.env-reader__bar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  min-height: var(--header-h);
+  padding: 0 var(--gutter);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  border-bottom: 1px solid var(--line);
+}
+.env-reader__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
+}
+.env-reader__close {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.6rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  flex-shrink: 0;
+}
+.env-reader__stage {
+  display: grid;
+  place-items: center;
+  padding: clamp(2rem, 6vw, 4rem) var(--gutter) 3rem;
+}
+.env-reader__opening {
+  width: min(22rem, 80vw);
+  padding-top: 4rem;
+}
+.env-reader__opening .env {
+  max-width: none;
+}
+.env-letter {
+  width: 100%;
+  max-width: 36rem;
+  background: var(--env-sheet);
+  color: #1d1b18;
+  padding: clamp(1.75rem, 6vw, 3.25rem);
+  border: 1px solid rgba(17, 17, 17, 0.08);
+  box-shadow:
+    0 1px 2px rgba(0, 0, 0, 0.05),
+    0 24px 50px -30px rgba(0, 0, 0, 0.45);
+  display: grid;
+  gap: 1.5rem;
+}
+.env-letter[data-variant='dobra'] {
+  background:
+    linear-gradient(180deg, transparent calc(33.3% - 1px), rgba(17, 17, 17, 0.06) 33.3%, transparent calc(33.3% + 1px)),
+    linear-gradient(180deg, transparent calc(66.6% - 1px), rgba(17, 17, 17, 0.06) 66.6%, transparent calc(66.6% + 1px)),
+    var(--env-sheet);
+}
+.env-letter__title {
+  font-family: var(--serif);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(1.25rem, 3.5vw, 1.5rem);
+  line-height: 1.3;
+  color: #6f5a34;
+  text-wrap: balance;
+}
+.env-letter__body {
+  display: grid;
+  gap: 1rem;
+}
+.env-letter__body p {
+  font-family: var(--serif);
+  font-size: clamp(1.05rem, 2.8vw, 1.2rem);
+  line-height: 1.7;
+  white-space: pre-line;
+}
+.env-letter__foot {
+  display: grid;
+  gap: 1rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgba(17, 17, 17, 0.1);
+}
+.env-letter__foot > p {
+  font-size: 0.8125rem;
+  color: #5d5952;
+}
+.env-letter__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.env-letter .btn {
+  color: #1d1b18;
+  border-color: rgba(17, 17, 17, 0.28);
+}
+.env-letter .btn:hover {
+  background: rgba(17, 17, 17, 0.05);
+}
+.env-letter .btn[aria-pressed='true'] {
+  border-color: #9a7c49;
+  color: #6f5a34;
+}
+
+@media (max-width: 560px) {
+  .envelopes__label {
+    min-height: 0;
+  }
+  .envelopes__meta:empty {
+    display: none;
+  }
+}

@@ -203,7 +203,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
-@media (min-width: 760px) {
+@media (min-width: 0) {
   .letter-toolbar {
     top: var(--header-h);
   }

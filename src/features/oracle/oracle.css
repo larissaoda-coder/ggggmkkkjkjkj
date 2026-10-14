@@ -1,0 +1,399 @@
+/* Oráculo: mesa escura, luz quente e baixa, cartas em papel marfim com traço dourado. */
+.oracle {
+  --o-bg: #0f0e0c;
+  --o-ink: #efe9dc;
+  --o-muted: #9a958b;
+  --o-gold: #c4a873;
+  --o-line: rgba(196, 168, 115, 0.28);
+  --o-paper: #f3eee2;
+  --o-paper-ink: #2a2620;
+  position: relative;
+  min-height: calc(100dvh - var(--header-h));
+  padding: clamp(1.5rem, 5vw, 3rem) var(--gutter) calc(3rem + var(--safe-bottom));
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 0%, rgba(196, 168, 115, 0.1), transparent 70%),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgba(167, 169, 172, 0.05), transparent 70%), var(--o-bg);
+  color: var(--o-ink);
+  display: grid;
+  align-content: start;
+  justify-items: center;
+  gap: clamp(1.5rem, 4vw, 2.5rem);
+  overflow: hidden;
+}
+.oracle__head {
+  display: grid;
+  justify-items: center;
+  gap: 0.6rem;
+  text-align: center;
+  max-width: 32rem;
+}
+.oracle__lotus {
+  width: 3.2rem;
+  fill: none;
+  stroke: var(--o-gold);
+  stroke-width: 0.8;
+}
+.oracle__title {
+  font-family: var(--serif);
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3rem);
+  line-height: 1.05;
+  text-wrap: balance;
+}
+.oracle__desc {
+  font-size: 0.875rem;
+  color: var(--o-muted);
+}
+
+/* ---------- cartas ---------- */
+.ocard {
+  --w: clamp(4.6rem, 22vw, 7.5rem);
+  position: relative;
+  width: var(--w);
+  aspect-ratio: 100 / 140;
+  max-width: 100%;
+  border-radius: 4px;
+  color: var(--o-gold);
+}
+.ocard__svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+  fill: none;
+  stroke: currentColor;
+}
+.ocard__frame {
+  stroke-width: 0.8;
+  fill: #16140f;
+}
+.ocard__thin {
+  stroke-width: 0.4;
+  opacity: 0.7;
+}
+.ocard__line {
+  stroke-width: 0.8;
+}
+.ocard__dot {
+  fill: currentColor;
+  stroke: none;
+}
+.ocard__num {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--serif);
+  font-size: 9px;
+  letter-spacing: 0.1em;
+}
+.ocard__name {
+  fill: currentColor;
+  stroke: none;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 8.5px;
+}
+.ocard__art {
+  stroke-width: 1;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+/* frente: papel marfim */
+.ocard__side--front {
+  color: var(--o-paper-ink);
+}
+.ocard__side--front .ocard__frame {
+  fill: var(--o-paper);
+  stroke: #b69a64;
+}
+.ocard__side--front .ocard__thin {
+  stroke: #b69a64;
+}
+
+/* posições */
+.oracle__slots {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  max-width: 60rem;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(0.75rem, 3vw, 2rem);
+}
+.oracle__slot {
+  display: grid;
+  justify-items: center;
+  align-content: start;
+  gap: 0.75rem;
+  min-width: 0;
+  text-align: center;
+}
+.oracle__slot-label {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  min-height: 2.6em;
+  font-size: 0.625rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--o-muted);
+  text-wrap: balance;
+}
+.ocard--slot {
+  perspective: 900px;
+}
+.ocard__empty {
+  position: absolute;
+  inset: 0;
+  border: 1px dashed var(--o-line);
+  border-radius: 4px;
+}
+.ocard__inner {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  transition: transform calc(1100ms * var(--motion-scale)) var(--ease-out);
+}
+.ocard--slot[data-open='true'] .ocard__inner {
+  transform: rotateY(180deg);
+}
+.ocard__side {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.ocard__side--front {
+  transform: rotateY(180deg);
+}
+.ocard--slot[data-open='true'] {
+  filter: drop-shadow(0 0 18px rgba(196, 168, 115, 0.28));
+  transition: filter calc(1400ms * var(--motion-scale)) var(--ease);
+}
+.oracle__reading {
+  display: grid;
+  gap: 0.4rem;
+  max-width: 17rem;
+}
+.oracle__keyword {
+  font-size: 0.625rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--o-gold);
+}
+.oracle__reading p {
+  font-family: var(--serif);
+  font-size: clamp(0.9rem, 2.4vw, 1.02rem);
+  line-height: 1.55;
+  color: #ddd7ca;
+}
+
+/* mesa */
+.oracle__table {
+  width: 100%;
+  max-width: 60rem;
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+}
+.oracle__stack {
+  position: relative;
+  width: clamp(5.5rem, 26vw, 8rem);
+  aspect-ratio: 100 / 140;
+}
+.ocard--stack {
+  position: absolute;
+  inset: 0;
+  --w: 100%;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
+}
+.oracle__spread {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0 1rem;
+}
+.ocard--pick {
+  --w: clamp(3.6rem, 13vw, 5.4rem);
+  transform: rotate(var(--r, 0deg));
+  transition:
+    transform var(--d-med) var(--ease-out),
+    box-shadow var(--d-med) var(--ease),
+    color var(--d-med) var(--ease);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+.ocard--pick:hover:not([disabled]) {
+  transform: rotate(var(--r, 0deg)) translateY(-4px);
+}
+.ocard--pick[data-focus='true'] {
+  transform: translateY(-12px);
+  color: #e8d4a6;
+  box-shadow:
+    0 0 0 1px rgba(232, 212, 166, 0.6),
+    0 0 28px rgba(196, 168, 115, 0.45),
+    0 10px 20px rgba(0, 0, 0, 0.5);
+}
+.ocard--pick:focus-visible {
+  outline: 1px solid var(--o-gold);
+  outline-offset: 3px;
+}
+.ocard--hidden {
+  position: absolute;
+  --w: clamp(3.6rem, 13vw, 5.4rem);
+  left: 50%;
+  bottom: -0.6rem;
+  transform: translateX(-50%) rotate(90deg);
+  opacity: 0.18;
+  pointer-events: none;
+  z-index: -1;
+}
+.oracle__actions {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+  min-height: 5rem;
+}
+.oracle__hint {
+  font-size: 0.8125rem;
+  color: var(--o-muted);
+  text-align: center;
+}
+.oracle__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.9rem;
+  padding: 0 1.5rem;
+  border: 1px solid var(--o-line);
+  color: var(--o-ink);
+  font-size: 0.75rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition:
+    border-color var(--d-fast) var(--ease),
+    background-color var(--d-fast) var(--ease),
+    opacity var(--d-fast) var(--ease);
+}
+.oracle__btn:hover:not([disabled]) {
+  border-color: var(--o-gold);
+  background: rgba(196, 168, 115, 0.06);
+}
+.oracle__btn--main {
+  border-color: rgba(196, 168, 115, 0.6);
+}
+.oracle__btn[disabled] {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.oracle__btn:focus-visible {
+  outline: 1px solid var(--o-gold);
+  outline-offset: 3px;
+}
+
+/* leitura final */
+.oracle__final {
+  width: 100%;
+  max-width: 36rem;
+  display: grid;
+  justify-items: center;
+  gap: 1.5rem;
+  text-align: center;
+}
+.oracle__rule {
+  width: 3rem;
+  height: 1px;
+  background: var(--o-gold);
+  opacity: 0.6;
+}
+.oracle__final-text {
+  font-family: var(--serif);
+  font-size: clamp(1.1rem, 3vw, 1.3rem);
+  line-height: 1.65;
+  color: var(--o-ink);
+  text-wrap: pretty;
+}
+.oracle__hidden-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-height: 2.75rem;
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--o-gold);
+}
+.oracle__hidden-glow {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e8d4a6;
+  box-shadow: 0 0 14px rgba(232, 212, 166, 0.9);
+  animation: oracle-breathe 2.8s ease-in-out infinite;
+}
+.oracle__lotus-card {
+  display: grid;
+  justify-items: center;
+  gap: 1rem;
+}
+.ocard--lotus {
+  --w: clamp(6rem, 30vw, 8.5rem);
+  color: var(--o-paper-ink);
+  filter: drop-shadow(0 0 26px rgba(232, 212, 166, 0.35));
+}
+.ocard--lotus .ocard__frame {
+  fill: var(--o-paper);
+  stroke: #b69a64;
+}
+.ocard--lotus .ocard__thin {
+  stroke: #b69a64;
+}
+.oracle__lotus-card p {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  color: #ddd7ca;
+  max-width: 30rem;
+  white-space: pre-line;
+}
+.oracle__closing {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--o-muted);
+  max-width: 28rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--o-line);
+}
+
+@keyframes oracle-breathe {
+  0%,
+  100% {
+    opacity: 0.45;
+    transform: scale(0.85);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.1);
+  }
+}
+:root[data-motion='minima'] .oracle__hidden-glow {
+  animation: none;
+}
+
+@media (max-width: 540px) {
+  .oracle__slots {
+    gap: 0.5rem;
+  }
+  .oracle__slot-label {
+    font-size: 0.5625rem;
+    letter-spacing: 0.1em;
+  }
+  .oracle[data-phase='revelacao'] .oracle__slots {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .oracle[data-phase='revelacao'] .ocard--slot {
+    --w: 6.5rem;
+  }
+}

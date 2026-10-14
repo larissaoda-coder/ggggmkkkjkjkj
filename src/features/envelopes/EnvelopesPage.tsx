@@ -8,6 +8,7 @@ import { usePersistentState } from '../../lib/usePersistentState';
 import { EmptyState } from '../../components/EmptyState';
 import { Icon } from '../../components/Icon';
 import './envelopes.css';
+import { AreaMark, Postmark, Tape } from '../../components/Ornaments';
 
 /**
  * Cada envelope abre de um jeito:
@@ -23,7 +24,15 @@ const OPENING_MS: Record<Variant, number> = { aba: 1500, salto: 1300, selo: 1700
 
 const isIds = (v: unknown): v is string[] => Array.isArray(v) && v.every((x) => typeof x === 'string');
 
-function EnvelopeArt({ variant, stage }: { variant: Variant; stage: 'fechado' | 'abrindo' | 'lido' }) {
+function EnvelopeArt({
+  variant,
+  stage,
+  number,
+}: {
+  variant: Variant;
+  stage: 'fechado' | 'abrindo' | 'lido';
+  number: number;
+}) {
   return (
     <div className="env" data-variant={variant} data-stage={stage} aria-hidden="true">
       <div className="env__back" />
@@ -41,6 +50,16 @@ function EnvelopeArt({ variant, stage }: { variant: Variant; stage: 'fechado' | 
         <i />
         <i />
       </span>
+      <span className="env__num">N.º {String(number).padStart(2, '0')}</span>
+      <Postmark
+        className="env__postmark"
+        top="CORREIO PARTICULAR"
+        bottom="CARTAS GUARDADAS"
+        center={String(number)}
+        tone={number % 2 ? 'ink' : 'red'}
+        rotate={number % 2 ? -14 : 10}
+        size={62}
+      />
     </div>
   );
 }
@@ -82,12 +101,14 @@ function letterMotion(
 function Reader({
   envelope,
   variant,
+  index,
   saved,
   onSave,
   onClose,
 }: {
   envelope: Envelope;
   variant: Variant;
+  index: number;
   saved: boolean;
   onSave: () => void;
   onClose: () => void;
@@ -138,7 +159,7 @@ function Reader({
       <div className="env-reader__stage">
         {stage === 'abrindo' ? (
           <div className="env-reader__opening">
-            <EnvelopeArt variant={variant} stage="abrindo" />
+            <EnvelopeArt variant={variant} stage="abrindo" number={index + 1} />
           </div>
         ) : (
           <motion.article
@@ -148,6 +169,7 @@ function Reader({
             animate={lm.animate}
             style={{ transformOrigin: 'top center' }}
           >
+            <Tape className="env-letter__tape" rotate={-2} />
             <h2 className="env-letter__title">{envelope.label}</h2>
             <div className="env-letter__body">
               {envelope.body
@@ -200,6 +222,7 @@ export default function EnvelopesPage() {
   return (
     <div className="page envelopes">
       <header className="envelopes__head">
+        <AreaMark id="cartas" />
         <h1 className="envelopes__title">Cartas guardadas</h1>
         <p className="envelopes__desc">Algumas mensagens foram escritas para momentos específicos.</p>
       </header>
@@ -219,7 +242,7 @@ export default function EnvelopesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={m.t(0.6, { delay: i * 0.08 * m.factor })}
               >
-                <EnvelopeArt variant={variants[i % variants.length]} stage={read ? 'lido' : 'fechado'} />
+                <EnvelopeArt variant={variants[i % variants.length]} stage={read ? 'lido' : 'fechado'} number={i + 1} />
                 <p className="envelopes__label">{e.label}</p>
                 <div className="envelopes__meta">
                   {read && <span>Lida</span>}
@@ -240,6 +263,7 @@ export default function EnvelopesPage() {
             key={current.id}
             envelope={current}
             variant={variants[openIndex % variants.length]}
+            index={openIndex}
             saved={saved.includes(current.id)}
             onSave={() =>
               setSaved((s) => (s.includes(current.id) ? s.filter((x) => x !== current.id) : [...s, current.id]))

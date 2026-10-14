@@ -11,6 +11,7 @@ import { MediaImg } from '../../components/MediaImg';
 import { Icon } from '../../components/Icon';
 import { paginate, type TextBlock } from './paginate';
 import './book.css';
+import { AreaMark } from '../../components/Ornaments';
 
 type BookPageData =
   | { kind: 'cover' }
@@ -216,6 +217,7 @@ export default function BookPage() {
   return (
     <div className="book-area" data-mode={spread ? 'spread' : 'single'}>
       <header className="book-area__head">
+        <AreaMark id="livro" />
         <h1 className="book-area__title">Algumas coisas sobre você</h1>
         <p className="book-area__desc">
           Textos que escrevi para registrar o que penso, o que admiro e o que nem sempre consigo dizer em voz alta.

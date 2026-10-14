@@ -6,6 +6,7 @@ import { useProgress } from '../../context/ProgressContext';
 import { EmptyState } from '../../components/EmptyState';
 import { shuffle } from '../oracle/cards';
 import './puzzle.css';
+import { AreaMark } from '../../components/Ornaments';
 
 interface Board {
   /** order[posição] = peça que está naquela posição */
@@ -153,6 +154,7 @@ export default function PuzzlePage() {
     return (
       <div className="page puzzle">
         <header className="puzzle__head">
+          <AreaMark id="quebra-cabeca" />
           <h1 className="puzzle__title">Uma imagem por partes</h1>
           <p className="puzzle__desc">Monte a imagem para revelar o conteúdo completo.</p>
         </header>
@@ -166,6 +168,7 @@ export default function PuzzlePage() {
   return (
     <div className="page puzzle" data-phase={phase}>
       <header className="puzzle__head">
+        <AreaMark id="quebra-cabeca" />
         <h1 className="puzzle__title">Uma imagem por partes</h1>
         <p className="puzzle__desc">Monte a imagem para revelar o conteúdo completo.</p>
       </header>

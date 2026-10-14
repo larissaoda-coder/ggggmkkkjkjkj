@@ -1,8 +1,7 @@
-/* O livro fica sobre uma mesa escura, em qualquer tema. */
+/* O livro fica sobre a mesa de papel; capa de tecido vermelho-escuro. */
 .book-area {
   min-height: calc(100dvh - var(--header-h));
-  background: radial-gradient(ellipse at 50% 40%, rgba(245, 243, 238, 0.06), transparent 65%), #161616;
-  color: var(--ivory);
+  color: var(--ink);
   padding: clamp(1.5rem, 4vw, 2.5rem) var(--gutter) calc(2rem + var(--safe-bottom));
   display: grid;
   justify-items: center;
@@ -16,15 +15,15 @@
   max-width: 34rem;
 }
 .book-area__title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-style: italic;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(1.6rem, 4.5vw, 2.4rem);
   line-height: 1.1;
 }
 .book-area__desc {
-  font-size: 0.8125rem;
-  color: var(--gray);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--muted);
   line-height: 1.5;
 }
 .book-area[data-mode='single'] .book-area__desc {
@@ -126,11 +125,11 @@
   text-indent: 0;
 }
 .bpage__heading {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: 2.6em;
   line-height: 1;
-  color: #7d653b;
+  color: #8a241e;
   margin-bottom: 0.5em;
 }
 .bpage__folio {
@@ -144,49 +143,54 @@
   letter-spacing: 0.1em;
   color: #8a8478;
 }
-.bpage--cover {
-  background: #1d1d1d;
-  color: #ede7da;
+.bpage--cover,
+.leaf__face .bpage--cover {
+  background-color: #4f1813;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
+    repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at 40% 30%, #6a221d, #45140f 75%);
+  color: #efe2c8;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 1em;
-  border-left: 3px solid #0e0e0e;
+  border-left: 3px solid #2c0b09;
 }
 .bpage--cover::after {
   content: '';
   position: absolute;
   inset: calc(var(--pw) * 0.05);
-  border: 1px solid rgba(184, 154, 100, 0.55);
+  border: 1px solid rgba(239, 226, 200, 0.55);
+  outline: 1px solid rgba(239, 226, 200, 0.3);
+  outline-offset: -6px;
   pointer-events: none;
 }
 .bpage__cover-title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-style: italic;
-  font-size: 2.1em;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 2.15em;
   line-height: 1.1;
   max-width: 9em;
 }
 .bpage__cover-for {
-  font-family: var(--sans);
-  font-size: 0.62em;
-  letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: #b89a64;
+  font-family: var(--script);
+  font-size: 1.7em;
+  line-height: 1;
+  color: #efe2c8;
 }
 .bpage__cover-rule {
   display: block;
   width: 2.2em;
   height: 1px;
-  background: #b89a64;
+  background: rgba(239, 226, 200, 0.7);
 }
 .bpage__cover-mark {
   width: 0.5em;
   height: 0.5em;
-  border: 1px solid #b89a64;
+  border: 1px solid rgba(239, 226, 200, 0.7);
   transform: rotate(45deg);
   margin-top: 1em;
 }
@@ -209,15 +213,15 @@
   max-width: 14em;
 }
 .bpage__section-note {
-  font-family: var(--sans);
+  font-family: var(--type);
   font-size: 0.6em;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #7d653b;
+  color: #8a241e;
 }
 .bpage__section-title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: 2.4em;
   line-height: 1.05;
 }
@@ -269,19 +273,7 @@
   gap: 0.75rem;
   width: min(100%, 36rem);
 }
-.book-controls .btn {
-  color: var(--ivory);
-  border-color: rgba(245, 243, 238, 0.35);
-}
-.book-controls .btn--solid {
-  background: var(--ivory);
-  color: #111;
-  border-color: var(--ivory);
-}
-.book-controls .btn--ghost:not(:disabled):hover {
-  border-color: rgba(245, 243, 238, 0.35);
-  background: rgba(245, 243, 238, 0.06);
-}
+
 .book-controls__row {
   display: flex;
   align-items: center;
@@ -290,28 +282,24 @@
   width: 100%;
 }
 .book-controls__count {
-  font-size: 0.75rem;
-  color: var(--gray);
-}
-.book-controls .link-btn {
-  color: var(--light);
-  text-decoration-color: rgba(245, 243, 238, 0.3);
+  font-size: 0.8125rem;
+  color: var(--muted);
 }
 .book-progress {
   width: 100%;
   height: 1px;
-  background: rgba(245, 243, 238, 0.15);
+  background: var(--line-strong);
 }
 .book-progress span {
   display: block;
   height: 100%;
-  background: #b89a64;
+  background: var(--red);
   transform-origin: left;
   transition: transform var(--d-slow) var(--ease);
 }
 @media (max-width: 520px) {
   .book-controls__row .btn {
     padding: 0 0.6rem;
-    font-size: 0.72rem;
+    font-size: 0.806rem;
   }
 }

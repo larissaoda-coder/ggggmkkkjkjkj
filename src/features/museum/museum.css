@@ -6,22 +6,24 @@
   margin-bottom: clamp(2.5rem, 8vw, 5rem);
 }
 .museum__eyebrow {
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.154em;
   text-transform: uppercase;
   color: var(--gold-ink);
 }
 .museum__title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 6vw, 3.2rem);
   line-height: 1.05;
   text-wrap: balance;
 }
 .museum__desc {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1.008rem;
   line-height: 1.6;
+  font-style: italic;
 }
 .museum__list {
   list-style: none;
@@ -98,8 +100,9 @@
   max-width: 19rem;
 }
 .exhibit__inv {
+  font-family: var(--type);
   font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.112em;
   text-transform: uppercase;
   color: var(--faint);
 }
@@ -114,7 +117,7 @@
   grid-template-columns: auto minmax(0, 1fr);
   gap: 0.15rem 0.75rem;
   margin: 0.2rem 0 0;
-  font-size: 0.75rem;
+  font-size: 0.84rem;
 }
 .exhibit__label dt {
   color: var(--faint);

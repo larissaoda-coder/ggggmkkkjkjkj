@@ -12,6 +12,7 @@ import { Icon } from '../../components/Icon';
 import { formatTime, useRadio } from './RadioContext';
 import { useSpotify } from './SpotifyContext';
 import './radio.css';
+import { AreaMark } from '../../components/Ornaments';
 
 const kindLabel: Record<Track['kind'], string> = { audio: 'Arquivo', spotify: 'Spotify', link: 'Link' };
 
@@ -98,6 +99,7 @@ export default function RadioPage() {
     return (
       <div className="page radio">
         <header className="radio__head">
+          <AreaMark id="radio" />
           <h1 className="radio__title">Faixas selecionadas</h1>
           <p className="radio__desc">
             Músicas que escolhi por diferentes motivos. Algumas me lembram você. Outras combinam com coisas que gostaria
@@ -114,6 +116,7 @@ export default function RadioPage() {
   return (
     <div className="page radio">
       <header className="radio__head">
+        <AreaMark id="radio" />
         <h1 className="radio__title">Faixas selecionadas</h1>
         <p className="radio__desc">
           Músicas que escolhi por diferentes motivos. Algumas me lembram você. Outras combinam com coisas que gostaria

@@ -5,8 +5,8 @@
   --env-line: rgba(17, 17, 17, 0.16);
   --env-sheet: #fbfaf6;
   --env-sheet-ink: #1d1b18;
-  --env-seal: #9a7c49;
-  --env-seal-hi: #b8995f;
+  --env-seal: #7e211b;
+  --env-seal-hi: #b0443b;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .envelopes {
@@ -29,14 +29,15 @@
   margin-bottom: clamp(2rem, 6vw, 3.5rem);
 }
 .envelopes__title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 6vw, 3.2rem);
   line-height: 1.05;
 }
 .envelopes__desc {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1.008rem;
+  font-style: italic;
 }
 .envelopes__grid {
   list-style: none;
@@ -61,11 +62,12 @@
   text-wrap: balance;
 }
 .envelopes__meta {
+  font-family: var(--type);
   display: flex;
   gap: 0.75rem;
   min-height: 1rem;
   font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.112em;
   text-transform: uppercase;
   color: var(--faint);
 }
@@ -335,8 +337,9 @@
   border-bottom: 1px solid var(--line);
 }
 .env-reader__label {
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.098em;
   text-transform: uppercase;
   color: var(--muted);
   overflow: hidden;
@@ -345,12 +348,13 @@
   min-width: 0;
 }
 .env-reader__close {
+  font-family: var(--type);
   display: inline-flex;
   align-items: center;
   gap: 0.4rem;
   min-height: 2.6rem;
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.126em;
   text-transform: uppercase;
   flex-shrink: 0;
 }
@@ -386,8 +390,7 @@
     var(--env-sheet);
 }
 .env-letter__title {
-  font-family: var(--serif);
-  font-style: italic;
+  font-family: var(--display);
   font-weight: 400;
   font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   line-height: 1.3;
@@ -411,7 +414,7 @@
   border-top: 1px solid rgba(17, 17, 17, 0.1);
 }
 .env-letter__foot > p {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: #5d5952;
 }
 .env-letter__actions {
@@ -438,4 +441,36 @@
   .envelopes__meta:empty {
     display: none;
   }
+}
+
+/* número datilografado e carimbo sobre o envelope */
+.env__num {
+  position: absolute;
+  z-index: 4;
+  left: 7%;
+  bottom: 9%;
+  font-family: var(--type);
+  font-size: 0.6875rem;
+  letter-spacing: 0.1em;
+  color: var(--ink-2);
+  opacity: 0.75;
+  transition: opacity calc(300ms * var(--motion-scale)) var(--ease);
+}
+.env__postmark {
+  position: absolute;
+  z-index: 4;
+  right: 6%;
+  bottom: 6%;
+}
+.env[data-stage='abrindo'] .env__num,
+.env[data-stage='abrindo'] .env__postmark {
+  opacity: 0 !important;
+  transition: opacity calc(250ms * var(--motion-scale)) var(--ease);
+}
+.env-letter {
+  position: relative;
+}
+.env-letter__tape {
+  top: -0.75rem;
+  left: calc(50% - 3.25rem);
 }

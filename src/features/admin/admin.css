@@ -8,13 +8,13 @@
   margin-bottom: 2rem;
 }
 .admin__title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(1.8rem, 5vw, 2.6rem);
 }
 .admin__lead {
   max-width: 46rem;
-  font-size: 0.875rem;
+  font-size: 0.98rem;
   line-height: 1.6;
   color: var(--muted);
 }
@@ -40,7 +40,7 @@
   min-height: 2.5rem;
   padding: 0 0.25rem;
   text-align: left;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--muted);
   border-bottom: 1px solid var(--line);
 }
@@ -70,8 +70,9 @@
   font-weight: 400;
 }
 .as__sub {
+  font-family: var(--type);
   font-size: 0.75rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.084em;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 500;
@@ -80,7 +81,7 @@
   display: grid;
   gap: 0.4rem;
   max-width: 44rem;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   line-height: 1.55;
   color: var(--muted);
 }
@@ -94,7 +95,7 @@
   min-width: 0;
 }
 .af__label {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--muted);
 }
 .af input[type='text'],
@@ -109,7 +110,7 @@
   border-radius: var(--radius);
   background: var(--bg-elev);
   color: var(--ink);
-  font-size: 0.9375rem;
+  font-size: 1.05rem;
   line-height: 1.5;
 }
 .af textarea {
@@ -131,19 +132,19 @@
   border-color: #a8442f;
 }
 .af__hint {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--faint);
   line-height: 1.45;
 }
 .af__error {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: #b4513c;
 }
 .af--check {
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
-  font-size: 0.875rem;
+  font-size: 0.98rem;
   cursor: pointer;
 }
 .af--check input {
@@ -183,15 +184,15 @@
 }
 .a-status {
   min-height: 1.2em;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--muted);
 }
 .a-error {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: #b4513c;
 }
 .a-warn {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--gold-ink);
 }
 .a-lines {
@@ -218,7 +219,7 @@
   padding: 0 0.9rem;
   border: 1px solid var(--line-strong);
   border-radius: var(--radius);
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--ink);
   background: transparent;
   cursor: pointer;
@@ -255,7 +256,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 0.4rem;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
 }
 
 /* listas */
@@ -264,7 +265,7 @@
   gap: 0.75rem;
 }
 .ai__empty {
-  font-size: 0.875rem;
+  font-size: 0.98rem;
   color: var(--faint);
   font-style: italic;
 }
@@ -292,11 +293,11 @@
   text-align: left;
 }
 .ai__num {
-  font-size: 0.6875rem;
+  font-size: 0.77rem;
   color: var(--faint);
 }
 .ai__title {
-  font-size: 0.9375rem;
+  font-size: 1.05rem;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -364,7 +365,7 @@
   min-width: 0;
 }
 .aphoto__num {
-  font-size: 0.6875rem;
+  font-size: 0.77rem;
   color: var(--faint);
 }
 .aphoto__actions {
@@ -394,7 +395,7 @@
   border-top-color: var(--gold);
 }
 .admin__savestate {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--muted);
 }
 .admin__size[data-over='true'] {

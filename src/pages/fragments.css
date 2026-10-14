@@ -70,11 +70,12 @@
   flex: 1;
 }
 .fragment-card__foot {
+  font-family: var(--type);
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.084em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -117,14 +118,14 @@
   margin-bottom: 1.5rem;
 }
 .fragment-detail__num {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   letter-spacing: 0.14em;
   color: var(--muted);
   margin-bottom: 0.6rem;
 }
 .fragment-detail__title {
-  font-family: var(--serif);
-  font-weight: 350;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(1.75rem, 5vw, 2.6rem);
   line-height: 1.12;
   letter-spacing: -0.01em;
@@ -181,7 +182,7 @@
 }
 @media (max-width: 520px) {
   .fragment-nav__title {
-    font-size: 0.875rem;
+    font-size: 0.98rem;
   }
 }
 @media (max-width: 640px) {

@@ -6,6 +6,7 @@ import { useProgress } from '../../context/ProgressContext';
 import { usePersistentState } from '../../lib/usePersistentState';
 import { EmptyState } from '../../components/EmptyState';
 import './future.css';
+import { AreaMark } from '../../components/Ornaments';
 
 const who = { hoje: 'Agora', adiante: 'Em outra fase' } as const;
 
@@ -56,6 +57,7 @@ export default function FuturePage() {
   return (
     <div className="page future">
       <header className="future__head">
+        <AreaMark id="futuro" />
         <h1 className="future__title">Em outra fase da vida</h1>
         <p className="future__desc">Algumas cenas imaginadas sobre como a vida poderia ser.</p>
       </header>

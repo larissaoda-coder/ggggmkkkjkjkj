@@ -5,6 +5,7 @@ import { useContent } from '../../content/ContentContext';
 import { useMotion } from '../../context/SettingsContext';
 import { useProgress } from '../../context/ProgressContext';
 import './oracle.css';
+import { AreaMark } from '../../components/Ornaments';
 
 type Phase = 'inicio' | 'embaralhando' | 'escolha' | 'revelacao';
 
@@ -43,8 +44,9 @@ function CardFace({ number, name, art }: { number: number | string; name: string
         {number}
       </text>
       <g className="ocard__art">{art}</g>
+      <rect x="16" y="112" width="68" height="14" className="ocard__namebox" />
       <text x="50" y="122" textAnchor="middle" className="ocard__name">
-        {name}
+        {name.toUpperCase()}.
       </text>
     </svg>
   );
@@ -107,6 +109,7 @@ export default function OraclePage() {
         <svg viewBox="0 0 60 30" className="oracle__lotus" aria-hidden="true">
           <path d="M30 26c-3-6-3-14 0-20 3 6 3 14 0 20ZM30 26c-7-3-11-9-11-16 7 2 10 8 11 16ZM30 26c7-3 11-9 11-16-7 2-10 8-11 16ZM30 26c-11 0-17-4-20-10 8-1 15 3 20 10ZM30 26c11 0 17-4 20-10-8-1-15 3-20 10Z" />
         </svg>
+        <AreaMark id="oraculo" />
         <h1 className="oracle__title">Uma leitura simbólica</h1>
         <p className="oracle__desc">Escolha três cartas e veja a interpretação criada para esta experiência.</p>
       </header>

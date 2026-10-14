@@ -6,19 +6,8 @@ export function SpotifyDock({ hidden }: { hidden: boolean }) {
   const s = useSpotify();
   if (!s.available || hidden || (!s.started && !s.open)) return null;
 
-  if (s.status === 'erro')
-    return (
-      <div className="sdock">
-        <div className="sdock__bar sdock__bar--error" role="status">
-          <span className="sdock__label">Não foi possível carregar o player do Spotify.</span>
-          {s.openUrl && (
-            <a className="sdock__toggle" href={s.openUrl} target="_blank" rel="noreferrer">
-              Abrir no Spotify
-            </a>
-          )}
-        </div>
-      </div>
-    );
+  // Se o player não carregar, o aviso fica só na página de músicas, sem ocupar as outras.
+  if (s.status === 'erro') return null;
 
   const label =
     s.status === 'carregando'

@@ -8,6 +8,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { MediaImg } from '../../components/MediaImg';
 import { Lightbox } from '../../components/Lightbox';
 import './museum.css';
+import { AreaMark } from '../../components/Ornaments';
 
 export default function MuseumPage() {
   const { content, photo } = useContent();
@@ -30,7 +31,7 @@ export default function MuseumPage() {
   return (
     <div className="page museum">
       <header className="museum__head">
-        <span className="museum__eyebrow">Acervo</span>
+        <AreaMark id="museu" />
         <h1 className="museum__title">Coisas que merecem registro</h1>
         <p className="museum__desc">
           Uma coleção de detalhes que, por algum motivo, escolhi não deixar passar despercebidos.
@@ -59,7 +60,7 @@ export default function MuseumPage() {
                   {p ? (
                     <button
                       type="button"
-                      className="exhibit__frame"
+                      className="exhibit__frame mono"
                       onClick={() => setOpen(photos.indexOf(p))}
                       aria-label={`Ampliar: ${e.title || 'fotografia'}`}
                     >

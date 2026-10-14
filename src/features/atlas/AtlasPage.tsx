@@ -10,6 +10,7 @@ import { usePersistentState } from '../../lib/usePersistentState';
 import { MediaImg } from '../../components/MediaImg';
 import { Icon } from '../../components/Icon';
 import './atlas.css';
+import { AreaMark } from '../../components/Ornaments';
 
 const categoryLabels: Record<StarCategory, string> = {
   memoria: 'Memória',
@@ -48,9 +49,31 @@ export default function AtlasPage() {
   const secretReady = regularOpened >= regular.length;
   const allDone = stars.length > 0 && stars.every((s) => starsOpened.includes(s.id));
 
-  const dust = useMemo(() => {
+  // Curvas de nível de um terreno imaginário: só textura de mapa, sem significado.
+  const contours = useMemo(() => {
     const r = seeded(11);
-    return Array.from({ length: 140 }, () => ({ x: r() * 100, y: r() * 100, r: 0.05 + r() * 0.14, d: r() * 6 }));
+    const hills = [
+      { x: 24, y: 34, s: 22 },
+      { x: 70, y: 62, s: 26 },
+      { x: 82, y: 20, s: 13 },
+      { x: 38, y: 82, s: 14 },
+    ];
+    const paths: string[] = [];
+    hills.forEach((h) => {
+      const p1 = r() * 6;
+      const p2 = r() * 6;
+      for (let k = 0; k < 5; k++) {
+        const rad = h.s * (1 - k * 0.18);
+        const pts: string[] = [];
+        for (let i = 0; i <= 48; i++) {
+          const t = (i / 48) * Math.PI * 2;
+          const rr = rad * (1 + 0.14 * Math.sin(3 * t + p1 + k * 0.3) + 0.07 * Math.sin(5 * t + p2));
+          pts.push(`${(h.x + Math.cos(t) * rr).toFixed(2)},${(h.y + Math.sin(t) * rr * 0.8).toFixed(2)}`);
+        }
+        paths.push(`M${pts.join('L')}Z`);
+      }
+    });
+    return paths;
   }, []);
 
   const choose = (s: Star) => {
@@ -125,6 +148,7 @@ export default function AtlasPage() {
   return (
     <div className="atlas">
       <header className="atlas__head">
+        <AreaMark id="atlas" />
         <h1 className="atlas__title">Pontos de referência</h1>
         <p className="atlas__desc">Escolha uma estrela para abrir o conteúdo associado a ela.</p>
         <div className="atlas__filters" role="group" aria-label="Categorias">
@@ -144,8 +168,8 @@ export default function AtlasPage() {
 
       <div className="atlas__sky">
         <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="atlas__svg" aria-hidden="true">
-          {dust.map((d, i) => (
-            <circle key={i} cx={d.x} cy={d.y} r={d.r} className="atlas__dust" style={{ animationDelay: `${-d.d}s` }} />
+          {contours.map((d, i) => (
+            <path key={i} d={d} className="atlas__contour" />
           ))}
           {stars.slice(1).map((s, i) => {
             const a = stars[i];
@@ -153,6 +177,22 @@ export default function AtlasPage() {
             return <line key={s.id} x1={a.x} y1={a.y} x2={s.x} y2={s.y} className="atlas__line" data-lit={lit} />;
           })}
         </svg>
+        <svg viewBox="0 0 100 100" className="atlas__compass" aria-hidden="true">
+          <circle cx="50" cy="50" r="30" />
+          <circle cx="50" cy="50" r="24" strokeDasharray="1 2.4" />
+          <path d="M50 8 56 50 50 92 44 50Z" className="atlas__compass-n" />
+          <path d="M8 50 50 44 92 50 50 56Z" />
+          <path d="M50 8 56 50H44Z" className="atlas__compass-fill" />
+          <text x="50" y="5" textAnchor="middle">
+            N
+          </text>
+        </svg>
+        <div className="atlas__scale" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <em className="num">0 · 1 · 2 · 3</em>
+        </div>
         {stars.map((s, i) => {
           const opened = starsOpened.includes(s.id);
           const locked = s.kind === 'segredo' && !secretReady;

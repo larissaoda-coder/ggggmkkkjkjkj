@@ -8,6 +8,7 @@ import { MediaImg } from '../../components/MediaImg';
 import { Lightbox } from '../../components/Lightbox';
 import { EmptyState } from '../../components/EmptyState';
 import './archive.css';
+import { AreaMark } from '../../components/Ornaments';
 
 const filters: { id: 'todas' | PhotoCategory; label: string }[] = [
   { id: 'todas', label: 'Todas' },
@@ -30,6 +31,7 @@ export default function ArchivePage() {
   return (
     <div className="page page--wide archive">
       <header className="archive__head">
+        <AreaMark id="arquivo" />
         <h1 className="archive__title">Arquivo pessoal</h1>
         <p className="archive__desc">Fotografias, detalhes e registros que escolhi guardar.</p>
       </header>
@@ -62,7 +64,7 @@ export default function ArchivePage() {
             <motion.button
               key={p.id}
               type="button"
-              className={`archive__item archive__item--${p.frame}`}
+              className={`archive__item archive__item--${p.frame} mono`}
               onClick={() => {
                 setOpen(i);
                 mark('arquivo');
@@ -72,7 +74,10 @@ export default function ArchivePage() {
               viewport={{ once: true, margin: '0px 0px -40px 0px' }}
               transition={m.t(0.7, { delay: (i % 3) * 0.08 * m.factor })}
               aria-label={p.caption ? `Abrir: ${p.caption}` : 'Abrir fotografia'}
-              style={{ ['--tilt' as string]: p.frame === 'polaroide' ? `${((i * 37) % 5) - 2}deg` : '0deg' }}
+              style={{
+                ['--tilt' as string]: `${(((i * 37) % 5) - 2) * (p.frame === 'polaroide' ? 1 : 0.45)}deg`,
+                ['--tape-r' as string]: `${((i * 53) % 7) - 3}deg`,
+              }}
             >
               <span className="archive__mat" style={{ aspectRatio: `${p.width} / ${p.height}` }}>
                 <MediaImg src={p.src} alt={p.caption || 'Fotografia'} />

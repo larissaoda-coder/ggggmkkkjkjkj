@@ -10,15 +10,16 @@
   max-width: 36rem;
 }
 .radio__title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 6vw, 3.2rem);
   line-height: 1.05;
 }
 .radio__desc {
-  font-size: 0.9rem;
+  font-size: 1.008rem;
   line-height: 1.6;
   color: var(--muted);
+  font-style: italic;
 }
 
 /* aparelho */
@@ -68,7 +69,7 @@
 .radio__freqs {
   display: flex;
   justify-content: space-between;
-  font-size: 0.625rem;
+  font-size: 0.7rem;
   letter-spacing: 0.08em;
   color: var(--r-muted);
   margin-top: 0.3rem;
@@ -135,8 +136,9 @@
   min-width: 0;
 }
 .radio__eyebrow {
+  font-family: var(--type);
   font-size: 0.625rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.112em;
   text-transform: uppercase;
   color: var(--r-muted);
 }
@@ -151,7 +153,7 @@
   overflow-wrap: anywhere;
 }
 .radio__artist {
-  font-size: 0.875rem;
+  font-size: 0.98rem;
   color: var(--r-silver);
 }
 .radio__note {
@@ -175,7 +177,7 @@
 .radio__times {
   display: flex;
   justify-content: space-between;
-  font-size: 0.6875rem;
+  font-size: 0.77rem;
   color: var(--r-muted);
 }
 .radio__controls {
@@ -193,7 +195,7 @@
   border: 1px solid var(--r-line);
   border-radius: 2px;
   color: var(--r-ink);
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   text-decoration: none;
   transition:
     border-color var(--d-fast) var(--ease),
@@ -228,7 +230,7 @@
 }
 .radio__status {
   min-height: 1.3em;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--r-silver);
 }
 .radio__volume {
@@ -251,7 +253,7 @@
 }
 .radio__hint,
 .radio__msg {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--r-muted);
 }
 .radio__spotify {
@@ -325,15 +327,16 @@
   font-size: 1.1rem;
 }
 .radio__mode-desc {
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--muted);
   line-height: 1.55;
 }
 
 /* fila */
 .radio__section {
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.126em;
   text-transform: uppercase;
   color: var(--muted);
   font-weight: 400;
@@ -361,7 +364,7 @@
   background: var(--hover);
 }
 .radio__item-num {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--faint);
 }
 .radio__item-text {
@@ -376,12 +379,13 @@
   white-space: nowrap;
 }
 .radio__item-artist {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--muted);
 }
 .radio__item-kind {
+  font-family: var(--type);
   font-size: 0.625rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.098em;
   text-transform: uppercase;
   color: var(--faint);
 }

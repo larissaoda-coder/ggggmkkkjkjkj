@@ -14,9 +14,8 @@
   gap: 1.25rem;
 }
 .sim-intro__title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-style: italic;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2.8rem, 10vw, 5.2rem);
   line-height: 0.98;
   letter-spacing: -0.02em;
@@ -141,13 +140,14 @@
   place-items: center;
 }
 .sim__caption {
+  font-family: var(--type);
   position: absolute;
   left: var(--gutter);
   bottom: 0.75rem;
   display: flex;
   gap: 0.6rem;
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.112em;
   text-transform: uppercase;
   color: var(--muted);
   background: color-mix(in srgb, var(--bg-sunk) 80%, transparent);
@@ -183,8 +183,9 @@
   white-space: nowrap;
 }
 .sim-line__who {
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.098em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -252,7 +253,7 @@
   padding: 0 1rem;
   border: 1px solid var(--line-strong);
   border-radius: 999px;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   transition:
     background-color var(--d-fast) var(--ease),
     border-color var(--d-fast) var(--ease);
@@ -262,7 +263,7 @@
   background: var(--hover);
 }
 .sim__next-dots {
-  font-size: 0.6875rem;
+  font-size: 0.77rem;
   color: var(--muted);
 }
 
@@ -298,7 +299,7 @@
   transform: translateX(4px) scale(0.99);
 }
 .sim-choice__key {
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--muted);
   display: inline-grid;
   place-items: center;
@@ -322,7 +323,7 @@
 }
 .sim-choice__locked {
   grid-column: 2;
-  font-size: 0.75rem;
+  font-size: 0.84rem;
   color: var(--muted);
   font-style: italic;
 }
@@ -336,9 +337,8 @@
   gap: 0.75rem;
 }
 .sim-ending__title {
-  font-family: var(--serif);
-  font-weight: 300;
-  font-style: italic;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 7vw, 3.1rem);
   line-height: 1.05;
 }
@@ -364,7 +364,7 @@
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--faint);
 }
 .sim-endings__list li[data-known='true'] {
@@ -399,7 +399,7 @@
   cursor: pointer;
 }
 .sim-chapter-card__num {
-  font-size: 0.8rem;
+  font-size: 0.896rem;
   letter-spacing: 0.3em;
   color: var(--muted);
   padding-left: 0.3em;

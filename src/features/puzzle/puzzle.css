@@ -5,14 +5,15 @@
   margin-bottom: clamp(1.5rem, 5vw, 2.75rem);
 }
 .puzzle__title {
-  font-family: var(--serif);
-  font-weight: 300;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 6vw, 3.2rem);
   line-height: 1.05;
 }
 .puzzle__desc {
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 1.008rem;
+  font-style: italic;
 }
 .puzzle__layout {
   display: grid;
@@ -83,7 +84,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  box-shadow: inset 0 0 0 1px rgba(184, 154, 100, 0.85);
+  box-shadow: inset 0 0 0 1px rgba(155, 44, 37, 0.85);
   pointer-events: none;
   animation: piece-fit calc(700ms * var(--motion-scale)) var(--ease-out);
 }
@@ -100,8 +101,8 @@
 @keyframes piece-fit {
   from {
     box-shadow:
-      inset 0 0 0 3px rgba(184, 154, 100, 1),
-      inset 0 0 24px rgba(184, 154, 100, 0.6);
+      inset 0 0 0 3px rgba(155, 44, 37, 1),
+      inset 0 0 24px rgba(155, 44, 37, 0.35);
   }
 }
 .puzzle__peek {
@@ -137,8 +138,9 @@
   border: 1px solid var(--line);
 }
 .puzzle__cover-text .num {
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.112em;
   text-transform: uppercase;
   color: var(--muted);
 }
@@ -150,7 +152,7 @@
 .puzzle__progress {
   display: grid;
   gap: 0.5rem;
-  font-size: 0.8125rem;
+  font-size: 0.91rem;
   color: var(--muted);
 }
 .puzzle__bar {
@@ -166,7 +168,7 @@
   transition: transform var(--d-slow) var(--ease-out);
 }
 .puzzle__help {
-  font-size: 0.875rem;
+  font-size: 0.98rem;
   line-height: 1.6;
   color: var(--muted);
   max-width: 28rem;
@@ -187,9 +189,9 @@
   background: var(--gold);
 }
 .puzzle__done-title {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-size: clamp(1.6rem, 4vw, 2.2rem);
-  font-weight: 300;
+  font-weight: 400;
 }
 .puzzle__caption {
   font-family: var(--serif);

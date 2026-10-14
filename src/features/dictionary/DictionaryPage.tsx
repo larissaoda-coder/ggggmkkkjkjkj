@@ -4,6 +4,7 @@ import type { DictEntry } from '../../content/types';
 import { useProgress } from '../../context/ProgressContext';
 import { EmptyState } from '../../components/EmptyState';
 import './dictionary.css';
+import { AreaMark } from '../../components/Ornaments';
 
 const ALPHABET = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 const fold = (s: string) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
@@ -47,6 +48,7 @@ export default function DictionaryPage() {
   return (
     <div className="page dictionary">
       <header className="dictionary__head">
+        <AreaMark id="dicionario" />
         <h1 className="dictionary__title">Termos particulares</h1>
         <p className="dictionary__desc">Palavras e definições inspiradas nas características que reconheço em você.</p>
       </header>

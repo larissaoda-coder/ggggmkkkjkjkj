@@ -19,6 +19,7 @@ import { useContent } from '../../content/ContentContext';
 import { useProgress } from '../../context/ProgressContext';
 import { Icon } from '../../components/Icon';
 import './simulator.css';
+import { AreaMark } from '../../components/Ornaments';
 
 interface HistoryEntry {
   sceneId: string;
@@ -208,7 +209,7 @@ export default function SimulatorPage() {
     return (
       <div className="sim-intro">
         <div className="sim-intro__inner">
-          <p className="eyebrow">Simulador de escolhas</p>
+          <AreaMark id="historia" />
           <h1 className="sim-intro__title">Uma história em aberto</h1>
           <p className="sim-intro__lede">
             Imagine algumas situações e escolha como gostaria de continuar. São cinco capítulos. As decisões mudam as

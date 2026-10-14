@@ -1,27 +1,35 @@
 /* ------------------------------------------------------------------
-   Fontes (carregadas apenas quando usadas, por unicode-range)
+   Fontes
+   Libre Caslon Display — títulos (tipo de livro antigo, alto contraste)
+   EB Garamond — texto corrido
+   Courier Prime — etiquetas, números e botões (máquina de escrever)
+   Mrs Saint Delafield — notas manuscritas, sempre curtas
 ------------------------------------------------------------------- */
-@import '@fontsource-variable/newsreader/opsz.css';
-@import '@fontsource-variable/newsreader/opsz-italic.css';
-@import '@fontsource-variable/inter/wght.css';
+@import '@fontsource/libre-caslon-display/400.css';
+@import '@fontsource-variable/eb-garamond/wght.css';
+@import '@fontsource-variable/eb-garamond/wght-italic.css';
+@import '@fontsource/courier-prime/400.css';
+@import '@fontsource/courier-prime/700.css';
+@import '@fontsource/courier-prime/400-italic.css';
+@import '@fontsource/mrs-saint-delafield/400.css';
 
 /* ------------------------------------------------------------------
-   Paleta
-   Preto #111111 · Branco #FFFFFF · Grafite #252525
-   Cinza #858585 · Cinza-claro #EAEAEA · Marfim #F5F3EE
+   Paleta: papel de algodão, tinta preta, sépia e um vermelho escuro
+   usado só em detalhes (carimbos, fitas, marcadores).
 ------------------------------------------------------------------- */
 :root {
-  --black: #111111;
-  --white: #ffffff;
-  --graphite: #252525;
-  --gray: #858585;
-  --light: #eaeaea;
-  --ivory: #f5f3ee;
-  --gold-raw: #a08453;
-  --silver-raw: #a7a9ac;
+  --black: #1d1b18;
+  --white: #fbf8f1;
+  --graphite: #3a352e;
+  --gray: #8d8578;
+  --light: #e9e2d4;
+  --ivory: #f2ede3;
 
-  --serif: 'Newsreader Variable', 'Newsreader', 'Iowan Old Style', Georgia, serif;
-  --sans: 'Inter Variable', 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --display: 'Libre Caslon Display', 'Libre Caslon Text', Didot, 'Bodoni 72', Georgia, serif;
+  --serif: 'EB Garamond Variable', 'EB Garamond', Garamond, 'Times New Roman', serif;
+  --type: 'Courier Prime', 'Courier New', Courier, monospace;
+  --script: 'Mrs Saint Delafield', 'Snell Roundhand', 'Apple Chancery', cursive;
+  --sans: var(--type);
 
   --motion-scale: 1;
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -30,66 +38,72 @@
   --d-med: calc(320ms * var(--motion-scale));
   --d-slow: calc(640ms * var(--motion-scale));
 
-  --radius: 2px;
-  --radius-lg: 6px;
-  --nav-side-w: 15.5rem;
-  --nav-side-w-compact: 4.5rem;
-  --bottom-nav-h: 3.75rem;
-  --mini-player-h: 3.5rem;
+  --radius: 1px;
+  --radius-lg: 3px;
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --measure: 38rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+
+  /* Relevo de papel: ruído iluminado de lado, clareado para servir de textura. */
+  --paper-tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch'/><feDiffuseLighting lighting-color='white' surfaceScale='1.3'><feDistantLight azimuth='45' elevation='58'/></feDiffuseLighting><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncR type='linear' slope='0.22' intercept='0.78'/><feFuncG type='linear' slope='0.22' intercept='0.78'/><feFuncB type='linear' slope='0.22' intercept='0.78'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
 }
 
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: var(--ivory);
-  --bg-elev: var(--white);
-  --bg-sunk: #eeece6;
-  --ink: var(--black);
-  --ink-2: var(--graphite);
-  /* Cinza intermediário levemente escurecido para texto pequeno (contraste AA). */
-  --muted: #676767;
-  --faint: var(--gray);
-  --line: rgba(17, 17, 17, 0.12);
-  --line-strong: rgba(17, 17, 17, 0.28);
-  --hover: rgba(17, 17, 17, 0.045);
-  --accent: var(--black);
-  --on-accent: var(--ivory);
-  --shadow: 0 1px 2px rgba(17, 17, 17, 0.04), 0 8px 24px rgba(17, 17, 17, 0.04);
-  --scrim: rgba(245, 243, 238, 0.82);
-  --paper: var(--white);
-  --glow: rgba(255, 252, 240, 0.9);
-  /* Dourado envelhecido: detalhes e marcadores. --gold-ink é a versão legível em texto pequeno. */
-  --gold: #a08453;
-  --gold-ink: #7d653b;
-  --silver: #a7a9ac;
-  --grain-opacity: 0.06;
+  --bg: #f2ede3;
+  --bg-elev: #fbf8f1;
+  --bg-sunk: #e8e1d3;
+  --ink: #1d1b18;
+  --ink-2: #3a352e;
+  --muted: #5f584e;
+  --faint: #8a8275;
+  --line: rgba(29, 27, 24, 0.14);
+  --line-strong: rgba(29, 27, 24, 0.32);
+  --hover: rgba(29, 27, 24, 0.05);
+  --accent: #1d1b18;
+  --on-accent: #f6f2ea;
+  --shadow: 0 1px 2px rgba(40, 30, 20, 0.08), 0 10px 26px -12px rgba(40, 30, 20, 0.22);
+  --scrim: rgba(242, 237, 227, 0.86);
+  --paper: #fbf8f1;
+  --glow: rgba(255, 250, 238, 0.9);
+  /* Vermelho de carimbo. Os nomes --gold* ficaram por compatibilidade: marcam o acento. */
+  --gold: #9b2c25;
+  --gold-ink: #8a241e;
+  --red: #9b2c25;
+  --sepia: #7b5f43;
+  --silver: #a7a39b;
+  --tape: rgba(212, 196, 160, 0.82);
+  --grain-opacity: 0.07;
+  --tex-blend: multiply;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: var(--black);
-  --bg-elev: #191919;
-  --bg-sunk: #0b0b0b;
-  --ink: var(--ivory);
-  --ink-2: var(--light);
-  --muted: var(--gray);
-  --faint: #5e5e5e;
-  --line: rgba(245, 243, 238, 0.11);
-  --line-strong: rgba(245, 243, 238, 0.26);
-  --hover: rgba(245, 243, 238, 0.05);
-  --accent: var(--ivory);
-  --on-accent: var(--black);
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 30px rgba(0, 0, 0, 0.25);
-  --scrim: rgba(17, 17, 17, 0.84);
-  --paper: var(--graphite);
-  --glow: rgba(245, 243, 238, 0.85);
-  --gold: #b89a64;
-  --gold-ink: #c4a873;
-  --silver: #8d8f92;
-  --grain-opacity: 0.08;
+  --bg: #1b1916;
+  --bg-elev: #25221e;
+  --bg-sunk: #141210;
+  --ink: #efe8db;
+  --ink-2: #d9d1c3;
+  --muted: #a69e90;
+  --faint: #756e63;
+  --line: rgba(239, 232, 219, 0.12);
+  --line-strong: rgba(239, 232, 219, 0.28);
+  --hover: rgba(239, 232, 219, 0.05);
+  --accent: #efe8db;
+  --on-accent: #1b1916;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 30px -12px rgba(0, 0, 0, 0.5);
+  --scrim: rgba(27, 25, 22, 0.88);
+  --paper: #2a2622;
+  --glow: rgba(239, 232, 219, 0.85);
+  --gold: #c25a50;
+  --gold-ink: #d27066;
+  --red: #c25a50;
+  --sepia: #b0916f;
+  --silver: #8f8a82;
+  --tape: rgba(205, 192, 160, 0.32);
+  --grain-opacity: 0.09;
+  --tex-blend: multiply;
 }
 
 /* ------------------------------------------------------------------
@@ -111,11 +125,14 @@ html {
 body {
   margin: 0;
   min-height: 100dvh;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--paper-tex);
+  background-blend-mode: var(--tex-blend);
   color: var(--ink);
-  font-family: var(--sans);
-  font-size: 0.875rem;
-  line-height: 1.55;
+  font-family: var(--serif);
+  font-size: 1rem;
+  line-height: 1.5;
+  font-variant-numeric: oldstyle-nums;
   font-feature-settings: 'kern', 'liga';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -157,6 +174,7 @@ textarea {
 }
 
 button {
+  font-family: var(--type);
   cursor: pointer;
   background: none;
   border: 0;
@@ -233,30 +251,30 @@ p {
    Tipografia utilitária
 ------------------------------------------------------------------- */
 .eyebrow {
-  font-family: var(--sans);
+  font-family: var(--type);
   font-size: 0.6875rem;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--muted);
-  font-weight: 500;
 }
 
 .meta {
+  font-family: var(--type);
   font-size: 0.75rem;
   color: var(--muted);
   letter-spacing: 0.01em;
 }
 
 .display {
-  font-family: var(--serif);
-  font-weight: 350;
+  font-family: var(--display);
+  font-weight: 400;
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1.08;
   letter-spacing: -0.015em;
 }
 
 .title {
-  font-family: var(--serif);
+  font-family: var(--display);
   font-weight: 400;
   font-size: clamp(1.5rem, 3.2vw, 2.1rem);
   line-height: 1.15;
@@ -271,7 +289,17 @@ p {
 }
 
 .num {
+  font-family: var(--type);
   font-variant-numeric: tabular-nums;
+}
+
+/* Nota manuscrita: só para textos curtos. */
+.script {
+  font-family: var(--script);
+  font-weight: 400;
+  font-style: normal;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* ------------------------------------------------------------------
@@ -288,6 +316,7 @@ p {
   border-radius: var(--radius);
   background: transparent;
   color: var(--ink);
+  font-family: var(--type);
   font-size: 0.8125rem;
   letter-spacing: 0.02em;
   text-decoration: none;

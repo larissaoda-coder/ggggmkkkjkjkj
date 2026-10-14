@@ -147,6 +147,7 @@ export function RadioProvider({ children }: { children: ReactNode }) {
       on('playing', () => {
         setStatus('ready');
         setPlaying(true);
+        window.dispatchEvent(new CustomEvent('annelise:tocando', { detail: 'radio' }));
       }),
       on('play', () => setPlaying(true)),
       on('pause', () => setPlaying(false)),
@@ -165,6 +166,15 @@ export function RadioProvider({ children }: { children: ReactNode }) {
     ];
     return () => offs.forEach((off) => off());
   }, [audio]);
+
+  /* Só um som por vez: se a playlist do Spotify começar, o arquivo pausa. */
+  useEffect(() => {
+    const onOther = (e: Event) => {
+      if ((e as CustomEvent<string>).detail !== 'radio') audioRef.current?.pause();
+    };
+    window.addEventListener('annelise:tocando', onOther);
+    return () => window.removeEventListener('annelise:tocando', onOther);
+  }, []);
 
   useEffect(() => {
     const a = audio();

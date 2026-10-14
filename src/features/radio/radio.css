@@ -416,3 +416,22 @@
     padding: 0 0.7rem;
   }
 }
+.radio__pl {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  max-width: 36rem;
+}
+.radio__pl-text {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  line-height: 1.6;
+}
+.radio__pl-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.radio__pl .radio__status {
+  color: var(--muted);
+}

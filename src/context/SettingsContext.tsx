@@ -10,9 +10,11 @@ export interface Prefs {
   reduceMotion: boolean;
   sound: boolean;
   largeText: boolean;
+  /** Começar a playlist no primeiro toque. */
+  music: boolean;
 }
 
-const defaults: Prefs = { theme: 'sistema', reduceMotion: false, sound: false, largeText: false };
+const defaults: Prefs = { theme: 'sistema', reduceMotion: false, sound: false, largeText: false, music: true };
 
 interface SettingsValue {
   prefs: Prefs;

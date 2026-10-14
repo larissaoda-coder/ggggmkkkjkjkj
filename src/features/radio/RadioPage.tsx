@@ -10,6 +10,7 @@ import { EmptyState } from '../../components/EmptyState';
 import { MediaImg } from '../../components/MediaImg';
 import { Icon } from '../../components/Icon';
 import { formatTime, useRadio } from './RadioContext';
+import { useSpotify } from './SpotifyContext';
 import './radio.css';
 
 const kindLabel: Record<Track['kind'], string> = { audio: 'Arquivo', spotify: 'Spotify', link: 'Link' };
@@ -66,6 +67,7 @@ export default function RadioPage() {
   const { mark } = useProgress();
   const m = useMotion();
   const r = useRadio();
+  const spotify = useSpotify();
   const [params, setParams] = useSearchParams();
   const handled = useRef(false);
 
@@ -341,9 +343,51 @@ export default function RadioPage() {
           <h2 id="playlist" className="radio__section">
             Playlist completa
           </h2>
-          <div onPointerDown={interact}>
-            <SpotifyFrame url={content.spotifyPlaylist} height={380} label="Playlist no Spotify" />
-          </div>
+          {spotify.available ? (
+            <div className="radio__pl" data-spotify-control>
+              <p className="radio__pl-text">
+                A playlist toca num player fixo no canto da tela e continua enquanto você passa pelas outras páginas.
+              </p>
+              <div className="radio__pl-actions">
+                <button
+                  type="button"
+                  className="btn btn--solid"
+                  onClick={() => {
+                    interact();
+                    spotify.toggle();
+                  }}
+                  disabled={spotify.status === 'carregando' || spotify.status === 'erro'}
+                >
+                  <Icon name={spotify.playing ? 'pause' : 'play'} size={16} />
+                  {spotify.playing ? 'Pausar a playlist' : 'Tocar a playlist'}
+                </button>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => spotify.setOpen(!spotify.open)}
+                  aria-expanded={spotify.open}
+                >
+                  {spotify.open ? 'Ocultar o player' : 'Mostrar o player'}
+                </button>
+              </div>
+              <p className="radio__status" role="status">
+                {spotify.status === 'carregando'
+                  ? 'Carregando o player do Spotify.'
+                  : spotify.status === 'erro'
+                    ? 'Não foi possível carregar o player do Spotify.'
+                    : ''}
+              </p>
+              {spotify.openUrl && (
+                <a className="link-btn" href={spotify.openUrl} target="_blank" rel="noreferrer">
+                  Abrir no Spotify <Icon name="external" size={14} />
+                </a>
+              )}
+            </div>
+          ) : (
+            <div onPointerDown={interact}>
+              <SpotifyFrame url={content.spotifyPlaylist} height={380} label="Playlist no Spotify" />
+            </div>
+          )}
         </section>
       )}
     </div>

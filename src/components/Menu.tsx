@@ -129,6 +129,10 @@ export function Menu({ open, onClose }: { open: boolean; onClose: () => void }) 
               <span>Sons do jardim</span>
             </label>
             <label className="menu__pref menu__check">
+              <input type="checkbox" checked={prefs.music} onChange={(e) => update({ music: e.target.checked })} />
+              <span>Tocar a playlist ao entrar</span>
+            </label>
+            <label className="menu__pref menu__check">
               <input
                 type="checkbox"
                 checked={prefs.largeText}

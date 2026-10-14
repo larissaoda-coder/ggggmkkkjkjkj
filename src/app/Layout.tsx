@@ -7,6 +7,8 @@ import { Menu } from '../components/Menu';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { Icon } from '../components/Icon';
 import { useRadio } from '../features/radio/RadioContext';
+import { useSpotify } from '../features/radio/SpotifyContext';
+import { SpotifyDock } from '../features/radio/SpotifyDock';
 
 function transitionKey(pathname: string) {
   const parts = pathname.split('/').filter(Boolean);
@@ -24,6 +26,12 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
   const immersive = Boolean(section?.immersive);
   const chrome = !isHome && !immersive;
   const radio = useRadio();
+  const spotify = useSpotify();
+  const isAdmin = location.pathname === '/admin';
+  const { setOpen: setSpotifyOpen } = spotify;
+  useEffect(() => {
+    if (isAdmin) setSpotifyOpen(false);
+  }, [isAdmin, setSpotifyOpen]);
   const showPlayer =
     radio.track?.kind === 'audio' && (radio.playing || radio.time > 0) && location.pathname !== '/radio';
 
@@ -82,6 +90,7 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
         </header>
       )}
       <Menu open={menuOpen} onClose={close} />
+      <SpotifyDock hidden={isAdmin || menuOpen} />
       <main id="conteudo" className="app__main" tabIndex={-1}>
         <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
           <motion.div

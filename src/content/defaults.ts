@@ -19,7 +19,7 @@ export const defaultContent: Content = {
 
   photos: [],
   tracks: [],
-  spotifyPlaylist: '',
+  spotifyPlaylist: 'https://open.spotify.com/playlist/728BdbXNyL00ybhvCK8R97',
 
   radio: {
     interludes: [

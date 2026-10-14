@@ -47,6 +47,17 @@ O conteúdo editável (tudo, menos a carta e os fragmentos) vem de três camadas
 | Publicado como artifact no claude.ai          | Banco de dados e armazenamento de arquivos do próprio artifact. Só contas com permissão de edição salvam (regra no servidor). | Quem abre conectado ao claude.ai. Visitantes sem login veem o `content.json` publicado. |
 | Qualquer outra hospedagem (GitHub Pages etc.) | Apenas no navegador de quem administra (localStorage e IndexedDB). Não há login: a área não é protegida.                      | Ninguém além desse navegador, até o conteúdo ser exportado para `public/content.json`.  |
 
+## Playlist
+
+A playlist do Spotify fica em `spotifyPlaylist` (padrão em `src/content/defaults.ts`, editável em
+_Administração → Músicas_). Ela toca num player fixo no canto da tela e continua entre as páginas.
+
+Navegadores não permitem som antes de a pessoa interagir com a página, então a playlist começa no primeiro toque
+ou clique (normalmente o botão Entrar). Se o navegador recusar mesmo assim (acontece no iPhone), o player abre
+pedindo um toque no play do Spotify. Sem conta do Spotify conectada no navegador, o Spotify toca prévias de 30
+segundos. A opção _Tocar a playlist ao entrar_ no menu desliga o início automático. No claude.ai o player do
+Spotify não carrega; lá a página mostra um link para abrir a playlist.
+
 Limites conhecidos:
 
 - No claude.ai não é possível enviar arquivos de áudio nem incorporar o player do Spotify; a rádio usa endereços
@@ -65,4 +76,5 @@ npm run build   # gera dist/
 ```
 
 O conteúdo de `dist/` pode ser publicado em qualquer hospedagem estática. Para o GitHub Pages, ative
-_Settings → Pages → Source: GitHub Actions_ e rode o workflow `.github/workflows/deploy.yml`.
+_Settings → Pages → Source: GitHub Actions_; o workflow `.github/workflows/deploy.yml` publica a cada push em
+`main` ou `claude/annelise-app` (ou manualmente, em _Actions → Publicar no GitHub Pages → Run workflow_).

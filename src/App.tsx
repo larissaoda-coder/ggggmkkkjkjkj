@@ -5,6 +5,7 @@ import { ProgressProvider } from './context/ProgressContext';
 import { ContentProvider } from './content/ContentContext';
 import { Layout } from './app/Layout';
 import { RadioProvider } from './features/radio/RadioContext';
+import { SpotifyProvider } from './features/radio/SpotifyContext';
 import Home from './pages/Home';
 
 const IndexPage = lazy(() => import('./pages/IndexPage'));
@@ -33,34 +34,36 @@ export default function App() {
       <ProgressProvider>
         <ContentProvider>
           <RadioProvider>
-            <HashRouter>
-              <Layout>
-                {(location) => (
-                  <Routes location={location}>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/indice" element={<IndexPage />} />
-                    <Route path="/carta" element={<LetterPage />} />
-                    <Route path="/fragmentos" element={<FragmentsPage />} />
-                    <Route path="/fragmentos/:n" element={<FragmentDetailPage />} />
-                    <Route path="/arquivo" element={<ArchivePage />} />
-                    <Route path="/livro" element={<BookPage />} />
-                    <Route path="/mapa" element={<AtlasPage />} />
-                    <Route path="/radio" element={<RadioPage />} />
-                    <Route path="/oraculo" element={<OraclePage />} />
-                    <Route path="/cartas" element={<EnvelopesPage />} />
-                    <Route path="/historia" element={<SimulatorPage />} />
-                    <Route path="/quebra-cabeca" element={<PuzzlePage />} />
-                    <Route path="/museu" element={<MuseumPage />} />
-                    <Route path="/dicionario" element={<DictionaryPage />} />
-                    <Route path="/futuro" element={<FuturePage />} />
-                    <Route path="/intervalo" element={<GardenPage />} />
-                    <Route path="/antes-de-sair" element={<SecretPage />} />
-                    <Route path="/admin" element={<AdminPage />} />
-                    <Route path="*" element={<NotFound />} />
-                  </Routes>
-                )}
-              </Layout>
-            </HashRouter>
+            <SpotifyProvider>
+              <HashRouter>
+                <Layout>
+                  {(location) => (
+                    <Routes location={location}>
+                      <Route path="/" element={<Home />} />
+                      <Route path="/indice" element={<IndexPage />} />
+                      <Route path="/carta" element={<LetterPage />} />
+                      <Route path="/fragmentos" element={<FragmentsPage />} />
+                      <Route path="/fragmentos/:n" element={<FragmentDetailPage />} />
+                      <Route path="/arquivo" element={<ArchivePage />} />
+                      <Route path="/livro" element={<BookPage />} />
+                      <Route path="/mapa" element={<AtlasPage />} />
+                      <Route path="/radio" element={<RadioPage />} />
+                      <Route path="/oraculo" element={<OraclePage />} />
+                      <Route path="/cartas" element={<EnvelopesPage />} />
+                      <Route path="/historia" element={<SimulatorPage />} />
+                      <Route path="/quebra-cabeca" element={<PuzzlePage />} />
+                      <Route path="/museu" element={<MuseumPage />} />
+                      <Route path="/dicionario" element={<DictionaryPage />} />
+                      <Route path="/futuro" element={<FuturePage />} />
+                      <Route path="/intervalo" element={<GardenPage />} />
+                      <Route path="/antes-de-sair" element={<SecretPage />} />
+                      <Route path="/admin" element={<AdminPage />} />
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                  )}
+                </Layout>
+              </HashRouter>
+            </SpotifyProvider>
           </RadioProvider>
         </ContentProvider>
       </ProgressProvider>

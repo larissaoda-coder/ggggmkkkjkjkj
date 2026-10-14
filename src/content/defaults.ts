@@ -31,8 +31,8 @@ export const defaultContent: Content = {
     {
       id: 'f-polaroide',
       src: 'fotos/03-polaroide.jpg',
-      width: 596,
-      height: 713,
+      width: 1672,
+      height: 2000,
       caption: '',
       dedication: '',
       category: 'retratos',
@@ -42,8 +42,8 @@ export const defaultContent: Content = {
     {
       id: 'f-arco',
       src: 'fotos/01-arco.jpg',
-      width: 570,
-      height: 294,
+      width: 2000,
+      height: 1032,
       caption: '',
       dedication: '',
       category: 'detalhes',
@@ -53,8 +53,8 @@ export const defaultContent: Content = {
     {
       id: 'f-rochas',
       src: 'fotos/02-rochas.jpg',
-      width: 570,
-      height: 273,
+      width: 2000,
+      height: 958,
       caption: '',
       dedication: '',
       category: 'retratos',
@@ -75,8 +75,8 @@ export const defaultContent: Content = {
     {
       id: 'f-instantaneas',
       src: 'fotos/06-instantaneas.jpg',
-      width: 631,
-      height: 715,
+      width: 1765,
+      height: 2000,
       caption: '',
       dedication: '',
       category: 'retratos',

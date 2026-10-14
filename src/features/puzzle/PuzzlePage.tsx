@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type PointerEvent as RPointerEvent } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useContent, useMediaSrc } from '../../content/ContentContext';
+import { puzzlePhoto } from '../../content/placement';
 import { useMotion } from '../../context/SettingsContext';
 import { useProgress } from '../../context/ProgressContext';
 import { EmptyState } from '../../components/EmptyState';
@@ -31,11 +32,11 @@ function newBoard(n: number): Board {
 }
 
 export default function PuzzlePage() {
-  const { content, photo } = useContent();
+  const { content } = useContent();
   const { mark } = useProgress();
   const m = useMotion();
   const pz = content.puzzle;
-  const chosen = (pz.photoId && photo(pz.photoId)) || content.photos[0];
+  const chosen = puzzlePhoto(content);
   const src = useMediaSrc(chosen?.src);
   const n = pz.size === 4 ? 4 : 3;
 

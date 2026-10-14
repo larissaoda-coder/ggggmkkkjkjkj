@@ -50,10 +50,49 @@ export function HomeTab({ draft, patch }: TabProps) {
         <Text label="Título" value={home.title} onChange={(v) => setHome({ title: v })} />
         <Text label="Subtítulo" value={home.subtitle} onChange={(v) => setHome({ subtitle: v })} rows={2} />
         <Text label="Rodapé" value={home.footer} onChange={(v) => setHome({ footer: v })} />
+        {[0, 1].map((i) => (
+          <PhotoPicker
+            key={i}
+            label={`Fotografia da abertura ${i + 1}`}
+            value={home.photoIds[i] ?? ''}
+            photos={draft.photos}
+            onChange={(v) => {
+              const ids = [home.photoIds[0] ?? '', home.photoIds[1] ?? ''];
+              ids[i] = v;
+              setHome({ photoIds: ids });
+            }}
+            hint={
+              i === 1 ? 'As fotografias da abertura, da carta e do quebra-cabeça não se repetem no arquivo.' : undefined
+            }
+          />
+        ))}
+      </Section>
+      <Section
+        title="Carta: abertura"
+        note="Quando a carta é aberta aparecem três faixas: uma fotografia, o verso de um envelope com uma frase escrita à mão e outra fotografia. Sem escolha, usam as fotografias que já vêm com o site."
+      >
+        <Text
+          label="Frase no envelope"
+          value={draft.letter.note}
+          onChange={(v) => patch((d) => ({ ...d, letter: { ...d.letter, note: v } }))}
+          hint="Curta, de uma linha. Vazio: o envelope aparece sem frase."
+        />
+        <PhotoPicker
+          label="Fotografia de cima"
+          value={draft.letter.topPhotoId}
+          photos={draft.photos}
+          onChange={(v) => patch((d) => ({ ...d, letter: { ...d.letter, topPhotoId: v } }))}
+        />
+        <PhotoPicker
+          label="Fotografia de baixo"
+          value={draft.letter.bottomPhotoId}
+          photos={draft.photos}
+          onChange={(v) => patch((d) => ({ ...d, letter: { ...d.letter, bottomPhotoId: v } }))}
+        />
       </Section>
       <Section
         title="Livro: dedicatória"
-        note="A carta e os dez fragmentos entram no livro exatamente como foram escritos e não são editados aqui."
+        note="Os dez fragmentos entram no livro exatamente como foram escritos e não são editados aqui. A carta tem a sua própria página."
       >
         <Text
           label="Dedicatória"
@@ -107,7 +146,7 @@ export function PhotosTab({ draft, patch, backend, onUploaded }: TabProps) {
             dedication: '',
             category: 'retratos',
             frame: 'livre',
-            inBook: true,
+            inBook: false,
           },
         ]);
       } catch (e) {
@@ -136,7 +175,7 @@ export function PhotosTab({ draft, patch, backend, onUploaded }: TabProps) {
           dedication: '',
           category: 'retratos',
           frame: 'livre',
-          inBook: true,
+          inBook: false,
         },
       ]);
       setUrl('');

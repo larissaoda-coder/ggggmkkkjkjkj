@@ -38,16 +38,16 @@
   --measure: 38rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-  /* Papel quase liso: só uma fibra leve, para não parecer tela. */
-  --paper-tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch'/><feDiffuseLighting lighting-color='white' surfaceScale='1.1'><feDistantLight azimuth='45' elevation='60'/></feDiffuseLighting><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncR type='linear' slope='0.09' intercept='0.91'/><feFuncG type='linear' slope='0.09' intercept='0.91'/><feFuncB type='linear' slope='0.09' intercept='0.91'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+  /* Papel branco liso, como o fundo das fotografias das referências. */
+  --paper-tex: none;
 }
 
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f7f6f3;
+  --bg: #ffffff;
   --bg-elev: #ffffff;
-  --bg-sunk: #ecebe8;
+  --bg-sunk: #f3f3f1;
   --ink: #141414;
   --ink-2: #2e2e2e;
   --muted: #5e5e5e;
@@ -56,9 +56,9 @@
   --line-strong: rgba(20, 20, 20, 0.3);
   --hover: rgba(20, 20, 20, 0.04);
   --accent: #141414;
-  --on-accent: #f7f6f3;
+  --on-accent: #ffffff;
   --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 14px 30px -16px rgba(0, 0, 0, 0.22);
-  --scrim: rgba(247, 246, 243, 0.9);
+  --scrim: rgba(255, 255, 255, 0.92);
   --paper: #ffffff;
   --glow: rgba(255, 255, 255, 0.9);
   /* Acento: preto. Os nomes --gold e --red ficaram por compatibilidade. */
@@ -68,7 +68,7 @@
   --sepia: #5e5e5e;
   --silver: #a3a3a3;
   --tape: rgba(255, 255, 255, 0.7);
-  --grain-opacity: 0.05;
+  --grain-opacity: 0;
   --tex-blend: multiply;
   --photo-blend: multiply;
 }
@@ -309,59 +309,58 @@ p {
    Botões e controles
 ------------------------------------------------------------------- */
 .btn {
+  /* Botão como na etiqueta das referências: só a palavra e um traço fino embaixo. */
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   min-height: 2.75rem;
-  padding: 0 1.1rem;
-  border: 1px solid var(--line-strong);
-  border-radius: var(--radius);
+  padding: 0 0.1rem;
+  border: 0;
   background: transparent;
   color: var(--ink);
   font-family: var(--type);
-  font-size: 0.8125rem;
-  letter-spacing: 0.02em;
+  font-weight: 400;
+  font-size: 0.9375rem;
+  letter-spacing: 0.06em;
   text-decoration: none;
   white-space: nowrap;
   transition:
-    background-color var(--d-fast) var(--ease),
-    border-color var(--d-fast) var(--ease),
     color var(--d-fast) var(--ease),
-    transform var(--d-fast) var(--ease);
+    opacity var(--d-fast) var(--ease);
 }
-.btn:hover {
-  background: var(--hover);
-  border-color: var(--ink);
+.btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.45rem;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform var(--d-med) var(--ease-out);
 }
-.btn:active {
-  transform: scale(0.98);
+.btn:hover::after {
+  transform: scaleX(0.6);
 }
 .btn[disabled],
 .btn[aria-disabled='true'] {
-  opacity: 0.4;
+  opacity: 0.35;
   cursor: not-allowed;
-  transform: none;
 }
 .btn--solid {
-  background: var(--accent);
-  color: var(--on-accent);
-  border-color: var(--accent);
-}
-.btn--solid:hover {
-  background: var(--ink-2);
-  border-color: var(--ink-2);
+  font-weight: 500;
 }
 .btn--ghost {
-  border-color: transparent;
+  color: var(--muted);
 }
-.btn--ghost:hover {
-  border-color: var(--line);
+.btn--ghost::after {
+  opacity: 0.5;
 }
 .btn--small {
   min-height: 2.25rem;
-  padding: 0 0.8rem;
-  font-size: 0.75rem;
+  font-size: 0.8125rem;
 }
 
 .icon-btn {

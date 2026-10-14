@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from 'react';
-import { letterParagraphs } from '../../data/letter';
 import { fragments } from '../../data/fragments';
 import { useContent } from '../../content/ContentContext';
 import type { Photo } from '../../content/types';
@@ -26,13 +25,9 @@ export const BUDGET = 1080;
 export const FIRST_BUDGET = 960;
 
 function buildPages(dedication: string, photos: Photo[]): BookPageData[] {
+  // O livro guarda só os dez fragmentos; a carta tem a sua própria página.
   const pages: BookPageData[] = [{ kind: 'cover' }, { kind: 'dedication', text: dedication }];
   const queue = [...photos];
-  pages.push({ kind: 'section', title: 'A carta', note: `${letterParagraphs.length} parágrafos` });
-  paginate(letterParagraphs, BUDGET, FIRST_BUDGET).forEach((blocks) =>
-    pages.push({ kind: 'text', heading: '', blocks }),
-  );
-  if (queue.length) pages.push({ kind: 'photo', photo: queue.shift()! });
   pages.push({ kind: 'section', title: 'Dez fragmentos', note: 'Numerados de 1 a 10' });
   fragments.forEach((f, i) => {
     paginate([f.text], BUDGET, FIRST_BUDGET).forEach((blocks, j) =>

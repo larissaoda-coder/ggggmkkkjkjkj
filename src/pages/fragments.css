@@ -213,3 +213,75 @@
 .fragment-nav__title {
   font-size: 1.4rem;
 }
+
+/* ---------- sem caixas: só os números, como a numeração das etiquetas ---------- */
+.fragments .page-head {
+  text-align: center;
+  justify-items: center;
+}
+.fragments .page-head h1 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  letter-spacing: 0.16em;
+}
+.fragment-grid {
+  grid-template-columns: repeat(auto-fill, minmax(min(46%, 11rem), 1fr));
+  gap: clamp(2.25rem, 6vw, 3.5rem) clamp(1rem, 4vw, 2.5rem);
+  max-width: 52rem;
+  margin: clamp(1.5rem, 5vw, 3rem) auto 0;
+  background: none;
+  border: 0;
+}
+.fragment-card {
+  min-height: 0;
+  padding: 0;
+  gap: 0.9rem;
+  align-items: center;
+  background: none;
+}
+.fragment-card:hover,
+.fragment-card:focus-visible {
+  background: none;
+}
+.fragment-card::after {
+  display: none;
+}
+.fragment-card__num {
+  position: relative;
+  padding: 0 0.15em 0.3rem;
+  font-size: clamp(3rem, 9vw, 4.2rem);
+  font-weight: 400;
+}
+.fragment-card__num::after {
+  content: '';
+  position: absolute;
+  left: -0.45em;
+  right: 0;
+  bottom: 0;
+  height: 1px;
+  background: currentColor;
+  transform-origin: right;
+  transition: transform var(--d-med) var(--ease-out);
+}
+.fragment-card:hover .fragment-card__num::after,
+.fragment-card:focus-visible .fragment-card__num::after {
+  transform: scaleX(0.55);
+}
+.fragment-card__foot {
+  gap: 0.4rem;
+  font-weight: 300;
+  font-size: 0.875rem;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+}
+.fragment-card__foot svg {
+  display: none;
+}
+.fragment-card[data-last='true']::before {
+  top: 0.4rem;
+  right: auto;
+  left: calc(50% + 1.6rem);
+  transform: none;
+}

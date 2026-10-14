@@ -36,8 +36,8 @@ export default function AtlasPage() {
   const stars = useMemo(
     () =>
       content.stars.filter((s) => {
-        if (s.kind === 'foto')
-          return Boolean(s.photoId ? content.photos.some((p) => p.id === s.photoId) : content.photos.length);
+        // Sem fotografia escolhida, a estrela não aparece: as fotografias do site não se repetem no mapa.
+        if (s.kind === 'foto') return Boolean(s.photoId && content.photos.some((p) => p.id === s.photoId));
         if (s.kind === 'musica')
           return Boolean(s.trackId ? content.tracks.some((t) => t.id === s.trackId) : content.tracks.length);
         return true;
@@ -93,7 +93,7 @@ export default function AtlasPage() {
       return <p className="atlas__locked">Esta estrela acende depois que as outras forem abertas.</p>;
     switch (s.kind) {
       case 'foto': {
-        const photo = content.photos.find((p) => p.id === s.photoId) ?? content.photos[0];
+        const photo = content.photos.find((p) => p.id === s.photoId);
         return photo ? (
           <figure className="atlas__photo">
             <MediaImg src={photo.src} alt={photo.caption || 'Fotografia'} />

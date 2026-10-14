@@ -90,8 +90,11 @@ export interface FutureScene {
 
 export interface Content {
   version: 1;
-  home: { title: string; subtitle: string; footer: string };
+  /** `photoIds`: fotografias da abertura, na ordem em que aparecem. */
+  home: { title: string; subtitle: string; footer: string; photoIds: string[] };
   book: { dedication: string };
+  /** Abertura da carta: duas fotografias e uma frase escrita à mão no verso do envelope. */
+  letter: { note: string; topPhotoId: string; bottomPhotoId: string };
   photos: Photo[];
   tracks: Track[];
   spotifyPlaylist: string;

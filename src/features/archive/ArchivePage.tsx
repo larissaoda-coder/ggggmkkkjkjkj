@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { motion } from 'framer-motion';
 import { useContent } from '../../content/ContentContext';
+import { archivePhotos } from '../../content/placement';
 import type { PhotoCategory } from '../../content/types';
 import { useMotion } from '../../context/SettingsContext';
 import { useProgress } from '../../context/ProgressContext';
@@ -22,10 +23,9 @@ export default function ArchivePage() {
   const m = useMotion();
   const [filter, setFilter] = useState<'todas' | PhotoCategory>('todas');
   const [open, setOpen] = useState<number | null>(null);
-  const photos = useMemo(
-    () => (filter === 'todas' ? content.photos : content.photos.filter((p) => p.category === filter)),
-    [content.photos, filter],
-  );
+  // Só as fotografias que não aparecem em outra parte do site.
+  const all = useMemo(() => archivePhotos(content), [content]);
+  const photos = useMemo(() => (filter === 'todas' ? all : all.filter((p) => p.category === filter)), [all, filter]);
 
   return (
     <div className="page page--wide archive">
@@ -35,11 +35,11 @@ export default function ArchivePage() {
         <p className="archive__desc">Fotografias, detalhes e registros que escolhi guardar.</p>
       </header>
 
-      {content.photos.length > 0 && (
+      {all.length > 0 && (
         <div className="archive__filters" role="group" aria-label="Coleções">
           {filters.map((f) => {
-            const count =
-              f.id === 'todas' ? content.photos.length : content.photos.filter((p) => p.category === f.id).length;
+            const count = f.id === 'todas' ? all.length : all.filter((p) => p.category === f.id).length;
+            if (count === 0 && f.id !== filter) return null;
             return (
               <button
                 key={f.id}

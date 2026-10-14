@@ -415,3 +415,48 @@
     --w: 6.5rem;
   }
 }
+
+/* ---------- sem molduras de interface ---------- */
+.ocard__empty {
+  border: 1px solid color-mix(in srgb, var(--ink) 13%, transparent);
+  border-radius: 2px;
+}
+.oracle__slot-label {
+  font-size: 0.8125rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  text-transform: lowercase;
+}
+.oracle__btn,
+.oracle__btn--main {
+  position: relative;
+  min-height: 2.75rem;
+  padding: 0 0.1rem;
+  border: 0;
+  outline: 0;
+  background: none;
+  font-size: 0.9375rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: none;
+}
+.oracle__btn--main {
+  font-weight: 500;
+}
+.oracle__btn::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0.45rem;
+  height: 1px;
+  background: currentColor;
+  transform-origin: left;
+  transition: transform var(--d-med) var(--ease-out);
+}
+.oracle__btn:hover:not([disabled]) {
+  background: none;
+}
+.oracle__btn:hover:not([disabled])::after {
+  transform: scaleX(0.6);
+}

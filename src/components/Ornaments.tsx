@@ -53,15 +53,20 @@ export function PhotoObject({
   );
 }
 
-/** Numeração de cada área, como a etiqueta de um bloco de papel: "n.º / 05 / para ver". */
+/**
+ * Abertura de cada área: a numeração como a etiqueta de um bloco de papel
+ * ("05 · para ver"). As fotografias ficam na abertura, no arquivo e no
+ * quebra-cabeça; aqui não entram, para nenhuma aparecer duas vezes.
+ */
 export function AreaMark({ id }: { id: string }) {
   const i = sections.findIndex((s) => s.id === id);
   if (i < 0) return null;
   return (
-    <span className="area-mark">
-      <span className="area-mark__code">n.º</span>
-      <span className="area-mark__num">{String(i + 1).padStart(2, '0')}</span>
-      <span className="area-mark__group">{groupLabels[sections[i].group].toLowerCase()}</span>
-    </span>
+    <div className="area-plate">
+      <span className="area-mark">
+        <span className="area-mark__num">{String(i + 1).padStart(2, '0')}</span>
+        <span className="area-mark__group">{groupLabels[sections[i].group].toLowerCase()}</span>
+      </span>
+    </div>
   );
 }

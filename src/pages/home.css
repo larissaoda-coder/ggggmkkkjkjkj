@@ -1,59 +1,65 @@
-/* Abertura: uma fotografia sobre o papel branco e, ao lado, o nome em versaletes. */
+/* Abertura: duas fotografias soltas no papel branco e, embaixo, o nome em versaletes. */
 .home {
   min-height: 100dvh;
   display: grid;
   grid-template-rows: 1fr auto;
-  padding: clamp(2rem, 8vh, 5rem) var(--gutter) calc(1.75rem + var(--safe-bottom));
+  padding: clamp(1.5rem, 6vh, 4rem) var(--gutter) calc(1.75rem + var(--safe-bottom));
 }
 .home__grid {
   align-self: center;
   justify-self: center;
-  width: min(62rem, 100%);
+  width: min(60rem, 100%);
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
-  gap: clamp(2rem, 6vw, 5rem);
-  align-items: end;
-}
-.home[data-photo='false'] .home__grid {
-  grid-template-columns: minmax(0, 1fr);
   justify-items: center;
+  gap: clamp(2rem, 5vh, 3.25rem);
   text-align: center;
+}
+.home__photos {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: clamp(2rem, 6vw, 4.5rem);
+  width: 100%;
 }
 .home__figure {
   margin: 0;
-  width: min(30rem, 100%);
-  justify-self: end;
+  min-width: 0;
+}
+.home__figure[data-shape='retrato'] {
+  width: min(15rem, 34%);
+}
+.home__figure[data-shape='paisagem'] {
+  width: min(29rem, 58%);
+}
+.home__photos[data-count='1'] .home__figure {
+  width: min(28rem, 100%);
 }
 .home__text {
   display: grid;
-  justify-items: start;
-  gap: 1rem;
-  padding-bottom: clamp(0rem, 4vh, 2rem);
-}
-.home[data-photo='false'] .home__text {
   justify-items: center;
+  gap: 0.9rem;
 }
 .home__title {
   font-family: var(--serif);
   font-weight: 500;
   font-variant-caps: all-small-caps;
-  font-size: clamp(2.4rem, 6vw, 3.6rem);
+  font-size: clamp(2.2rem, 5.4vw, 3.3rem);
   letter-spacing: 0.12em;
   line-height: 1;
 }
 .home__subtitle {
   font-family: var(--serif);
   font-style: italic;
-  font-size: clamp(1.25rem, 2.6vw, 1.5rem);
+  font-size: clamp(1.2rem, 2.4vw, 1.45rem);
   line-height: 1.35;
   color: var(--ink-2);
-  max-width: 20rem;
+  max-width: 21rem;
   text-wrap: balance;
 }
 .home__enter {
   position: relative;
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 1.1rem;
   padding: 0.25rem 0 0.45rem;
   font-family: var(--type);
   font-weight: 400;
@@ -65,19 +71,20 @@
 .home__enter::after {
   content: '';
   position: absolute;
-  left: -1.6rem;
-  right: -0.4rem;
+  left: -1rem;
+  right: -1rem;
   bottom: 0;
   height: 1.5px;
   background: currentColor;
-  transform-origin: right;
+  transform-origin: center;
   transition: transform var(--d-med) var(--ease-out);
 }
 .home__enter:hover::after {
-  transform: scaleX(1.12);
+  transform: scaleX(0.6);
 }
 .home__footer {
   justify-self: center;
+  margin-top: 2.5rem;
   font-family: var(--type);
   font-weight: 300;
   font-size: 0.8125rem;
@@ -86,15 +93,15 @@
   text-align: center;
 }
 @media (max-width: 760px) {
-  .home__grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 2.25rem;
+  .home__photos {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.75rem;
   }
-  .home__figure {
-    justify-self: center;
+  .home__figure[data-shape='retrato'] {
+    width: min(13.5rem, 60%);
+  }
+  .home__figure[data-shape='paisagem'] {
     width: min(24rem, 100%);
-  }
-  .home__text {
-    padding-left: 1.6rem;
   }
 }

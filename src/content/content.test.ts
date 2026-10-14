@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { defaultContent } from './defaults';
 import { mergeContent } from './ContentContext';
+import { archivePhotos, puzzlePhoto } from './placement';
 import { cards, closingNote, positions, shuffle } from '../features/oracle/cards';
 
 describe('conteúdo padrão', () => {
@@ -35,7 +36,7 @@ describe('conteúdo padrão', () => {
   });
 
   it('usa os textos exigidos na página inicial', () => {
-    expect(defaultContent.home).toEqual({
+    expect(defaultContent.home).toMatchObject({
       title: 'Para Annelise.',
       subtitle: 'Algumas coisas merecem ser lidas com calma.',
       footer: 'Feito para você, com atenção aos detalhes.',
@@ -67,6 +68,26 @@ describe('mergeContent', () => {
 
   it('ignora conteúdo inválido', () => {
     expect(mergeContent(defaultContent, null)).toBe(defaultContent);
+  });
+});
+
+describe('fotografias', () => {
+  it('cada uma aparece num lugar só', () => {
+    const home = defaultContent.home.photoIds;
+    const used = [...home, puzzlePhoto(defaultContent)!.id, ...archivePhotos(defaultContent).map((p) => p.id)];
+    expect(home).toEqual(['f-polaroide', 'f-arco']);
+    expect(new Set(used).size).toBe(used.length);
+    expect(used.sort()).toEqual(defaultContent.photos.map((p) => p.id).sort());
+  });
+
+  it('não entram no livro, que guarda só os fragmentos', () => {
+    expect(defaultContent.photos.every((p) => !p.inBook)).toBe(true);
+  });
+
+  it('descarta entradas salvas que apontam para fotografias retiradas', () => {
+    const old = { ...defaultContent.photos[0], id: 'f-maos', src: 'fotos/07-maos.jpg' };
+    const merged = mergeContent(defaultContent, { photos: [old, defaultContent.photos[1]] });
+    expect(merged.photos.map((p) => p.id)).toEqual([defaultContent.photos[1].id]);
   });
 });
 

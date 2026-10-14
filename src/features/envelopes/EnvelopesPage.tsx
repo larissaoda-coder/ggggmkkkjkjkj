@@ -7,6 +7,7 @@ import { useProgress } from '../../context/ProgressContext';
 import { usePersistentState } from '../../lib/usePersistentState';
 import { EmptyState } from '../../components/EmptyState';
 import { Icon } from '../../components/Icon';
+import '@fontsource/shadows-into-light-two/400.css';
 import './envelopes.css';
 import { AreaMark } from '../../components/Ornaments';
 
@@ -28,10 +29,12 @@ function EnvelopeArt({
   variant,
   stage,
   number,
+  label,
 }: {
   variant: Variant;
   stage: 'fechado' | 'abrindo' | 'lido';
   number: number;
+  label: string;
 }) {
   return (
     <div className="env" data-variant={variant} data-stage={stage} aria-hidden="true">
@@ -46,6 +49,12 @@ function EnvelopeArt({
         <path d="M0 100 68 48M160 100 92 48" className="env__fold" />
       </svg>
       <div className="env__flap" />
+      {/* borda da aba com sombra, como no verso de um envelope de verdade */}
+      <svg className="env__edge" viewBox="0 0 160 100" preserveAspectRatio="none">
+        <path d="M0 0 76 52Q80 55 84 52L160 0" className="env__edge-shadow" />
+        <path d="M0 0 76 52Q80 55 84 52L160 0" className="env__edge-line" />
+      </svg>
+      <span className="env__hand">{label}</span>
       <span className="env__seal">
         <i />
         <i />
@@ -150,7 +159,7 @@ function Reader({
       <div className="env-reader__stage">
         {stage === 'abrindo' ? (
           <div className="env-reader__opening">
-            <EnvelopeArt variant={variant} stage="abrindo" number={index + 1} />
+            <EnvelopeArt variant={variant} stage="abrindo" number={index + 1} label={envelope.label} />
           </div>
         ) : (
           <motion.article
@@ -232,13 +241,22 @@ export default function EnvelopesPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={m.t(0.6, { delay: i * 0.08 * m.factor })}
               >
-                <EnvelopeArt variant={variants[i % variants.length]} stage={read ? 'lido' : 'fechado'} number={i + 1} />
-                <p className="envelopes__label">{e.label}</p>
+                <EnvelopeArt
+                  variant={variants[i % variants.length]}
+                  stage={read ? 'lido' : 'fechado'}
+                  number={i + 1}
+                  label={e.label}
+                />
                 <div className="envelopes__meta">
                   {read && <span>Lida</span>}
                   {isSaved && <span className="envelopes__saved">Guardada</span>}
                 </div>
-                <button type="button" className="btn" onClick={() => open(e.id)}>
+                <button
+                  type="button"
+                  className="btn"
+                  onClick={() => open(e.id)}
+                  aria-label={`Abrir envelope: ${e.label}`}
+                >
                   Abrir envelope
                 </button>
               </motion.li>

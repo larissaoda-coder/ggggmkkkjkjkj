@@ -7,7 +7,6 @@ import { useProgress } from '../../context/ProgressContext';
 import { useSecretUnlocked } from '../../lib/useSecret';
 import { sections } from '../../app/sections';
 import { fragments } from '../../data/fragments';
-import { MediaImg } from '../../components/MediaImg';
 import './secret.css';
 
 const OPENING =
@@ -49,7 +48,6 @@ export default function SecretPage() {
   }
 
   /* O que foi encontrado pelo caminho. */
-  const favorite = content.photos.find((p) => p.category === 'favoritas') ?? content.photos[0];
   const word = content.dictionary.find((d) => d.id === lastWord) ?? content.dictionary[0];
   const star =
     content.stars.find((s) => s.id === lastStar && s.kind !== 'segredo') ??
@@ -85,17 +83,8 @@ export default function SecretPage() {
         {OPENING}
       </motion.p>
 
-      {(favorite || word || star || track) && (
-        <motion.section className="secret__found" data-photo={Boolean(favorite)} aria-label="Pelo caminho" {...fade(2)}>
-          {favorite && (
-            <figure className="found found--photo">
-              <span className="found__label">Uma fotografia</span>
-              <span className="found__img" style={{ aspectRatio: `${favorite.width} / ${favorite.height}` }}>
-                <MediaImg src={favorite.src} alt={favorite.caption || 'Fotografia'} />
-              </span>
-              {favorite.caption && <figcaption>{favorite.caption}</figcaption>}
-            </figure>
-          )}
+      {(word || star || track) && (
+        <motion.section className="secret__found" data-photo={false} aria-label="Pelo caminho" {...fade(2)}>
           <div className="secret__found-col">
             {word && (
               <div className="found">

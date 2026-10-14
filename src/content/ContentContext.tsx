@@ -3,6 +3,9 @@ import { defaultContent } from './defaults';
 import { createBackend, idbGet, type Backend } from './backend';
 import type { Content, Photo } from './types';
 
+/** Arquivos que saíram do site; entradas salvas antes que ainda apontem para eles são descartadas. */
+const RETIRED_PHOTOS = new Set(['fotos/07-maos.jpg']);
+
 /** Junta o conteúdo salvo ao padrão, chave por chave, para tolerar versões antigas. */
 export function mergeContent(base: Content, over: Partial<Content> | null | undefined): Content {
   if (!over || typeof over !== 'object') return base;
@@ -19,6 +22,7 @@ export function mergeContent(base: Content, over: Partial<Content> | null | unde
       (out as unknown as Record<string, unknown>)[key] = value;
     }
   }
+  out.photos = out.photos.filter((p) => !RETIRED_PHOTOS.has(p?.src));
   return out;
 }
 

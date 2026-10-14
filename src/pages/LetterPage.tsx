@@ -6,6 +6,7 @@ import { useMotion, useSettings } from '../context/SettingsContext';
 import { useProgress } from '../context/ProgressContext';
 import { usePersistentState } from '../lib/usePersistentState';
 import { Icon } from '../components/Icon';
+import { LetterOpening } from './LetterOpening';
 import './letter.css';
 
 type Phase = 'closed' | 'opening' | 'open';
@@ -27,6 +28,8 @@ export default function LetterPage() {
   const { mark } = useProgress();
   const [saved, setSaved] = usePersistentState<LetterState>('letter', initialLetter);
   const [phase, setPhase] = useState<Phase>('closed');
+  // A abertura em três faixas anima só quando a carta é aberta pelo botão principal.
+  const [intro, setIntro] = useState<'animado' | 'estatico'>('estatico');
   const [progress, setProgress] = useState(0);
   const [atEnd, setAtEnd] = useState(false);
   const articleRef = useRef<HTMLElement>(null);
@@ -47,13 +50,25 @@ export default function LetterPage() {
     [setSaved],
   );
 
+  // O envelope se abre e, em seguida, a abertura em três faixas aparece.
   const openAnimated = () => {
+    setIntro('animado');
     if (m.reduced) {
       reveal(null);
       return;
     }
     setPhase('opening');
     openTimer.current = window.setTimeout(() => reveal(null), 1900 * m.factor);
+  };
+
+  const toArticle = () => {
+    const el = articleRef.current;
+    if (!el) return;
+    const header = parseFloat(getComputedStyle(document.documentElement).fontSize) * 3.4 + 56;
+    window.scrollTo({
+      top: el.getBoundingClientRect().top + window.scrollY - header,
+      behavior: m.reduced ? 'auto' : 'smooth',
+    });
   };
 
   useEffect(() => () => window.clearTimeout(openTimer.current), []);
@@ -151,6 +166,7 @@ export default function LetterPage() {
 
   const closeLetter = () => {
     setSaved((s) => ({ ...s, position: measure() }));
+    setIntro('estatico');
     setPhase('closed');
     setAtEnd(false);
     window.scrollTo({ top: 0 });
@@ -205,7 +221,14 @@ export default function LetterPage() {
               )}
             </>
           ) : (
-            <button type="button" className="btn" onClick={() => reveal(null)}>
+            <button
+              type="button"
+              className="btn"
+              onClick={() => {
+                setIntro('estatico');
+                reveal(null);
+              }}
+            >
               <Icon name="skip" size={16} /> Pular animação
             </button>
           )}
@@ -270,6 +293,8 @@ export default function LetterPage() {
           <Icon name="arrow-up" size={18} />
         </button>
       </div>
+
+      <LetterOpening animate={intro === 'animado'} onContinue={toArticle} />
 
       <motion.article
         ref={articleRef}

@@ -14,7 +14,7 @@ export interface Prefs {
   music: boolean;
 }
 
-const defaults: Prefs = { theme: 'sistema', reduceMotion: false, sound: false, largeText: false, music: true };
+const defaults: Prefs = { theme: 'claro', reduceMotion: false, sound: false, largeText: false, music: true };
 
 interface SettingsValue {
   prefs: Prefs;

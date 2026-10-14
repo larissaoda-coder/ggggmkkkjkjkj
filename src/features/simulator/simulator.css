@@ -619,3 +619,37 @@
     transform: translate(-18px, -6px);
   }
 }
+
+/* abertura no mesmo desenho das outras áreas: título em versaletes, linha em itálico */
+.sim-intro {
+  min-height: 0;
+  align-items: start;
+}
+.sim-intro__inner {
+  justify-items: center;
+  text-align: center;
+  max-width: 34rem;
+}
+.sim-intro__title {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  font-size: clamp(1.6rem, 4.2vw, 2.2rem);
+  line-height: 1.25;
+  letter-spacing: 0.16em;
+  text-wrap: balance;
+}
+.sim-intro__lede {
+  font-style: italic;
+  color: var(--ink);
+}
+.sim-intro__actions {
+  justify-content: center;
+}
+.sim-intro .sim-endings {
+  margin-top: 1.25rem;
+  text-align: left;
+}
+.sim-intro__note {
+  max-width: 28rem;
+}

@@ -16,11 +16,12 @@ export default function IndexPage() {
   return (
     <div className="page index">
       <header className="index__head">
-        <span className="area-mark">
-          <span className="area-mark__code">n.º</span>
-          <span className="area-mark__num">00</span>
-          <span className="area-mark__group">índice</span>
-        </span>
+        <div className="area-plate">
+          <span className="area-mark">
+            <span className="area-mark__num">00</span>
+            <span className="area-mark__group">índice</span>
+          </span>
+        </div>
         <h1 className="index__title">Cada parte pode ser aberta separadamente.</h1>
         <p className="index__lede">Não há ordem obrigatória. O que você já viu fica marcado.</p>
       </header>

@@ -78,22 +78,21 @@ npm test        # textos originais, paginação do livro e conteúdo padrão
 npm run build   # gera dist/
 ```
 
-O conteúdo de `dist/` pode ser publicado em qualquer hospedagem estática. Para o GitHub Pages, ative
-_Settings → Pages → Source: GitHub Actions_; o workflow `.github/workflows/deploy.yml` publica a cada push em
-`main` ou `claude/annelise-app` (ou manualmente, em _Actions → Publicar no GitHub Pages → Run workflow_).
+O site é publicado pela Vercel: o projeto está ligado a este repositório e cada push em `claude/annelise-app`
+(a branch principal) gera uma nova versão. As configurações ficam em `vercel.json` (build `npm run build`, saída
+`dist/`). O endereço é `<nome-do-projeto>.vercel.app`; para mudá-lo, renomeie o projeto em _Settings → General →
+Project Name_ ou adicione outro nome em _Settings → Domains_.
 
-O endereço fica `https://larissaoda-coder.github.io/ggggmkkkjkjkj/`. Para um nome mais curto sem custo, renomeie o
-repositório (_Settings → General → Repository name_, por exemplo `para-annelise`); o endereço passa a ser
-`https://larissaoda-coder.github.io/para-annelise/`.
+O conteúdo de `dist/` também funciona em qualquer outra hospedagem estática. O workflow
+`.github/workflows/deploy.yml` publica no GitHub Pages quando rodado manualmente (_Actions → Publicar no GitHub
+Pages → Run workflow_), depois de ativar _Settings → Pages → Source: GitHub Actions_.
 
 ### Domínio próprio
 
 1. Compre o domínio (por exemplo em registro.br para `.com.br`).
-2. No painel do domínio, crie os registros DNS:
-   - `A` em `@` apontando para `185.199.108.153`, `185.199.109.153`, `185.199.110.153` e `185.199.111.153`;
-   - `CNAME` em `www` apontando para `larissaoda-coder.github.io`.
-3. Crie o arquivo `public/CNAME` contendo só o domínio (por exemplo `paraannelise.com.br`) e publique.
-4. Em _Settings → Pages → Custom domain_, informe o mesmo domínio e marque _Enforce HTTPS_ quando liberar.
+2. No painel do domínio, crie os registros DNS que a hospedagem indicar.
+3. Na Vercel, em _Settings → Domains_, adicione o domínio; ela mostra os registros DNS exatos e cuida do HTTPS.
+   (No GitHub Pages: crie `public/CNAME` com o domínio e informe-o em _Settings → Pages → Custom domain_.)
 
 Os caminhos do build são relativos (`base: './'`), então o mesmo build funciona no endereço do GitHub e no domínio
 próprio.

@@ -1,8 +1,8 @@
 name: Publicar no GitHub Pages
 
+# O site é publicado pela Vercel a cada push. Este workflow fica só para uso manual,
+# caso o GitHub Pages seja ativado (Settings → Pages → Source: GitHub Actions).
 on:
-  push:
-    branches: [main, claude/annelise-app]
   workflow_dispatch:
 
 permissions:

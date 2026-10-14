@@ -8,7 +8,7 @@ import { usePersistentState } from '../../lib/usePersistentState';
 import { EmptyState } from '../../components/EmptyState';
 import { Icon } from '../../components/Icon';
 import './envelopes.css';
-import { AreaMark, Postmark, Tape } from '../../components/Ornaments';
+import { AreaMark } from '../../components/Ornaments';
 
 /**
  * Cada envelope abre de um jeito:
@@ -51,15 +51,6 @@ function EnvelopeArt({
         <i />
       </span>
       <span className="env__num">N.º {String(number).padStart(2, '0')}</span>
-      <Postmark
-        className="env__postmark"
-        top="CORREIO PARTICULAR"
-        bottom="CARTAS GUARDADAS"
-        center={String(number)}
-        tone={number % 2 ? 'ink' : 'red'}
-        rotate={number % 2 ? -14 : 10}
-        size={62}
-      />
     </div>
   );
 }
@@ -169,7 +160,6 @@ function Reader({
             animate={lm.animate}
             style={{ transformOrigin: 'top center' }}
           >
-            <Tape className="env-letter__tape" rotate={-2} />
             <h2 className="env-letter__title">{envelope.label}</h2>
             <div className="env-letter__body">
               {envelope.body

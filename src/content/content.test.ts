@@ -21,8 +21,15 @@ describe('conteúdo padrão', () => {
     defaultContent.future.forEach((s) => expect(s.lines.length).toBeGreaterThan(1));
   });
 
-  it('não inventa fotografias nem faixas', () => {
-    expect(defaultContent.photos).toEqual([]);
+  it('usa só as fotografias enviadas, sem legendas inventadas', () => {
+    // Arquivos que existem de fato em public/fotos.
+    const files = Object.keys(import.meta.glob('../../public/fotos/*.jpg')).map((f) => f.replace('../../public/', ''));
+    expect(defaultContent.photos.length).toBeGreaterThan(0);
+    for (const p of defaultContent.photos) {
+      expect(files).toContain(p.src);
+      expect(p.caption).toBe('');
+      expect(p.dedication).toBe('');
+    }
     expect(defaultContent.tracks).toEqual([]);
     expect(defaultContent.museum).toEqual([]);
   });
@@ -53,7 +60,7 @@ describe('conteúdo padrão', () => {
 describe('mergeContent', () => {
   it('mantém o padrão para chaves ausentes ou de tipo errado', () => {
     const merged = mergeContent(defaultContent, { photos: 'x' as never, home: { title: 'Outro' } as never });
-    expect(merged.photos).toEqual([]);
+    expect(merged.photos).toEqual(defaultContent.photos);
     expect(merged.home.title).toBe('Outro');
     expect(merged.home.subtitle).toBe(defaultContent.home.subtitle);
   });

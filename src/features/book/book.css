@@ -79,7 +79,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  background: #f7f4ec;
+  background: #fbfbf9;
   color: #1a1a1a;
   padding: calc(var(--pw) * 0.1) calc(var(--pw) * 0.09) calc(var(--pw) * 0.12);
   font-size: calc(var(--pw) * 0.0395);
@@ -129,7 +129,7 @@
   font-weight: 400;
   font-size: 2.6em;
   line-height: 1;
-  color: #8a241e;
+  color: #141414;
   margin-bottom: 0.5em;
 }
 .bpage__folio {
@@ -145,52 +145,55 @@
 }
 .bpage--cover,
 .leaf__face .bpage--cover {
-  background-color: #4f1813;
+  background-color: #161616;
   background-image:
     repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px),
     repeating-linear-gradient(-45deg, rgba(0, 0, 0, 0.06) 0 1px, transparent 1px 3px),
-    radial-gradient(ellipse at 40% 30%, #6a221d, #45140f 75%);
-  color: #efe2c8;
+    radial-gradient(ellipse at 40% 30%, #2a2a2a, #0f0f0f 75%);
+  color: #ecece9;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   text-align: center;
   gap: 1em;
-  border-left: 3px solid #2c0b09;
+  border-left: 3px solid #050505;
 }
 .bpage--cover::after {
   content: '';
   position: absolute;
   inset: calc(var(--pw) * 0.05);
-  border: 1px solid rgba(239, 226, 200, 0.55);
-  outline: 1px solid rgba(239, 226, 200, 0.3);
+  border: 1px solid rgba(236, 236, 233, 0.55);
+  outline: 1px solid rgba(236, 236, 233, 0.3);
   outline-offset: -6px;
   pointer-events: none;
 }
 .bpage__cover-title {
-  font-family: var(--display);
-  font-weight: 400;
-  font-size: 2.15em;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
+  font-size: 1.9em;
   line-height: 1.1;
   max-width: 9em;
 }
 .bpage__cover-for {
-  font-family: var(--script);
+  font-family: var(--serif);
+  font-style: italic;
   font-size: 1.7em;
   line-height: 1;
-  color: #efe2c8;
+  color: #ecece9;
 }
 .bpage__cover-rule {
   display: block;
   width: 2.2em;
   height: 1px;
-  background: rgba(239, 226, 200, 0.7);
+  background: rgba(236, 236, 233, 0.7);
 }
 .bpage__cover-mark {
   width: 0.5em;
   height: 0.5em;
-  border: 1px solid rgba(239, 226, 200, 0.7);
+  border: 1px solid rgba(236, 236, 233, 0.7);
   transform: rotate(45deg);
   margin-top: 1em;
 }
@@ -217,7 +220,7 @@
   font-size: 0.6em;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: #8a241e;
+  color: #141414;
 }
 .bpage__section-title {
   font-family: var(--display);
@@ -241,13 +244,11 @@
   max-width: 100%;
   max-height: calc(var(--pw) * 1.05);
   overflow: hidden;
-  background: #e7e2d6;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
 }
 .bpage__photo-frame img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
 }
 .bpage--photo figcaption {
   font-family: var(--serif);
@@ -263,7 +264,7 @@
   line-height: 1.5;
 }
 .bpage--blank {
-  background-color: #f2eee4;
+  background-color: #f6f6f3;
 }
 
 /* Controles */
@@ -302,4 +303,10 @@
     padding: 0 0.6rem;
     font-size: 0.806rem;
   }
+}
+
+/* Fotografias do livro em preto e branco; o branco do arquivo some no papel da página. */
+.bpage--photo img {
+  filter: grayscale(1) contrast(1.04);
+  mix-blend-mode: multiply;
 }

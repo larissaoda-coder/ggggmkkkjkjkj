@@ -1,24 +1,24 @@
 /* Cartas guardadas: envelopes de papel, lacre dourado, leitura em folha clara. */
 .envelopes {
-  --env: #e8e2d4;
-  --env-flap: #dfd7c6;
+  --env: #f3f2ee;
+  --env-flap: #e9e8e3;
   --env-line: rgba(17, 17, 17, 0.16);
-  --env-sheet: #fbfaf6;
+  --env-sheet: #ffffff;
   --env-sheet-ink: #1d1b18;
-  --env-seal: #7e211b;
-  --env-seal-hi: #b0443b;
+  --env-seal: #141414;
+  --env-seal-hi: #4a4a4a;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) .envelopes {
-    --env: #2a2824;
-    --env-flap: #33302b;
+    --env: #262626;
+    --env-flap: #2e2e2e;
     --env-line: rgba(245, 243, 238, 0.14);
     --env-sheet: #f1ece0;
   }
 }
 :root[data-theme='dark'] .envelopes {
-  --env: #2a2824;
-  --env-flap: #33302b;
+  --env: #262626;
+  --env-flap: #2e2e2e;
   --env-line: rgba(245, 243, 238, 0.14);
   --env-sheet: #f1ece0;
 }
@@ -394,7 +394,7 @@
   font-weight: 400;
   font-size: clamp(1.25rem, 3.5vw, 1.5rem);
   line-height: 1.3;
-  color: #6f5a34;
+  color: #141414;
   text-wrap: balance;
 }
 .env-letter__body {
@@ -430,8 +430,8 @@
   background: rgba(17, 17, 17, 0.05);
 }
 .env-letter .btn[aria-pressed='true'] {
-  border-color: #9a7c49;
-  color: #6f5a34;
+  border-color: #141414;
+  color: #141414;
 }
 
 @media (max-width: 560px) {
@@ -456,21 +456,7 @@
   opacity: 0.75;
   transition: opacity calc(300ms * var(--motion-scale)) var(--ease);
 }
-.env__postmark {
-  position: absolute;
-  z-index: 4;
-  right: 6%;
-  bottom: 6%;
-}
 .env[data-stage='abrindo'] .env__num,
-.env[data-stage='abrindo'] .env__postmark {
-  opacity: 0 !important;
-  transition: opacity calc(250ms * var(--motion-scale)) var(--ease);
-}
-.env-letter {
+.env[data-stage='abrindo'] .env-letter {
   position: relative;
-}
-.env-letter__tape {
-  top: -0.75rem;
-  left: calc(50% - 3.25rem);
 }

@@ -34,10 +34,12 @@
   box-shadow: 0 3px 0 -2px var(--line);
 }
 .topbar__brand {
-  font-family: var(--script);
-  font-size: 1.75rem;
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 0.14em;
   line-height: 1;
-  padding-top: 0.25rem;
   text-decoration: none;
 }
 .topbar__menu {
@@ -92,8 +94,11 @@
   border-bottom: 1px solid var(--line);
 }
 .menu__brand {
-  font-family: var(--script);
-  font-size: 1.75rem;
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  font-weight: 500;
+  font-size: 1.3rem;
+  letter-spacing: 0.14em;
   line-height: 1;
   text-decoration: none;
 }

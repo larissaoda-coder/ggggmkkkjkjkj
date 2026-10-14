@@ -250,8 +250,10 @@ export function PhotosTab({ draft, patch, backend, onUploaded }: TabProps) {
                       label="Moldura"
                       value={p.frame}
                       options={[
-                        { value: 'livre', label: 'Simples' },
+                        { value: 'livre', label: 'Sem moldura' },
                         { value: 'polaroide', label: 'Polaroide' },
+                        { value: 'serrilhada', label: 'Cópia antiga (borda serrilhada)' },
+                        { value: 'recorte', label: 'Recorte de papel' },
                       ]}
                       onChange={(v) => up({ frame: v })}
                     />

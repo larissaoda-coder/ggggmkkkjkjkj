@@ -220,7 +220,7 @@ export default function GardenPage() {
         ctx.save();
         ctx.translate(x - p.r * 0.15, y - p.r * 0.1);
         ctx.fillStyle = 'rgba(243, 238, 226, 0.92)';
-        ctx.strokeStyle = 'rgba(184, 154, 100, 0.55)';
+        ctx.strokeStyle = 'rgba(160, 160, 158, 0.55)';
         ctx.lineWidth = 0.6;
         const k = p.r * 0.32;
         for (let i = 0; i < 8; i++) {
@@ -234,7 +234,7 @@ export default function GardenPage() {
         }
         ctx.beginPath();
         ctx.arc(0, 0, k * 0.22, 0, Math.PI * 2);
-        ctx.fillStyle = '#c4a873';
+        ctx.fillStyle = '#e6e6e3';
         ctx.fill();
         ctx.restore();
       }

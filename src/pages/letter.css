@@ -55,7 +55,7 @@
   position: absolute;
   inset: 0;
   border: 1px solid var(--line-strong);
-  background: #ece5d5;
+  background: #fbfbf9;
 }
 .envelope__back {
   z-index: 0;
@@ -87,7 +87,7 @@
   content: '';
   position: absolute;
   inset: 0;
-  background: #e4dccb;
+  background: #f1f0ec;
   clip-path: polygon(0 0, 100% 0, 50% 100%);
 }
 .envelope__flap::after {
@@ -110,7 +110,7 @@
   height: 2.6rem;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 30%, #b0443b, #7e211b 62%);
+  background: radial-gradient(circle at 35% 30%, #4a4a4a, #141414 62%);
   box-shadow:
     inset 0 0 0 3px rgba(0, 0, 0, 0.12),
     inset 0 0 0 5px rgba(255, 255, 255, 0.12),
@@ -242,9 +242,8 @@
   max-width: calc(var(--measure) * min(1.15, var(--letter-scale)) + 2 * clamp(1.25rem, 6vw, 4rem));
   margin: clamp(2rem, 6vw, 4rem) auto 0;
   padding: clamp(2.5rem, 7vw, 4.5rem) clamp(1.25rem, 6vw, 4rem) clamp(1rem, 3vw, 2rem);
-  box-shadow:
-    0 1px 2px rgba(40, 28, 16, 0.1),
-    0 18px 40px -22px rgba(40, 28, 16, 0.35);
+  background: var(--paper);
+  box-shadow: var(--shadow);
 }
 @media (max-width: 640px) {
   .letter-paper {
@@ -252,23 +251,7 @@
     margin-right: 0.6rem;
   }
 }
-.letter-paper__tape {
-  top: -0.75rem;
-  left: calc(50% - 3.25rem);
-}
-.letter-paper__postmark {
-  position: absolute;
-  top: 0.6rem;
-  right: 0.8rem;
-}
-@media (max-width: 640px) {
-  .letter-paper__postmark {
-    transform: scale(0.75) rotate(12deg) !important;
-    transform-origin: top right;
-    top: 0.2rem;
-    right: 0.2rem;
-  }
-}
+
 .letter-paper__to {
   margin-bottom: 2.5rem;
 }
@@ -287,11 +270,11 @@
 }
 .letter-paper__body p:first-child::first-letter {
   float: left;
-  font-family: var(--display);
+  font-family: var(--serif);
   font-size: 3.8em;
   line-height: 0.8;
   padding: 0.06em 0.1em 0 0;
-  color: var(--red);
+  color: var(--ink);
 }
 .letter-paper__body p:last-child {
   font-style: italic;
@@ -335,25 +318,4 @@
   max-width: var(--measure);
   margin: 0 auto;
   padding: 0 var(--gutter) 2rem;
-}
-
-/* selo e carimbo sobre o envelope fechado */
-.envelope__stamp {
-  position: absolute;
-  z-index: 5;
-  top: -1.6rem;
-  right: -1.6rem;
-  transform-origin: center;
-  scale: 0.72;
-}
-.envelope__postmark {
-  position: absolute;
-  z-index: 6;
-  top: -1.4rem;
-  left: -2.4rem;
-}
-.envelope--opening .envelope__stamp,
-.envelope--opening .envelope__postmark {
-  opacity: 0;
-  transition: opacity calc(var(--dur) * 0.3) var(--ease);
 }

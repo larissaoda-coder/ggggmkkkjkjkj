@@ -5,10 +5,10 @@
   --o-muted: var(--muted);
   --o-gold: var(--red);
   --o-line: var(--line-strong);
-  --o-paper: #f7f1e3;
+  --o-paper: #fbfbf9;
   --o-paper-ink: #1d1b18;
-  --o-back: #561b17;
-  --o-back-ink: #e8d9bd;
+  --o-back: #141414;
+  --o-back-ink: #e6e6e3;
   position: relative;
   min-height: calc(100dvh - var(--header-h));
   padding: clamp(1.5rem, 5vw, 3rem) var(--gutter) calc(3rem + var(--safe-bottom));
@@ -112,7 +112,7 @@
   stroke: var(--o-paper-ink);
 }
 .ocard__side--front .ocard__num {
-  fill: var(--red);
+  fill: var(--o-paper-ink);
 }
 
 /* posições */
@@ -260,6 +260,7 @@
 .oracle__actions {
   display: grid;
   justify-items: center;
+  align-content: start;
   gap: 0.75rem;
   min-height: 5rem;
 }
@@ -364,7 +365,7 @@
   stroke: var(--o-paper-ink);
 }
 .ocard--lotus .ocard__num {
-  fill: var(--red);
+  fill: var(--o-paper-ink);
 }
 .oracle__lotus-card p {
   font-family: var(--serif);

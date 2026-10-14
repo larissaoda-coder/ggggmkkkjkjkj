@@ -29,7 +29,7 @@
   --r-muted: #9b9a96;
   --r-line: rgba(242, 239, 232, 0.14);
   --r-silver: #b9bbbe;
-  --r-gold: #c4a873;
+  --r-gold: #e6e6e3;
   position: relative;
   overflow: hidden;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.035), transparent 40%), var(--r-bg);
@@ -80,7 +80,7 @@
   bottom: 0.2rem;
   width: 1px;
   background: var(--r-gold);
-  box-shadow: 0 0 8px rgba(196, 168, 115, 0.7);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.55);
   transition: left calc(900ms * var(--motion-scale)) var(--ease-out);
 }
 .radio__body {
@@ -114,7 +114,7 @@
 }
 .radio__label {
   fill: #2a2722;
-  stroke: rgba(196, 168, 115, 0.6);
+  stroke: rgba(230, 230, 227, 0.5);
 }
 .radio__label-num {
   fill: var(--r-gold);

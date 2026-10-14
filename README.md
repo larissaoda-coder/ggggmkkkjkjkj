@@ -1,11 +1,12 @@
 # Para Annelise
 
 Um site pessoal, em português, com uma carta, dez fragmentos e várias áreas para ler, ver, ouvir e explorar com
-calma. O visual é de colagem em papel: textura de papel de algodão, selos picotados, carimbos postais, fita adesiva,
-bordas rasgadas, fotografias em preto e branco e um vermelho de carimbo usado só em detalhes. Tipografia: Libre
-Caslon Display nos títulos, EB Garamond no texto, Courier Prime nas etiquetas e Mrs Saint Delafield nas notas
-manuscritas (todas servidas junto com o site, sem depender do Google Fonts). Sem dependências além de React, React
-Router e Framer Motion.
+calma. Visual minimalista em preto e branco: papel claro, muito espaço, fotografias tratadas como objetos (cópias
+antigas com borda serrilhada, polaroides, recortes de papel). Tipografia: EB Garamond no texto e nos títulos, com
+versaletes nos nomes, e Jost nos números e etiquetas — servidas junto com o site. Sem dependências além de React,
+React Router e Framer Motion.
+
+As fotografias do arquivo ficam em `public/fotos/` e estão listadas em `src/content/defaults.ts`.
 
 Os textos originais da carta e dos fragmentos estão em `src/data/letter.ts` e `src/data/fragments.ts`, sem
 edição; um teste confere isso.

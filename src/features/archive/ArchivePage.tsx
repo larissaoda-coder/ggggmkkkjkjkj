@@ -4,11 +4,10 @@ import { useContent } from '../../content/ContentContext';
 import type { PhotoCategory } from '../../content/types';
 import { useMotion } from '../../context/SettingsContext';
 import { useProgress } from '../../context/ProgressContext';
-import { MediaImg } from '../../components/MediaImg';
 import { Lightbox } from '../../components/Lightbox';
 import { EmptyState } from '../../components/EmptyState';
 import './archive.css';
-import { AreaMark } from '../../components/Ornaments';
+import { AreaMark, PhotoObject } from '../../components/Ornaments';
 
 const filters: { id: 'todas' | PhotoCategory; label: string }[] = [
   { id: 'todas', label: 'Todas' },
@@ -64,7 +63,8 @@ export default function ArchivePage() {
             <motion.button
               key={p.id}
               type="button"
-              className={`archive__item archive__item--${p.frame} mono`}
+              className={`archive__item archive__item--${p.frame}`}
+              data-size={i % 4}
               onClick={() => {
                 setOpen(i);
                 mark('arquivo');
@@ -72,17 +72,17 @@ export default function ArchivePage() {
               initial={{ opacity: 0, y: m.reduced ? 0 : 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '0px 0px -40px 0px' }}
-              transition={m.t(0.7, { delay: (i % 3) * 0.08 * m.factor })}
-              aria-label={p.caption ? `Abrir: ${p.caption}` : 'Abrir fotografia'}
+              transition={m.t(0.8, { delay: (i % 3) * 0.08 * m.factor })}
+              aria-label={p.caption ? `Ampliar: ${p.caption}` : `Ampliar a fotografia ${i + 1}`}
               style={{
-                ['--tilt' as string]: `${(((i * 37) % 5) - 2) * (p.frame === 'polaroide' ? 1 : 0.45)}deg`,
-                ['--tape-r' as string]: `${((i * 53) % 7) - 3}deg`,
+                ['--tilt' as string]: p.frame === 'livre' ? '0deg' : `${(((i * 37) % 5) - 2) * 0.7}deg`,
               }}
             >
-              <span className="archive__mat" style={{ aspectRatio: `${p.width} / ${p.height}` }}>
-                <MediaImg src={p.src} alt={p.caption || 'Fotografia'} />
+              <PhotoObject photo={p} index={i} className="archive__photo" />
+              <span className="archive__label">
+                <span className="archive__num num">{String(i + 1).padStart(2, '0')}</span>
+                {p.caption && <span className="archive__caption">{p.caption}</span>}
               </span>
-              {p.caption && <span className="archive__caption">{p.caption}</span>}
             </motion.button>
           ))}
         </div>

@@ -17,7 +17,7 @@ export interface Photo {
   caption: string;
   dedication: string;
   category: PhotoCategory;
-  frame: 'livre' | 'polaroide';
+  frame: 'livre' | 'polaroide' | 'serrilhada' | 'recorte';
   inBook: boolean;
 }
 

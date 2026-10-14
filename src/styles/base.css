@@ -1,34 +1,28 @@
 /* ------------------------------------------------------------------
    Fontes
-   Libre Caslon Display — títulos (tipo de livro antigo, alto contraste)
-   EB Garamond — texto corrido
-   Courier Prime — etiquetas, números e botões (máquina de escrever)
-   Mrs Saint Delafield — notas manuscritas, sempre curtas
+   EB Garamond — títulos e texto (com versaletes nos nomes e rótulos)
+   Jost — números e etiquetas, leve, como numa etiqueta de papelaria
 ------------------------------------------------------------------- */
-@import '@fontsource/libre-caslon-display/400.css';
 @import '@fontsource-variable/eb-garamond/wght.css';
 @import '@fontsource-variable/eb-garamond/wght-italic.css';
-@import '@fontsource/courier-prime/400.css';
-@import '@fontsource/courier-prime/700.css';
-@import '@fontsource/courier-prime/400-italic.css';
-@import '@fontsource/mrs-saint-delafield/400.css';
+@import '@fontsource-variable/jost/wght.css';
 
 /* ------------------------------------------------------------------
-   Paleta: papel de algodão, tinta preta, sépia e um vermelho escuro
-   usado só em detalhes (carimbos, fitas, marcadores).
+   Paleta: branco de papel, cinzas de grafite e preto (sumi).
+   Nenhuma cor além disso; as fotografias também ficam em preto e branco.
 ------------------------------------------------------------------- */
 :root {
-  --black: #1d1b18;
-  --white: #fbf8f1;
-  --graphite: #3a352e;
-  --gray: #8d8578;
-  --light: #e9e2d4;
-  --ivory: #f2ede3;
+  --black: #141414;
+  --white: #ffffff;
+  --graphite: #2e2e2e;
+  --gray: #8a8a8a;
+  --light: #e6e6e4;
+  --ivory: #f7f6f3;
 
-  --display: 'Libre Caslon Display', 'Libre Caslon Text', Didot, 'Bodoni 72', Georgia, serif;
   --serif: 'EB Garamond Variable', 'EB Garamond', Garamond, 'Times New Roman', serif;
-  --type: 'Courier Prime', 'Courier New', Courier, monospace;
-  --script: 'Mrs Saint Delafield', 'Snell Roundhand', 'Apple Chancery', cursive;
+  --display: var(--serif);
+  --type: 'Jost Variable', 'Jost', Futura, 'Century Gothic', system-ui, sans-serif;
+  --script: var(--serif);
   --sans: var(--type);
 
   --motion-scale: 1;
@@ -38,72 +32,74 @@
   --d-med: calc(320ms * var(--motion-scale));
   --d-slow: calc(640ms * var(--motion-scale));
 
-  --radius: 1px;
-  --radius-lg: 3px;
+  --radius: 0px;
+  --radius-lg: 2px;
   --gutter: clamp(1rem, 4vw, 2.5rem);
   --measure: 38rem;
   --safe-bottom: env(safe-area-inset-bottom, 0px);
 
-  /* Relevo de papel: ruído iluminado de lado, clareado para servir de textura. */
-  --paper-tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch'/><feDiffuseLighting lighting-color='white' surfaceScale='1.3'><feDistantLight azimuth='45' elevation='58'/></feDiffuseLighting><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncR type='linear' slope='0.22' intercept='0.78'/><feFuncG type='linear' slope='0.22' intercept='0.78'/><feFuncB type='linear' slope='0.22' intercept='0.78'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
+  /* Papel quase liso: só uma fibra leve, para não parecer tela. */
+  --paper-tex: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='260' height='260'><filter id='p' x='0' y='0' width='100%' height='100%'><feTurbulence type='fractalNoise' baseFrequency='0.06' numOctaves='4' stitchTiles='stitch'/><feDiffuseLighting lighting-color='white' surfaceScale='1.1'><feDistantLight azimuth='45' elevation='60'/></feDiffuseLighting><feColorMatrix type='saturate' values='0'/><feComponentTransfer><feFuncR type='linear' slope='0.09' intercept='0.91'/><feFuncG type='linear' slope='0.09' intercept='0.91'/><feFuncB type='linear' slope='0.09' intercept='0.91'/></feComponentTransfer></filter><rect width='100%' height='100%' filter='url(%23p)'/></svg>");
 }
 
 :root,
 :root[data-theme='light'] {
   color-scheme: light;
-  --bg: #f2ede3;
-  --bg-elev: #fbf8f1;
-  --bg-sunk: #e8e1d3;
-  --ink: #1d1b18;
-  --ink-2: #3a352e;
-  --muted: #5f584e;
-  --faint: #8a8275;
-  --line: rgba(29, 27, 24, 0.14);
-  --line-strong: rgba(29, 27, 24, 0.32);
-  --hover: rgba(29, 27, 24, 0.05);
-  --accent: #1d1b18;
-  --on-accent: #f6f2ea;
-  --shadow: 0 1px 2px rgba(40, 30, 20, 0.08), 0 10px 26px -12px rgba(40, 30, 20, 0.22);
-  --scrim: rgba(242, 237, 227, 0.86);
-  --paper: #fbf8f1;
-  --glow: rgba(255, 250, 238, 0.9);
-  /* Vermelho de carimbo. Os nomes --gold* ficaram por compatibilidade: marcam o acento. */
-  --gold: #9b2c25;
-  --gold-ink: #8a241e;
-  --red: #9b2c25;
-  --sepia: #7b5f43;
-  --silver: #a7a39b;
-  --tape: rgba(212, 196, 160, 0.82);
-  --grain-opacity: 0.07;
+  --bg: #f7f6f3;
+  --bg-elev: #ffffff;
+  --bg-sunk: #ecebe8;
+  --ink: #141414;
+  --ink-2: #2e2e2e;
+  --muted: #5e5e5e;
+  --faint: #8c8c8c;
+  --line: rgba(20, 20, 20, 0.12);
+  --line-strong: rgba(20, 20, 20, 0.3);
+  --hover: rgba(20, 20, 20, 0.04);
+  --accent: #141414;
+  --on-accent: #f7f6f3;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.06), 0 14px 30px -16px rgba(0, 0, 0, 0.22);
+  --scrim: rgba(247, 246, 243, 0.9);
+  --paper: #ffffff;
+  --glow: rgba(255, 255, 255, 0.9);
+  /* Acento: preto. Os nomes --gold e --red ficaram por compatibilidade. */
+  --gold: #141414;
+  --gold-ink: #141414;
+  --red: #141414;
+  --sepia: #5e5e5e;
+  --silver: #a3a3a3;
+  --tape: rgba(255, 255, 255, 0.7);
+  --grain-opacity: 0.05;
   --tex-blend: multiply;
+  --photo-blend: multiply;
 }
 
 :root[data-theme='dark'] {
   color-scheme: dark;
-  --bg: #1b1916;
-  --bg-elev: #25221e;
-  --bg-sunk: #141210;
-  --ink: #efe8db;
-  --ink-2: #d9d1c3;
-  --muted: #a69e90;
-  --faint: #756e63;
-  --line: rgba(239, 232, 219, 0.12);
-  --line-strong: rgba(239, 232, 219, 0.28);
-  --hover: rgba(239, 232, 219, 0.05);
-  --accent: #efe8db;
-  --on-accent: #1b1916;
-  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35), 0 12px 30px -12px rgba(0, 0, 0, 0.5);
-  --scrim: rgba(27, 25, 22, 0.88);
-  --paper: #2a2622;
-  --glow: rgba(239, 232, 219, 0.85);
-  --gold: #c25a50;
-  --gold-ink: #d27066;
-  --red: #c25a50;
-  --sepia: #b0916f;
-  --silver: #8f8a82;
-  --tape: rgba(205, 192, 160, 0.32);
-  --grain-opacity: 0.09;
+  --bg: #121212;
+  --bg-elev: #1b1b1b;
+  --bg-sunk: #0b0b0b;
+  --ink: #ededeb;
+  --ink-2: #d4d4d2;
+  --muted: #9a9a98;
+  --faint: #6c6c6a;
+  --line: rgba(237, 237, 235, 0.12);
+  --line-strong: rgba(237, 237, 235, 0.28);
+  --hover: rgba(237, 237, 235, 0.05);
+  --accent: #ededeb;
+  --on-accent: #121212;
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4), 0 14px 30px -14px rgba(0, 0, 0, 0.6);
+  --scrim: rgba(18, 18, 18, 0.9);
+  --paper: #1e1e1e;
+  --glow: rgba(237, 237, 235, 0.85);
+  --gold: #ededeb;
+  --gold-ink: #ededeb;
+  --red: #ededeb;
+  --sepia: #9a9a98;
+  --silver: #8a8a8a;
+  --tape: rgba(255, 255, 255, 0.18);
+  --grain-opacity: 0.08;
   --tex-blend: multiply;
+  --photo-blend: normal;
 }
 
 /* ------------------------------------------------------------------
@@ -295,11 +291,18 @@ p {
 
 /* Nota manuscrita: só para textos curtos. */
 .script {
-  font-family: var(--script);
+  font-family: var(--serif);
   font-weight: 400;
-  font-style: normal;
+  font-style: italic;
   letter-spacing: 0;
   text-transform: none;
+}
+
+/* Versaletes, como nos nomes de uma página de peça de teatro. */
+.smallcaps {
+  font-family: var(--serif);
+  font-variant-caps: all-small-caps;
+  letter-spacing: 0.12em;
 }
 
 /* ------------------------------------------------------------------

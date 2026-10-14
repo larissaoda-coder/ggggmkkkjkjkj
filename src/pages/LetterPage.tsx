@@ -7,7 +7,6 @@ import { useProgress } from '../context/ProgressContext';
 import { usePersistentState } from '../lib/usePersistentState';
 import { Icon } from '../components/Icon';
 import './letter.css';
-import { Postmark, Stamp, Tape, engravings } from '../components/Ornaments';
 
 type Phase = 'closed' | 'opening' | 'open';
 
@@ -181,22 +180,6 @@ export default function LetterPage() {
             </div>
             <div className="envelope__flap" />
             <div className="envelope__seal" />
-            <Stamp
-              className="envelope__stamp"
-              art={engravings.envelope}
-              label="Correio particular"
-              value="1"
-              rotate={5}
-            />
-            <Postmark
-              className="envelope__postmark"
-              top="CORREIO PARTICULAR"
-              bottom="UMA CARTA"
-              center="N.º 1"
-              waves
-              rotate={-8}
-              size={84}
-            />
           </div>
         </div>
 
@@ -290,23 +273,13 @@ export default function LetterPage() {
 
       <motion.article
         ref={articleRef}
-        className="letter-paper sheet"
+        className="letter-paper"
         style={{ ['--letter-scale' as string]: saved.scale }}
         initial={{ opacity: 0, y: m.reduced ? 0 : 24 }}
         animate={{ opacity: 1, y: 0 }}
         transition={m.t(0.8)}
         aria-label="Carta"
       >
-        <Tape className="letter-paper__tape" rotate={-3} />
-        <Postmark
-          className="letter-paper__postmark"
-          top="CORREIO PARTICULAR"
-          bottom="UMA CARTA"
-          center="N.º 1"
-          tone="red"
-          rotate={12}
-          size={86}
-        />
         <div className="letter-paper__body">
           {letterParagraphs.map((p, i) => (
             <p key={i}>{p}</p>

@@ -1,168 +1,107 @@
 /* ------------------------------------------------------------------
-   Colagem: carimbos, selos, fita adesiva, renda e papel rasgado
+   Fotografias como objetos sobre o papel, e a numeração das áreas
 ------------------------------------------------------------------- */
-
-/* Carimbo postal */
-.postmark {
-  display: block;
-  color: var(--ink);
-  opacity: 0.72;
-  mix-blend-mode: multiply;
-  overflow: visible;
-  pointer-events: none;
-}
-.postmark--red {
-  color: var(--red);
-  opacity: 0.8;
-}
-:root[data-theme='dark'] .postmark {
-  mix-blend-mode: screen;
-  opacity: 0.5;
-}
-.postmark__ring {
-  font-family: var(--type);
-  font-weight: 700;
-  font-size: 9.5px;
-  letter-spacing: 0.14em;
-}
-.postmark__center {
-  font-family: var(--display);
-  font-size: 15px;
-}
-.postmark__sub {
-  font-family: var(--type);
-  font-size: 8px;
-  letter-spacing: 0.12em;
-}
-
-/* Selo picotado: os furos são o próprio fundo transparente nas bordas. */
-.stamp {
-  --sp: #f6efdf;
-  display: inline-block;
-  width: 96px;
-  height: 120px;
-  padding: 6px;
-  background: radial-gradient(circle at center, transparent 3.1px, var(--sp) 3.6px) -6px -6px / 12px 12px;
-  filter: drop-shadow(0 2px 2px rgba(40, 28, 16, 0.22));
-  color: #2a2520;
-  pointer-events: none;
-}
-.stamp__inner {
+.pobj {
   position: relative;
-  display: grid;
-  grid-template-rows: 1fr auto;
-  height: 100%;
-  padding: 5px 5px 4px;
-  background: var(--sp);
-  outline: 1px solid rgba(42, 37, 32, 0.75);
-  outline-offset: -4px;
+  display: block;
+  max-width: 100%;
 }
-.stamp__art {
+.pobj__print {
+  display: block;
+}
+.pobj__img {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow: hidden;
+}
+.pobj__img img {
   width: 100%;
   height: 100%;
-  min-height: 0;
-}
-.stamp__label {
-  font-family: var(--type);
-  font-size: 6.5px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-align: center;
-  padding-bottom: 2px;
-}
-.stamp__value {
-  position: absolute;
-  top: 6px;
-  right: 8px;
-  font-family: var(--display);
-  font-size: 13px;
-  color: var(--red);
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.04);
 }
 
-/* Fita adesiva de papel, pontas recortadas */
-.tape {
-  position: absolute;
-  z-index: 3;
-  width: 6.5rem;
-  height: 1.55rem;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.28), transparent 45%, rgba(0, 0, 0, 0.04)), var(--tape);
-  transform: rotate(var(--r, -3deg));
-  clip-path: polygon(
-    2% 0,
-    98% 0,
-    100% 14%,
-    97% 30%,
-    100% 48%,
-    97% 66%,
-    100% 84%,
-    98% 100%,
-    2% 100%,
-    0 86%,
-    3% 70%,
-    0 52%,
-    3% 34%,
-    0 16%
-  );
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-:root[data-theme='dark'] .tape {
-  mix-blend-mode: normal;
-}
-
-/* Fita de renda */
-.lace {
-  display: block;
-  height: 22px;
-  background-color: var(--red);
-  -webkit-mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill-rule='evenodd' d='M0 6.5 H4.6 A5.4 5.4 0 0 1 15.4 6.5 H20 V13.5 H15.4 A5.4 5.4 0 0 1 4.6 13.5 H0 Z M10 7.6 L12.4 10 L10 12.4 L7.6 10 Z M8.9 4.2 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z M8.9 15.8 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z M-1 10 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z M17.8 10 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z M4.3 8.3 h0.9 v0.9 h-0.9 Z M14.8 8.3 h0.9 v0.9 h-0.9 Z M4.3 10.8 h0.9 v0.9 h-0.9 Z M14.8 10.8 h0.9 v0.9 h-0.9 Z'/></svg>")
-    left center / 22px 22px repeat-x;
-  mask: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><path fill-rule='evenodd' d='M0 6.5 H4.6 A5.4 5.4 0 0 1 15.4 6.5 H20 V13.5 H15.4 A5.4 5.4 0 0 1 4.6 13.5 H0 Z M10 7.6 L12.4 10 L10 12.4 L7.6 10 Z M8.9 4.2 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z M8.9 15.8 a1.1 1.1 0 1 0 2.2 0 a1.1 1.1 0 1 0 -2.2 0 Z M-1 10 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z M17.8 10 a1.6 1.6 0 1 0 3.2 0 a1.6 1.6 0 1 0 -3.2 0 Z M4.3 8.3 h0.9 v0.9 h-0.9 Z M14.8 8.3 h0.9 v0.9 h-0.9 Z M4.3 10.8 h0.9 v0.9 h-0.9 Z M14.8 10.8 h0.9 v0.9 h-0.9 Z'/></svg>")
-    left center / 22px 22px repeat-x;
-  opacity: 0.88;
-}
-
-/* Papel rasgado em cima e embaixo (a sombra vai num elemento por fora, com drop-shadow) */
-.torn-y {
-  -webkit-mask:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M0 10 L0 4 L6 6 L11 2 L17 5 L23 1 L29 4 L34 2 L41 6 L47 3 L53 5 L58 1 L65 4 L71 2 L77 6 L83 3 L90 5 L96 1 L102 4 L108 2 L114 5 L120 4 L120 10 Z'/></svg>")
-      top left / 120px 10px repeat-x,
-    linear-gradient(#000 0 0) center / 100% calc(100% - 18px) no-repeat,
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M0 0 L0 6 L5 4 L12 8 L18 5 L24 9 L30 6 L35 8 L42 4 L48 7 L54 5 L60 9 L66 6 L72 8 L78 4 L84 7 L91 5 L97 9 L103 6 L109 8 L115 5 L120 6 L120 0 Z'/></svg>")
-      bottom left / 120px 10px repeat-x;
-  mask:
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M0 10 L0 4 L6 6 L11 2 L17 5 L23 1 L29 4 L34 2 L41 6 L47 3 L53 5 L58 1 L65 4 L71 2 L77 6 L83 3 L90 5 L96 1 L102 4 L108 2 L114 5 L120 4 L120 10 Z'/></svg>")
-      top left / 120px 10px repeat-x,
-    linear-gradient(#000 0 0) center / 100% calc(100% - 18px) no-repeat,
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 10' preserveAspectRatio='none'><path d='M0 0 L0 6 L5 4 L12 8 L18 5 L24 9 L30 6 L35 8 L42 4 L48 7 L54 5 L60 9 L66 6 L72 8 L78 4 L84 7 L91 5 L97 9 L103 6 L109 8 L115 5 L120 6 L120 0 Z'/></svg>")
-      bottom left / 120px 10px repeat-x;
-}
-.torn-shadow {
-  filter: drop-shadow(0 1px 1px rgba(40, 28, 16, 0.14)) drop-shadow(0 10px 18px rgba(40, 28, 16, 0.12));
-}
-:root[data-theme='dark'] .torn-shadow {
-  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45));
-}
-
-/* Folha de papel avulsa, um tom mais claro que a mesa */
-.sheet {
-  position: relative;
-  background-color: var(--paper);
+/* Sem moldura: a imagem como veio. O branco do arquivo some no papel
+   (o fundo aqui garante a mistura mesmo dentro de elementos animados). */
+.pobj--livre .pobj__img {
+  background-color: var(--bg);
   background-image: var(--paper-tex);
   background-blend-mode: var(--tex-blend);
 }
-
-/* Marca de catálogo no topo de cada área */
-.area-mark {
-  display: inline-block;
-  font-family: var(--type);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--red);
+.pobj--livre .pobj__img img {
+  mix-blend-mode: var(--photo-blend);
 }
 
-/* Fotografias da colagem em preto e branco; a cor aparece ao ampliar. */
-.mono img {
-  filter: grayscale(1) contrast(1.06) brightness(1.02);
+/* Polaroide / instantânea: borda branca, base mais larga, leve desgaste */
+.pobj--polaroide .pobj__print {
+  padding: 5% 5% 18%;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.025), transparent 40%, rgba(0, 0, 0, 0.03)), #fbfbf9;
+  box-shadow:
+    0 1px 1px rgba(0, 0, 0, 0.08),
+    0 12px 26px -14px rgba(0, 0, 0, 0.35);
+}
+
+/* Cópia antiga: margem creme e borda serrilhada */
+.pobj--serrilhada {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.12)) drop-shadow(0 10px 16px rgba(0, 0, 0, 0.12));
+}
+.pobj--serrilhada .pobj__print {
+  padding: 6%;
+  background: #f1ede4;
+}
+
+/* Recorte de papel */
+.pobj--recorte {
+  filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.18)) drop-shadow(0 8px 14px rgba(0, 0, 0, 0.14));
+}
+
+/* ---------- numeração das áreas ---------- */
+.area-mark {
+  justify-self: start;
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto auto;
+  column-gap: 0.9rem;
+  align-items: end;
+  font-family: var(--type);
+  color: var(--ink);
+}
+.area-mark__code {
+  grid-column: 1;
+  font-size: 0.75rem;
+  font-weight: 300;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.area-mark__num {
+  position: relative;
+  grid-column: 1;
+  grid-row: 2;
+  font-size: 1.9rem;
+  font-weight: 300;
+  line-height: 1;
+  padding-bottom: 0.2rem;
+}
+.area-mark__num::after {
+  content: '';
+  position: absolute;
+  left: -1.4rem;
+  right: 0;
+  bottom: 0;
+  height: 1.5px;
+  background: currentColor;
+}
+.area-mark__group {
+  grid-column: 2;
+  grid-row: 2;
+  padding-bottom: 0.3rem;
+  font-size: 0.8125rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+.book-area__head .area-mark,
+.oracle__head .area-mark {
+  justify-self: center;
 }

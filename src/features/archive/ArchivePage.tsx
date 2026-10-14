@@ -35,7 +35,8 @@ export default function ArchivePage() {
         <p className="archive__desc">Fotografias, detalhes e registros que escolhi guardar.</p>
       </header>
 
-      {all.length > 0 && (
+      {/* Filtros só fazem sentido com mais de uma coleção. */}
+      {new Set(all.map((p) => p.category)).size > 1 && (
         <div className="archive__filters" role="group" aria-label="Coleções">
           {filters.map((f) => {
             const count = f.id === 'todas' ? all.length : all.filter((p) => p.category === f.id).length;

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { useContent } from '../../content/ContentContext';
-import { rememberAdminDevice } from '../../content/useCanAdmin';
+import { REPO, checkGithubToken, setGithubToken } from '../../content/backend';
 import type { Content } from '../../content/types';
 import { useProgress } from '../../context/ProgressContext';
+import { Text } from './fields';
 import {
   DataTab,
   DictionaryTab,
@@ -60,10 +61,6 @@ export default function AdminPage() {
   }, [content]);
 
   useEffect(() => {
-    if (backend?.mode === 'local') rememberAdminDevice();
-  }, [backend]);
-
-  useEffect(() => {
     if (!dirty) return;
     const warn = (e: BeforeUnloadEvent) => {
       e.preventDefault();
@@ -109,7 +106,9 @@ export default function AdminPage() {
   }
 
   if (!backend.canEdit) {
-    return (
+    return backend.mode === 'github' ? (
+      <ConnectGithub />
+    ) : (
       <div className="page page--narrow admin">
         <h1 className="admin__title">Administração</h1>
         <p className="admin__lead">
@@ -117,9 +116,6 @@ export default function AdminPage() {
             ? 'Esta área é só para quem administra o site. A conta conectada não tem permissão de edição.'
             : 'Para administrar, abra esta página conectado ao claude.ai com a conta que tem permissão de edição.'}
         </p>
-        <Link to="/indice" className="link-btn">
-          Voltar ao índice
-        </Link>
       </div>
     );
   }
@@ -138,10 +134,20 @@ export default function AdminPage() {
             publicada com o site, não as alterações salvas aqui.
           </p>
         ) : (
-          <p className="admin__lead admin__lead--warn">
-            Modo local: tudo o que for salvo aqui fica apenas neste navegador, neste aparelho. Não há login nem
-            servidor, então esta área não é protegida e ninguém mais vê estas alterações. Para publicar para outras
-            pessoas, use Exportar e importar.
+          <p className="admin__lead">
+            Salvar grava as alterações no repositório do site no GitHub. A Vercel publica a nova versão em cerca de um
+            minuto, e quem abrir o site depois disso vê as mudanças. Este navegador está conectado com um token guardado
+            só aqui.{' '}
+            <button
+              type="button"
+              className="admin__disconnect"
+              onClick={() => {
+                setGithubToken(null);
+                window.location.reload();
+              }}
+            >
+              Desconectar este aparelho
+            </button>
           </p>
         )}
       </header>
@@ -219,6 +225,84 @@ export default function AdminPage() {
           </button>
         </div>
       </div>
+    </div>
+  );
+}
+
+/** Primeiro acesso fora do claude.ai: liga este navegador ao repositório com um token do GitHub. */
+function ConnectGithub() {
+  const [token, setToken] = useState('');
+  const [busy, setBusy] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const connect = async () => {
+    const t = token.trim();
+    if (!t) return;
+    setBusy(true);
+    setError(null);
+    const result = await checkGithubToken(t);
+    if (result === 'ok') {
+      setGithubToken(t);
+      window.location.reload();
+      return;
+    }
+    setBusy(false);
+    setError(
+      result === 'invalido'
+        ? 'Este token não é válido. Confira se copiou ele inteiro.'
+        : result === 'sem-acesso'
+          ? `Este token não tem acesso ao repositório ${REPO.owner}/${REPO.name}.`
+          : 'Não foi possível falar com o GitHub agora. Verifique a conexão e tente de novo.',
+    );
+  };
+
+  return (
+    <div className="page page--narrow admin">
+      <h1 className="admin__title">Administração</h1>
+      <p className="admin__lead">
+        Para editar o site, conecte este navegador ao repositório do site no GitHub. É feito uma vez por aparelho, e o
+        acesso fica guardado só neste navegador.
+      </p>
+      <ol className="admin__steps">
+        <li>
+          Abra{' '}
+          <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">
+            github.com/settings/personal-access-tokens/new
+          </a>{' '}
+          com a conta dona do repositório.
+        </li>
+        <li>Dê um nome ao token (por exemplo, Para Annelise) e escolha a validade.</li>
+        <li>
+          Em <b>Repository access</b>, marque <b>Only select repositories</b> e escolha{' '}
+          <b>
+            {REPO.owner}/{REPO.name}
+          </b>
+          .
+        </li>
+        <li>
+          Em <b>Permissions</b>, adicione <b>Contents</b> com <b>Read and write</b>.
+        </li>
+        <li>
+          Clique em <b>Generate token</b>, copie e cole aqui.
+        </li>
+      </ol>
+      <form
+        className="admin__connect"
+        onSubmit={(e) => {
+          e.preventDefault();
+          void connect();
+        }}
+      >
+        <Text label="Token do GitHub" type="password" value={token} onChange={setToken} placeholder="github_pat_…" />
+        <button type="submit" className="ab ab--solid" disabled={busy || !token.trim()}>
+          {busy ? 'Conferindo' : 'Conectar'}
+        </button>
+      </form>
+      {error && (
+        <p className="a-error" role="alert">
+          {error}
+        </p>
+      )}
     </div>
   );
 }

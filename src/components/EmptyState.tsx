@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import type { ReactNode } from 'react';
 import { useCanAdmin } from '../content/useCanAdmin';
+import { ADMIN_PATH } from '../app/sections';
 
 /** Estado vazio elegante; quem administra vê um atalho para preencher. */
 export function EmptyState({ text, adminTab, children }: { text: string; adminTab?: string; children?: ReactNode }) {
@@ -11,7 +12,7 @@ export function EmptyState({ text, adminTab, children }: { text: string; adminTa
       <p className="empty__text">{text}</p>
       {children}
       {canAdmin && adminTab && (
-        <Link to={`/admin?aba=${adminTab}`} className="empty__admin">
+        <Link to={`${ADMIN_PATH}?aba=${adminTab}`} className="empty__admin">
           Adicionar na administração
         </Link>
       )}

@@ -216,7 +216,7 @@ export function PhotosTab({ draft, patch, backend, onUploaded }: TabProps) {
             As imagens são reduzidas para no máximo 2000 px antes de serem guardadas.{' '}
             {backend.mode === 'artifact'
               ? 'Elas ficam no armazenamento deste site no claude.ai.'
-              : 'Neste modo elas ficam guardadas apenas neste navegador.'}{' '}
+              : 'Elas são gravadas no repositório do site assim que enviadas.'}{' '}
             Novas fotografias aparecem no site depois de salvar.
           </p>
           <p>A ordem aqui é a ordem do arquivo pessoal e do livro.</p>
@@ -449,7 +449,7 @@ export function MusicTab({ draft, patch, backend }: TabProps) {
   const [busy, setBusy] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const playlistOk = !draft.spotifyPlaylist.trim() || Boolean(spotifyEmbedUrl(draft.spotifyPlaylist, false));
-  const audioUpload = backend.mode === 'local' && backend.canUpload;
+  const audioUpload = backend.mode === 'github' && backend.canUpload;
 
   return (
     <>
@@ -473,7 +473,7 @@ export function MusicTab({ draft, patch, backend }: TabProps) {
         note={
           backend.mode === 'artifact'
             ? 'Arquivos de áudio não podem ser enviados por aqui no claude.ai. Para uma faixa de áudio, use o endereço de um arquivo .mp3 já hospedado. Faixas do Spotify abrem pelo link.'
-            : 'Arquivos de áudio enviados aqui ficam guardados apenas neste navegador.'
+            : 'Arquivos de áudio enviados aqui são gravados no repositório do site e aparecem depois de salvar.'
         }
       >
         <p className="a-status" role="status">
@@ -840,7 +840,7 @@ export function SecretTab({ draft, patch }: TabProps) {
 }
 
 /* ---------------- Dados ---------------- */
-export function DataTab({ draft, patch, backend }: TabProps) {
+export function DataTab({ draft, patch }: TabProps) {
   const json = useMemo(() => JSON.stringify(draft, null, 2), [draft]);
   const [paste, setPaste] = useState('');
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
@@ -859,14 +859,7 @@ export function DataTab({ draft, patch, backend }: TabProps) {
 
   return (
     <>
-      <Section
-        title="Exportar"
-        note={
-          backend.mode === 'local'
-            ? 'Para publicar este conteúdo para outras pessoas, salve-o como public/content.json no projeto e publique o site de novo. Fotografias e áudios guardados no navegador (endereços que começam com idb:) não vão junto: use endereços de arquivos publicados.'
-            : 'Cópia de segurança de tudo o que está salvo aqui.'
-        }
-      >
+      <Section title="Exportar" note={'Cópia de segurança de tudo o que está salvo aqui.'}>
         <div className="a-row a-row--start">
           <button
             type="button"

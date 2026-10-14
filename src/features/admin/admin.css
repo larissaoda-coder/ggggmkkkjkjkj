@@ -436,3 +436,33 @@
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* primeiro acesso fora do claude.ai */
+.admin__steps {
+  display: grid;
+  gap: 0.5rem;
+  max-width: 40rem;
+  padding-left: 1.25rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--ink-2);
+}
+.admin__steps a {
+  color: var(--ink);
+  text-underline-offset: 0.25em;
+  overflow-wrap: anywhere;
+}
+.admin__connect {
+  display: grid;
+  gap: 0.9rem;
+  justify-items: start;
+  max-width: 28rem;
+}
+.admin__connect .af {
+  width: 100%;
+}
+.admin__disconnect {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.25em;
+}

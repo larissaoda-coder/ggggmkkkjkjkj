@@ -30,7 +30,7 @@ edição; um teste confere isso.
 | `/futuro`        | Em outra fase da vida       | Sete cenas imaginadas em formato de conversa.                                                   |
 | `/intervalo`     | Um intervalo                | Lago interativo com ondulações, pétalas e detalhes para perceber; som e movimento controláveis. |
 | `/antes-de-sair` | Antes de sair               | Página final, liberada depois de algumas áreas vistas.                                          |
-| `/admin`         | Administração               | Edição de fotos, textos, músicas, mapa, cartas, dicionário, museu, cenas e da página final.     |
+| `/bastidores-a7k2` | Administração (fora do menu) | Edição de fotos, textos, músicas, mapa, cartas, dicionário, museu, cenas e da página final.     |
 
 O menu também guarda as preferências: tema (sistema, claro, escuro), reduzir movimento, sons do jardim e texto
 maior.
@@ -48,7 +48,7 @@ O conteúdo editável (tudo, menos a carta e os fragmentos) vem de três camadas
 | Onde o site roda                              | Salvar e enviar fotos                                                                                                         | Quem vê as alterações                                                                   |
 | --------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
 | Publicado como artifact no claude.ai          | Banco de dados e armazenamento de arquivos do próprio artifact. Só contas com permissão de edição salvam (regra no servidor). | Quem abre conectado ao claude.ai. Visitantes sem login veem o `content.json` publicado. |
-| Qualquer outra hospedagem (GitHub Pages etc.) | Apenas no navegador de quem administra (localStorage e IndexedDB). Não há login: a área não é protegida.                      | Ninguém além desse navegador, até o conteúdo ser exportado para `public/content.json`.  |
+| Vercel ou outra hospedagem | Em `public/content.json` e `public/fotos/` no repositório, gravados pela própria administração com um token do GitHub (Contents: Read and write) guardado só no navegador de quem administra. | Todo mundo, depois que a hospedagem publica a nova versão (cerca de um minuto). |
 
 ## Playlist
 

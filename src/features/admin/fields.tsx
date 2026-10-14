@@ -21,7 +21,7 @@ export function Text({
   rows?: number;
   placeholder?: string;
   error?: string | null;
-  type?: 'text' | 'url';
+  type?: 'text' | 'url' | 'password';
 }) {
   const id = useId();
   return (

@@ -3,6 +3,7 @@ import { HashRouter, Routes, Route } from 'react-router-dom';
 import { SettingsProvider } from './context/SettingsContext';
 import { ProgressProvider } from './context/ProgressContext';
 import { ContentProvider } from './content/ContentContext';
+import { ADMIN_PATH } from './app/sections';
 import { Layout } from './app/Layout';
 import { RadioProvider } from './features/radio/RadioContext';
 import { SpotifyProvider } from './features/radio/SpotifyContext';
@@ -55,7 +56,7 @@ export default function App() {
                       <Route path="/futuro" element={<FuturePage />} />
                       <Route path="/intervalo" element={<GardenPage />} />
                       <Route path="/antes-de-sair" element={<SecretPage />} />
-                      <Route path="/admin" element={<AdminPage />} />
+                      <Route path={ADMIN_PATH} element={<AdminPage />} />
                       <Route path="*" element={<NotFound />} />
                     </Routes>
                   )}

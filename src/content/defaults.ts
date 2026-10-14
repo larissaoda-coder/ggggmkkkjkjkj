@@ -26,7 +26,7 @@ export const defaultContent: Content = {
   },
 
   // Imagens escolhidas por quem fez o site (public/fotos). Sem legendas: só quem as escolheu sabe o que dizer delas.
-  // Cada uma aparece num lugar só: as duas primeiras na abertura, a última no quebra-cabeça e as outras no arquivo.
+  // Cada uma aparece num lugar só: as duas primeiras na abertura, o texto no quebra-cabeça e as outras no arquivo.
   photos: [
     {
       id: 'f-polaroide',
@@ -51,10 +51,21 @@ export const defaultContent: Content = {
       inBook: false,
     },
     {
-      id: 'f-rochas',
-      src: 'fotos/02-rochas.jpg',
-      width: 2000,
-      height: 958,
+      id: 'f-volta',
+      src: 'fotos/07-volta.jpg',
+      width: 1954,
+      height: 1994,
+      caption: '',
+      dedication: '',
+      category: 'detalhes',
+      frame: 'livre',
+      inBook: false,
+    },
+    {
+      id: 'f-cama',
+      src: 'fotos/08-cama.jpg',
+      width: 1170,
+      height: 1192,
       caption: '',
       dedication: '',
       category: 'retratos',
@@ -62,21 +73,10 @@ export const defaultContent: Content = {
       inBook: false,
     },
     {
-      id: 'f-recortes',
-      src: 'fotos/04-recortes.jpg',
-      width: 942,
-      height: 966,
-      caption: '',
-      dedication: '',
-      category: 'favoritas',
-      frame: 'livre',
-      inBook: false,
-    },
-    {
-      id: 'f-instantaneas',
-      src: 'fotos/06-instantaneas.jpg',
-      width: 1765,
-      height: 2000,
+      id: 'f-noite',
+      src: 'fotos/09-noite.jpg',
+      width: 1080,
+      height: 1440,
       caption: '',
       dedication: '',
       category: 'retratos',
@@ -84,13 +84,13 @@ export const defaultContent: Content = {
       inBook: false,
     },
     {
-      id: 'f-maos-orfeu',
-      src: 'fotos/05-maos-orfeu.jpg',
+      id: 'f-abraco',
+      src: 'fotos/10-abraco.jpg',
       width: 1200,
-      height: 900,
+      height: 1200,
       caption: '',
       dedication: '',
-      category: 'favoritas',
+      category: 'retratos',
       frame: 'livre',
       inBook: false,
     },
@@ -419,7 +419,7 @@ export const defaultContent: Content = {
     },
   ],
 
-  puzzle: { photoId: 'f-maos-orfeu', size: 3, message: '' },
+  puzzle: { photoId: 'f-volta', size: 3, message: '' },
 
   garden: {
     messages: [

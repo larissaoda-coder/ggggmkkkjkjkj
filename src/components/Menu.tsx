@@ -4,7 +4,6 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { sections, groupLabels, SECRET_PATH, type Group } from '../app/sections';
 import { useMotion, useSettings, type ThemePref } from '../context/SettingsContext';
 import { useSecretUnlocked } from '../lib/useSecret';
-import { useCanAdmin } from '../content/useCanAdmin';
 import { Icon } from './Icon';
 
 /** Menu recolhível, igual no celular e no computador. */
@@ -12,7 +11,6 @@ export function Menu({ open, onClose }: { open: boolean; onClose: () => void }) 
   const m = useMotion();
   const { prefs, update } = useSettings();
   const unlocked = useSecretUnlocked();
-  const canAdmin = useCanAdmin();
   const panelRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
   const groups: Group[] = ['ler', 'ver', 'ouvir', 'explorar', 'pausar'];
@@ -140,11 +138,6 @@ export function Menu({ open, onClose }: { open: boolean; onClose: () => void }) 
               />
               <span>Texto maior</span>
             </label>
-            {canAdmin && (
-              <Link to="/admin" className="menu__admin">
-                Administração
-              </Link>
-            )}
           </div>
         </motion.div>
       )}

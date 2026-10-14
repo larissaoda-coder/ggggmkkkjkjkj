@@ -2,7 +2,7 @@ import { Suspense, useCallback, useEffect, useState, type ReactNode } from 'reac
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useMotion } from '../context/SettingsContext';
-import { sectionForPath } from './sections';
+import { ADMIN_PATH, sectionForPath } from './sections';
 import { Menu } from '../components/Menu';
 import { ErrorBoundary } from '../components/ErrorBoundary';
 import { Icon } from '../components/Icon';
@@ -27,7 +27,7 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
   const chrome = !isHome && !immersive;
   const radio = useRadio();
   const spotify = useSpotify();
-  const isAdmin = location.pathname === '/admin';
+  const isAdmin = location.pathname === ADMIN_PATH;
   const { setOpen: setSpotifyOpen } = spotify;
   useEffect(() => {
     if (isAdmin) setSpotifyOpen(false);
@@ -38,7 +38,7 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
   useEffect(() => {
     const titles: Record<string, string> = {
       '/indice': 'Índice',
-      '/admin': 'Administração',
+      [ADMIN_PATH]: 'Administração',
       '/antes-de-sair': 'Antes de sair',
     };
     const name = section?.title ?? titles[location.pathname];

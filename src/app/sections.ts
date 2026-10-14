@@ -130,3 +130,6 @@ export const SECRET_PATH = '/antes-de-sair';
 export function sectionForPath(pathname: string): Section | undefined {
   return sections.find((s) => pathname === s.path || pathname.startsWith(s.path + '/'));
 }
+
+/** Endereço da administração. Não aparece no menu nem no índice. */
+export const ADMIN_PATH = '/bastidores-a7k2';

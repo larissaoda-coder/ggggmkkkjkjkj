@@ -5,15 +5,14 @@
  *   de dados do artifact (documento site/content) e o armazenamento de
  *   arquivos para as fotografias. Somente quem tem permissão de edição
  *   consegue salvar — a regra é aplicada pelo servidor, não pela página.
- * - Modo "github": em qualquer outra hospedagem (Vercel), salvar grava
- *   public/content.json e as fotografias enviadas direto no repositório do
- *   site, e a hospedagem publica a nova versão sozinha. Só salva quem colou
- *   um token do GitHub com permissão de escrita; o token fica apenas no
- *   navegador de quem administra.
+ * - Modo "site": na Vercel, a função /api/site guarda o conteúdo e os
+ *   arquivos no Vercel Blob. Ler é aberto a todos; gravar pede a senha da
+ *   área de edição, conferida no servidor. A senha fica guardada só no
+ *   navegador de quem edita.
  */
 import type { Content } from './types';
 
-export type BackendMode = 'artifact' | 'github';
+export type BackendMode = 'artifact' | 'site';
 
 /* Tipos mínimos das capacidades do claude.ai usadas aqui. */
 interface DocSnap {
@@ -115,93 +114,71 @@ export async function idbDelete(id: string) {
   });
 }
 
-/* ---------------- GitHub: publica no repositório do site ---------------- */
-export const REPO = { owner: 'larissaoda-coder', name: 'ggggmkkkjkjkj', branch: 'claude/annelise-app' };
-const TOKEN_KEY = 'annelise:v1:github-token';
-const CONTENT_PATH = 'public/content.json';
+/* ---------------- Área de edição na hospedagem (Vercel) ---------------- */
+const API = '/api/site';
+const PASS_KEY = 'annelise:v1:senha';
 
-export function githubToken(): string | null {
+export function savedPassword(): string | null {
   try {
-    return localStorage.getItem(TOKEN_KEY);
+    return localStorage.getItem(PASS_KEY);
   } catch {
     return null;
   }
 }
-export function setGithubToken(token: string | null) {
+export function setSavedPassword(password: string | null) {
   try {
-    if (token) localStorage.setItem(TOKEN_KEY, token);
-    else localStorage.removeItem(TOKEN_KEY);
+    if (password) localStorage.setItem(PASS_KEY, password);
+    else localStorage.removeItem(PASS_KEY);
   } catch {
     /* armazenamento bloqueado */
   }
 }
 
-/** Arquivos enviados nesta sessão que a hospedagem ainda não publicou: mostrados a partir da memória. */
-export const pendingMedia = new Map<string, string>();
+const auth = (password: string | null) => ({ 'x-senha': encodeURIComponent(password ?? '') });
 
-class GithubError extends Error {
+class SiteError extends Error {
   constructor(
     public status: number,
-    message: string,
+    public code: string,
   ) {
-    super(message);
+    super(code);
   }
 }
 
-async function gh(path: string, token: string, init: RequestInit = {}) {
-  const url = `https://api.github.com/repos/${REPO.owner}/${REPO.name}${path}`;
-  const res = await fetch(url, {
-    ...init,
-    cache: 'no-store',
-    headers: {
-      Accept: 'application/vnd.github+json',
-      Authorization: `Bearer ${token}`,
-      'X-GitHub-Api-Version': '2022-11-28',
-      ...(init.body ? { 'Content-Type': 'application/json' } : {}),
-    },
-  });
-  if (!res.ok && res.status !== 404) throw new GithubError(res.status, `GitHub ${res.status}`);
-  return res;
+async function apiJson(res: Response): Promise<Record<string, unknown> | null> {
+  if (!(res.headers.get('content-type') ?? '').includes('json')) return null;
+  return (await res.json().catch(() => null)) as Record<string, unknown> | null;
 }
 
-function bytesToBase64(bytes: Uint8Array) {
-  let bin = '';
-  for (let i = 0; i < bytes.length; i += 0x8000) bin += String.fromCharCode(...bytes.subarray(i, i + 0x8000));
-  return btoa(bin);
-}
-
-async function fileSha(path: string, token: string): Promise<string | undefined> {
-  const res = await gh(`/contents/${path}?ref=${encodeURIComponent(REPO.branch)}`, token);
-  if (res.status === 404) return undefined;
-  return ((await res.json()) as { sha: string }).sha;
-}
-
-async function putFile(path: string, bytes: Uint8Array, message: string, token: string) {
-  const sha = await fileSha(path, token);
-  const body = { message, content: bytesToBase64(bytes), branch: REPO.branch, ...(sha ? { sha } : {}) };
-  const res = await gh(`/contents/${path}`, token, { method: 'PUT', body: JSON.stringify(body) });
-  if (res.status === 404) throw new GithubError(404, 'repositório não encontrado');
-}
-
-/** Confere se o token abre o repositório. A permissão de escrita só se confirma ao salvar. */
-export async function checkGithubToken(token: string): Promise<'ok' | 'invalido' | 'sem-acesso' | 'rede'> {
+/** O que já foi configurado na Vercel: o armazenamento (Blob) e a senha. Null se a função não existe aqui. */
+export async function siteSetup(): Promise<{ armazenamento: boolean; senha: boolean } | null> {
   try {
-    const res = await gh('', token);
-    return res.ok ? 'ok' : 'sem-acesso';
-  } catch (e) {
-    if (e instanceof GithubError) return e.status === 401 ? 'invalido' : 'sem-acesso';
+    const data = await apiJson(await fetch(`${API}?acao=estado`, { cache: 'no-store' }));
+    return data ? { armazenamento: Boolean(data.armazenamento), senha: Boolean(data.senha) } : null;
+  } catch {
+    return null;
+  }
+}
+
+export async function checkPassword(password: string): Promise<'ok' | 'senha' | 'sem-senha' | 'rede'> {
+  try {
+    const res = await fetch(`${API}?acao=entrar`, { method: 'POST', headers: auth(password), cache: 'no-store' });
+    const data = await apiJson(res);
+    if (!data) return 'rede';
+    if (res.ok) return 'ok';
+    return data.erro === 'sem-senha' ? 'sem-senha' : res.status === 401 ? 'senha' : 'rede';
+  } catch {
     return 'rede';
   }
 }
 
-/** Mensagem para quem administra quando o GitHub recusa uma gravação. */
-export function githubErrorText(e: unknown): string | null {
-  if (!(e instanceof GithubError)) return null;
-  if (e.status === 401) return 'O token do GitHub não vale mais. Desconecte este aparelho e cole um token novo.';
-  if (e.status === 403 || e.status === 404)
-    return 'O token do GitHub não tem permissão para gravar no repositório. Ele precisa de "Contents: Read and write".';
-  if (e.status === 409 || e.status === 422)
-    return 'O conteúdo mudou no GitHub enquanto você editava. Recarregue a página e tente de novo.';
+/** Mensagem para quem edita quando o servidor recusa uma gravação. */
+export function siteErrorText(e: unknown): string | null {
+  if (!(e instanceof SiteError)) return null;
+  if (e.status === 401) return 'A senha mudou. Saia deste aparelho e entre de novo com a senha nova.';
+  if (e.code === 'armazenamento')
+    return 'O armazenamento ainda não está ligado ao projeto na Vercel (Storage → Blob → Connect).';
+  if (e.status === 413) return 'O conteúdo ficou grande demais para salvar de uma vez.';
   return null;
 }
 
@@ -209,32 +186,28 @@ const EXT: Record<string, string> = {
   'image/jpeg': 'jpg',
   'image/png': 'png',
   'image/webp': 'webp',
+  'image/gif': 'gif',
   'audio/mpeg': 'mp3',
   'audio/mp4': 'm4a',
   'audio/x-m4a': 'm4a',
+  'audio/aac': 'aac',
   'audio/ogg': 'ogg',
   'audio/wav': 'wav',
 };
 
-function githubBackend(): Backend {
-  const token = githubToken();
+function siteBackend(): Backend {
+  const password = savedPassword();
   return {
-    mode: 'github',
-    canEdit: Boolean(token),
+    mode: 'site',
+    canEdit: Boolean(password),
     hasDb: false,
-    canUpload: Boolean(token),
+    canUpload: Boolean(password),
     async load() {
-      // Quem administra vê a última versão gravada, mesmo antes de a hospedagem terminar de publicar.
-      if (!token) return null;
       try {
-        const res = await fetch(
-          `https://api.github.com/repos/${REPO.owner}/${REPO.name}/contents/${CONTENT_PATH}?ref=${encodeURIComponent(REPO.branch)}`,
-          {
-            cache: 'no-store',
-            headers: { Accept: 'application/vnd.github.raw+json', Authorization: `Bearer ${token}` },
-          },
-        );
-        return res.ok ? ((await res.json()) as Partial<Content>) : null;
+        // Quem edita pula o cache da borda para ver na hora o que acabou de salvar.
+        const res = await fetch(password ? `${API}?v=${Date.now()}` : API, { cache: 'no-store' });
+        if (res.status !== 200) return null;
+        return (await apiJson(res)) as Partial<Content> | null;
       } catch {
         return null;
       }
@@ -243,32 +216,30 @@ function githubBackend(): Backend {
       return () => {};
     },
     async save(content) {
-      const t = githubToken();
-      if (!t) throw new GithubError(401, 'sem token');
-      const bytes = new TextEncoder().encode(JSON.stringify(content, null, 2) + '\n');
-      await putFile(CONTENT_PATH, bytes, 'Conteúdo atualizado pela administração', t);
+      const res = await fetch(API, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', ...auth(savedPassword()) },
+        body: JSON.stringify(content),
+      });
+      if (!res.ok) throw new SiteError(res.status, String((await apiJson(res))?.erro ?? res.status));
     },
     async uploadImage(blob) {
-      const t = githubToken();
-      if (!t) throw new GithubError(401, 'sem token');
+      const { upload } = await import('@vercel/blob/client');
       const audio = blob.type.startsWith('audio/');
       const ext = EXT[blob.type] ?? (audio ? 'mp3' : 'jpg');
-      const id = `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 7)}`;
-      const src = `${audio ? 'musicas' : 'fotos'}/up-${id}.${ext}`;
-      await putFile(`public/${src}`, new Uint8Array(await blob.arrayBuffer()), 'Arquivo enviado pela administração', t);
-      pendingMedia.set(src, URL.createObjectURL(blob));
-      return src;
+      const result = await upload(`${audio ? 'musicas' : 'fotos'}/${Date.now().toString(36)}.${ext}`, blob, {
+        access: 'public',
+        handleUploadUrl: `${API}?acao=enviar`,
+        headers: auth(savedPassword()),
+        contentType: blob.type || undefined,
+        multipart: blob.size > 8 * 1024 * 1024,
+      });
+      return result.url;
     },
     async deleteImage(src) {
-      // Só apaga o que foi enviado pela administração; os arquivos que vieram com o site ficam.
-      const t = githubToken();
-      if (!t || !/^(fotos|musicas)\/up-/.test(src)) return;
-      const sha = await fileSha(`public/${src}`, t);
-      if (!sha) return;
-      await gh(`/contents/public/${src}`, t, {
-        method: 'DELETE',
-        body: JSON.stringify({ message: 'Arquivo removido pela administração', sha, branch: REPO.branch }),
-      });
+      // Só apaga o que foi enviado pela área de edição; os arquivos que vieram com o site ficam.
+      if (!/^https:\/\/[^/]+\.blob\.vercel-storage\.com\//.test(src)) return;
+      await fetch(`${API}?url=${encodeURIComponent(src)}`, { method: 'DELETE', headers: auth(savedPassword()) });
     },
   };
 }
@@ -276,7 +247,7 @@ function githubBackend(): Backend {
 /** Descobre o ambiente e devolve o armazenamento adequado. */
 export async function createBackend(): Promise<Backend> {
   const claude = window.claude;
-  if (!claude?.use) return githubBackend();
+  if (!claude?.use) return siteBackend();
 
   const [db, user, assets] = await Promise.all([
     withTimeout(claude.use('db') as Promise<DbApi | null>, 10000, null),

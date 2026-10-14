@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState, type ComponentType } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { useContent } from '../../content/ContentContext';
-import { REPO, checkGithubToken, setGithubToken } from '../../content/backend';
+import { checkPassword, setSavedPassword, siteSetup } from '../../content/backend';
 import type { Content } from '../../content/types';
 import { useProgress } from '../../context/ProgressContext';
 import { Text } from './fields';
@@ -106,11 +106,11 @@ export default function AdminPage() {
   }
 
   if (!backend.canEdit) {
-    return backend.mode === 'github' ? (
-      <ConnectGithub />
+    return backend.mode === 'site' ? (
+      <SignIn />
     ) : (
       <div className="page page--narrow admin">
-        <h1 className="admin__title">Administração</h1>
+        <h1 className="admin__title">Edição</h1>
         <p className="admin__lead">
           {backend.hasDb
             ? 'Esta área é só para quem administra o site. A conta conectada não tem permissão de edição.'
@@ -126,7 +126,7 @@ export default function AdminPage() {
   return (
     <div className="page page--wide admin">
       <header className="admin__head">
-        <h1 className="admin__title">Administração</h1>
+        <h1 className="admin__title">Edição</h1>
         {backend.mode === 'artifact' ? (
           <p className="admin__lead">
             As alterações são salvas no banco de dados deste site no claude.ai. Só contas com permissão de edição
@@ -135,18 +135,17 @@ export default function AdminPage() {
           </p>
         ) : (
           <p className="admin__lead">
-            Salvar grava as alterações no repositório do site no GitHub. A Vercel publica a nova versão em cerca de um
-            minuto, e quem abrir o site depois disso vê as mudanças. Este navegador está conectado com um token guardado
-            só aqui.{' '}
+            As alterações ficam guardadas no armazenamento do site e aparecem para quem abrir o site logo depois de
+            salvar. A senha fica lembrada só neste navegador.{' '}
             <button
               type="button"
               className="admin__disconnect"
               onClick={() => {
-                setGithubToken(null);
+                setSavedPassword(null);
                 window.location.reload();
               }}
             >
-              Desconectar este aparelho
+              Sair deste aparelho
             </button>
           </p>
         )}
@@ -229,75 +228,85 @@ export default function AdminPage() {
   );
 }
 
-/** Primeiro acesso fora do claude.ai: liga este navegador ao repositório com um token do GitHub. */
-function ConnectGithub() {
-  const [token, setToken] = useState('');
+/** Entrada da área de edição: senha conferida pela função do site. */
+function SignIn() {
+  const [password, setPassword] = useState('');
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [setup, setSetup] = useState<{ armazenamento: boolean; senha: boolean } | null | undefined>(undefined);
 
-  const connect = async () => {
-    const t = token.trim();
-    if (!t) return;
+  useEffect(() => {
+    let alive = true;
+    void siteSetup().then((s) => alive && setSetup(s));
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const enter = async () => {
+    const p = password;
+    if (!p) return;
     setBusy(true);
     setError(null);
-    const result = await checkGithubToken(t);
+    const result = await checkPassword(p);
     if (result === 'ok') {
-      setGithubToken(t);
+      setSavedPassword(p);
       window.location.reload();
       return;
     }
     setBusy(false);
     setError(
-      result === 'invalido'
-        ? 'Este token não é válido. Confira se copiou ele inteiro.'
-        : result === 'sem-acesso'
-          ? `Este token não tem acesso ao repositório ${REPO.owner}/${REPO.name}.`
-          : 'Não foi possível falar com o GitHub agora. Verifique a conexão e tente de novo.',
+      result === 'senha'
+        ? 'Senha incorreta.'
+        : result === 'sem-senha'
+          ? 'A senha ainda não foi definida na Vercel (veja os passos acima).'
+          : 'Não foi possível falar com o servidor do site agora. Tente de novo em instantes.',
     );
   };
 
+  const ready = setup?.armazenamento && setup.senha;
+
   return (
     <div className="page page--narrow admin">
-      <h1 className="admin__title">Administração</h1>
-      <p className="admin__lead">
-        Para editar o site, conecte este navegador ao repositório do site no GitHub. É feito uma vez por aparelho, e o
-        acesso fica guardado só neste navegador.
-      </p>
-      <ol className="admin__steps">
-        <li>
-          Abra{' '}
-          <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noreferrer">
-            github.com/settings/personal-access-tokens/new
-          </a>{' '}
-          com a conta dona do repositório.
-        </li>
-        <li>Dê um nome ao token (por exemplo, Para Annelise) e escolha a validade.</li>
-        <li>
-          Em <b>Repository access</b>, marque <b>Only select repositories</b> e escolha{' '}
-          <b>
-            {REPO.owner}/{REPO.name}
-          </b>
-          .
-        </li>
-        <li>
-          Em <b>Permissions</b>, adicione <b>Contents</b> com <b>Read and write</b>.
-        </li>
-        <li>
-          Clique em <b>Generate token</b>, copie e cole aqui.
-        </li>
-      </ol>
-      <form
-        className="admin__connect"
-        onSubmit={(e) => {
-          e.preventDefault();
-          void connect();
-        }}
-      >
-        <Text label="Token do GitHub" type="password" value={token} onChange={setToken} placeholder="github_pat_…" />
-        <button type="submit" className="ab ab--solid" disabled={busy || !token.trim()}>
-          {busy ? 'Conferindo' : 'Conectar'}
-        </button>
-      </form>
+      <h1 className="admin__title">Edição</h1>
+      {setup === null && (
+        <p className="admin__lead">
+          A área de edição funciona no endereço publicado na Vercel. Por aqui não há servidor para guardar as
+          alterações.
+        </p>
+      )}
+      {setup && !ready && (
+        <>
+          <p className="admin__lead">Falta ligar duas coisas no projeto da Vercel, uma vez só:</p>
+          <ol className="admin__steps">
+            <li data-done={setup.armazenamento}>
+              Em <b>Storage</b>, crie um <b>Blob</b> e ligue ao projeto (<b>Connect Project</b>).
+              {setup.armazenamento && ' Feito.'}
+            </li>
+            <li data-done={setup.senha}>
+              Em <b>Settings → Environment Variables</b>, crie <b>ADMIN_PASSWORD</b> com a senha que você quer usar
+              aqui.{setup.senha && ' Feito.'}
+            </li>
+            <li>
+              Em <b>Deployments</b>, abra o menu da publicação mais recente e escolha <b>Redeploy</b>.
+            </li>
+          </ol>
+        </>
+      )}
+      {setup !== null && (
+        <form
+          className="admin__connect"
+          onSubmit={(e) => {
+            e.preventDefault();
+            void enter();
+          }}
+        >
+          <Text label="Senha" type="password" value={password} onChange={setPassword} />
+          <button type="submit" className="ab ab--solid" disabled={busy || !password}>
+            {busy ? 'Conferindo' : 'Entrar'}
+          </button>
+        </form>
+      )}
       {error && (
         <p className="a-error" role="alert">
           {error}

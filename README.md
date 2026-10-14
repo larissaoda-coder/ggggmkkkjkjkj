@@ -13,24 +13,24 @@ edição; um teste confere isso.
 
 ## Áreas
 
-| Endereço           | Área                         | O que faz                                                                                       |
-| ------------------ | ---------------------------- | ----------------------------------------------------------------------------------------------- |
-| `/`                | Abertura                     | Título, subtítulo e o botão Entrar.                                                             |
-| `/indice`          | Índice                       | Todas as áreas por grupo; marca o que já foi visto.                                             |
-| `/carta`           | A carta                      | A carta inteira, com progresso e tamanho de letra.                                              |
-| `/livro`           | Algumas coisas sobre você    | Livro com capa, dedicatória, carta, dez fragmentos e fotografias; páginas viram em 3D.          |
-| `/cartas`          | Cartas guardadas             | Cinco envelopes "Abra quando…", cada um com sua animação; a mensagem pode ser guardada.         |
-| `/dicionario`      | Termos particulares          | Verbetes com busca e navegação por letra.                                                       |
-| `/arquivo`         | Arquivo pessoal              | Fotografias em mosaico, coleções, polaroides e tela cheia com legenda e dedicatória.            |
-| `/museu`           | Coisas que merecem registro  | Peças com fotografia ou objeto, etiqueta de museu, frase e texto.                               |
-| `/quebra-cabeca`   | Uma imagem por partes        | Quebra-cabeça de uma fotografia: arrastar, trocar, girar peças, progresso e mensagem final.     |
-| `/radio`           | Faixas selecionadas          | Player de áudio real, fila, Spotify, links e o modo rádio "Frequência Annelise".                |
-| `/mapa`            | Pontos de referência         | Pontos que abrem fotografia, fragmento, música, pergunta, carta curta e um segredo.             |
-| `/oraculo`         | Uma leitura simbólica        | Baralho próprio, embaralhamento real, três cartas escolhidas, leitura e carta escondida.        |
-| `/futuro`          | Em outra fase da vida        | Sete cenas imaginadas em formato de conversa.                                                   |
-| `/intervalo`       | Um intervalo                 | Lago interativo com ondulações, pétalas e detalhes para perceber; som e movimento controláveis. |
-| `/antes-de-sair`   | Antes de sair                | Página final, liberada depois de algumas áreas vistas.                                          |
-| `/bastidores-a7k2` | Administração (fora do menu) | Edição de fotos, textos, músicas, mapa, cartas, dicionário, museu, cenas e da página final.     |
+| Endereço           | Área                        | O que faz                                                                                       |
+| ------------------ | --------------------------- | ----------------------------------------------------------------------------------------------- |
+| `/`                | Abertura                    | Título, subtítulo e o botão Entrar.                                                             |
+| `/indice`          | Índice                      | Todas as áreas por grupo; marca o que já foi visto.                                             |
+| `/carta`           | A carta                     | A carta inteira, com progresso e tamanho de letra.                                              |
+| `/livro`           | Algumas coisas sobre você   | Livro com capa, dedicatória, carta, dez fragmentos e fotografias; páginas viram em 3D.          |
+| `/cartas`          | Cartas guardadas            | Cinco envelopes "Abra quando…", cada um com sua animação; a mensagem pode ser guardada.         |
+| `/dicionario`      | Termos particulares         | Verbetes com busca e navegação por letra.                                                       |
+| `/arquivo`         | Arquivo pessoal             | Fotografias em mosaico, coleções, polaroides e tela cheia com legenda e dedicatória.            |
+| `/museu`           | Coisas que merecem registro | Peças com fotografia ou objeto, etiqueta de museu, frase e texto.                               |
+| `/quebra-cabeca`   | Uma imagem por partes       | Quebra-cabeça de uma fotografia: arrastar, trocar, girar peças, progresso e mensagem final.     |
+| `/radio`           | Faixas selecionadas         | Player de áudio real, fila, Spotify, links e o modo rádio "Frequência Annelise".                |
+| `/mapa`            | Pontos de referência        | Pontos que abrem fotografia, fragmento, música, pergunta, carta curta e um segredo.             |
+| `/oraculo`         | Uma leitura simbólica       | Baralho próprio, embaralhamento real, três cartas escolhidas, leitura e carta escondida.        |
+| `/futuro`          | Em outra fase da vida       | Sete cenas imaginadas em formato de conversa.                                                   |
+| `/intervalo`       | Um intervalo                | Lago interativo com ondulações, pétalas e detalhes para perceber; som e movimento controláveis. |
+| `/antes-de-sair`   | Antes de sair               | Página final, liberada depois de algumas áreas vistas.                                          |
+| `/bastidores-a7k2` | Edição (fora do menu)       | Fotos, textos, músicas, mapa, cartas, dicionário, museu, cenas e página final.                  |
 
 O menu também guarda as preferências: tema (sistema, claro, escuro), reduzir movimento, sons do jardim e texto
 maior.
@@ -45,10 +45,10 @@ O conteúdo editável (tudo, menos a carta e os fragmentos) vem de três camadas
    _Administração → Exportar e importar_.
 3. **O que foi salvo pela administração**, que depende de onde o site está:
 
-| Onde o site roda                     | Salvar e enviar fotos                                                                                                                                                                         | Quem vê as alterações                                                                   |
-| ------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| Publicado como artifact no claude.ai | Banco de dados e armazenamento de arquivos do próprio artifact. Só contas com permissão de edição salvam (regra no servidor).                                                                 | Quem abre conectado ao claude.ai. Visitantes sem login veem o `content.json` publicado. |
-| Vercel ou outra hospedagem           | Em `public/content.json` e `public/fotos/` no repositório, gravados pela própria administração com um token do GitHub (Contents: Read and write) guardado só no navegador de quem administra. | Todo mundo, depois que a hospedagem publica a nova versão (cerca de um minuto).         |
+| Onde o site roda                     | Salvar e enviar fotos                                                                                                         | Quem vê as alterações                                                                   |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| Publicado como artifact no claude.ai | Banco de dados e armazenamento de arquivos do próprio artifact. Só contas com permissão de edição salvam (regra no servidor). | Quem abre conectado ao claude.ai. Visitantes sem login veem o `content.json` publicado. |
+| Vercel                               | No Vercel Blob do projeto, pela função `api/site.ts`. Gravar pede a senha `ADMIN_PASSWORD`, conferida no servidor.            | Todo mundo, segundos depois de salvar.                                                  |
 
 ## Playlist
 
@@ -78,10 +78,15 @@ npm test        # textos originais, paginação do livro e conteúdo padrão
 npm run build   # gera dist/
 ```
 
-O site é publicado pela Vercel: o projeto está ligado a este repositório e cada push em `claude/annelise-app`
-(a branch principal) gera uma nova versão. As configurações ficam em `vercel.json` (build `npm run build`, saída
-`dist/`). O endereço é `<nome-do-projeto>.vercel.app`; para mudá-lo, renomeie o projeto em _Settings → General →
-Project Name_ ou adicione outro nome em _Settings → Domains_.
+O site é publicado pela Vercel a cada push em `claude/annelise-app`. As configurações ficam em `vercel.json`
+(build `npm run build`, saída `dist/`), e `api/site.ts` é a função que guarda o que a área de edição salva.
+
+Para a área de edição funcionar, o projeto na Vercel precisa, uma vez só:
+
+1. de um **Blob** ligado ao projeto (_Storage → Create → Blob → Connect Project_), que cria
+   `BLOB_READ_WRITE_TOKEN`;
+2. da variável `ADMIN_PASSWORD` com a senha (_Settings → Environment Variables_);
+3. de uma nova publicação depois disso (_Deployments → Redeploy_).
 
 O conteúdo de `dist/` também funciona em qualquer outra hospedagem estática. O workflow
 `.github/workflows/deploy.yml` publica no GitHub Pages quando rodado manualmente (_Actions → Publicar no GitHub

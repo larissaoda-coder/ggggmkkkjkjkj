@@ -38,7 +38,7 @@ export function Layout({ children }: { children: (location: ReturnType<typeof us
   useEffect(() => {
     const titles: Record<string, string> = {
       '/indice': 'Índice',
-      [ADMIN_PATH]: 'Administração',
+      [ADMIN_PATH]: 'Edição',
       '/antes-de-sair': 'Antes de sair',
     };
     const name = section?.title ?? titles[location.pathname];

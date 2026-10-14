@@ -437,7 +437,7 @@
   }
 }
 
-/* primeiro acesso fora do claude.ai */
+/* entrada da área de edição */
 .admin__steps {
   display: grid;
   gap: 0.5rem;
@@ -465,4 +465,7 @@
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 0.25em;
+}
+.admin__steps li[data-done='true'] {
+  color: var(--muted);
 }

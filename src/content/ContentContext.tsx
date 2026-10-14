@@ -1,6 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from 'react';
 import { defaultContent } from './defaults';
-import { createBackend, githubErrorText, idbGet, pendingMedia, type Backend } from './backend';
+import { createBackend, idbGet, siteErrorText, type Backend } from './backend';
 import type { Content, Photo } from './types';
 
 /** Arquivos que saíram do site; entradas salvas antes que ainda apontem para eles são descartadas. */
@@ -101,7 +101,7 @@ export function ContentProvider({ children }: { children: ReactNode }) {
         setSaveError(
           code === 'resource_exhausted' || code === 'quota_exceeded'
             ? 'O conteúdo ficou grande demais para salvar de uma vez. Remova algumas fotografias ou textos longos e tente de novo.'
-            : (githubErrorText(e) ?? 'Não foi possível salvar agora. Verifique a conexão e tente de novo.'),
+            : (siteErrorText(e) ?? 'Não foi possível salvar agora. Verifique a conexão e tente de novo.'),
         );
         setSaveState('error');
         return false;
@@ -130,8 +130,6 @@ const objectUrls = new Map<string, string>();
 
 /** Versão sem hook: devolve um endereço tocável/exibível, ou null se o arquivo não existir mais. */
 export async function resolveMediaSrc(src: string): Promise<string | null> {
-  const pending = pendingMedia.get(src);
-  if (pending) return pending;
   if (!src.startsWith('idb:')) return src;
   const cached = objectUrls.get(src);
   if (cached) return cached;
@@ -143,16 +141,11 @@ export async function resolveMediaSrc(src: string): Promise<string | null> {
 }
 export function useMediaSrc(src: string | undefined): string | undefined {
   const [url, setUrl] = useState<string | undefined>(() =>
-    !src ? undefined : (pendingMedia.get(src) ?? (src.startsWith('idb:') ? objectUrls.get(src) : src)),
+    !src ? undefined : src.startsWith('idb:') ? objectUrls.get(src) : src,
   );
   useEffect(() => {
     if (!src) {
       setUrl(undefined);
-      return;
-    }
-    const pending = pendingMedia.get(src);
-    if (pending) {
-      setUrl(pending);
       return;
     }
     if (!src.startsWith('idb:')) {

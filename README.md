@@ -81,3 +81,19 @@ npm run build   # gera dist/
 O conteúdo de `dist/` pode ser publicado em qualquer hospedagem estática. Para o GitHub Pages, ative
 _Settings → Pages → Source: GitHub Actions_; o workflow `.github/workflows/deploy.yml` publica a cada push em
 `main` ou `claude/annelise-app` (ou manualmente, em _Actions → Publicar no GitHub Pages → Run workflow_).
+
+O endereço fica `https://larissaoda-coder.github.io/ggggmkkkjkjkj/`. Para um nome mais curto sem custo, renomeie o
+repositório (_Settings → General → Repository name_, por exemplo `para-annelise`); o endereço passa a ser
+`https://larissaoda-coder.github.io/para-annelise/`.
+
+### Domínio próprio
+
+1. Compre o domínio (por exemplo em registro.br para `.com.br`).
+2. No painel do domínio, crie os registros DNS:
+   - `A` em `@` apontando para `185.199.108.153`, `185.199.109.153`, `185.199.110.153` e `185.199.111.153`;
+   - `CNAME` em `www` apontando para `larissaoda-coder.github.io`.
+3. Crie o arquivo `public/CNAME` contendo só o domínio (por exemplo `paraannelise.com.br`) e publique.
+4. Em _Settings → Pages → Custom domain_, informe o mesmo domínio e marque _Enforce HTTPS_ quando liberar.
+
+Os caminhos do build são relativos (`base: './'`), então o mesmo build funciona no endereço do GitHub e no domínio
+próprio.

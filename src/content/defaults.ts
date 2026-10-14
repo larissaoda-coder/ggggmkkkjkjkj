@@ -20,7 +20,7 @@ export const defaultContent: Content = {
 
   letter: {
     note: 'Com todo o amor.',
-    // Vazio: usa as fotografias da abertura que acompanham o site (public/fotos/carta-*.jpg).
+    // Vazio: sem fotografia em cima; embaixo vai a que acompanha o site (public/fotos/carta-varanda.jpg).
     topPhotoId: '',
     bottomPhotoId: '',
   },

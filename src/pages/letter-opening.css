@@ -6,6 +6,10 @@
   display: grid;
   justify-items: center;
 }
+.opening[data-top='false'] {
+  /* duas faixas: o envelope e a fotografia de baixo */
+  width: min(100%, max(20rem, min(40rem, calc((100dvh - 10rem) / 1.17))));
+}
 .opening__panel {
   position: relative;
   width: 100%;
@@ -76,6 +80,9 @@
 .opening__note[data-write='true'] {
   clip-path: inset(-10% 100% -10% 0);
   animation: opening-write 2.2s linear 2s forwards;
+}
+.opening[data-top='false'] .opening__note[data-write='true'] {
+  animation-delay: 1.1s;
 }
 @keyframes opening-write {
   to {

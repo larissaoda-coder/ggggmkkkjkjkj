@@ -69,7 +69,7 @@ export function HomeTab({ draft, patch }: TabProps) {
       </Section>
       <Section
         title="Carta: abertura"
-        note="Quando a carta é aberta aparecem três faixas: uma fotografia, o verso de um envelope com uma frase escrita à mão e outra fotografia. Sem escolha, usam as fotografias que já vêm com o site."
+        note="Quando a carta é aberta aparecem o verso de um envelope com uma frase escrita à mão e, embaixo, uma fotografia. Uma fotografia em cima é opcional. Sem escolha, embaixo vai a fotografia que já vem com o site."
       >
         <Text
           label="Frase no envelope"
@@ -78,7 +78,7 @@ export function HomeTab({ draft, patch }: TabProps) {
           hint="Curta, de uma linha. Vazio: o envelope aparece sem frase."
         />
         <PhotoPicker
-          label="Fotografia de cima"
+          label="Fotografia de cima (opcional)"
           value={draft.letter.topPhotoId}
           photos={draft.photos}
           onChange={(v) => patch((d) => ({ ...d, letter: { ...d.letter, topPhotoId: v } }))}
